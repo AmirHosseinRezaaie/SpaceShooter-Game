@@ -80,5 +80,74 @@ namespace Final_Ap_Project.UI
         {
 
         }
+
+        // ------------------- Click Handle ---------------------
+
+        private void btnPlay_Click(object sender, EventArgs e)
+        {
+            // Hide main menu:
+            this.Hide();
+
+            // GameForm : Modal
+            using (GameForm game = new GameForm())
+            {
+                game.ShowDialog();
+            }
+
+            // Back to Main menu:
+            this.Show();
+        }
+
+        private void btnShop_Click(object sender, EventArgs e)
+        {
+            // Hide main menu:
+            this.Hide();
+
+            // ShopForm : Modal
+            using (ShopForm game = new ShopForm())
+            {
+                game.ShowDialog();
+            }
+
+            // Back to Main menu:
+            this.Show();
+        }
+
+        private void btnOptions_Click(object sender, EventArgs e)
+        {
+            // Hide main menu:
+            this.Hide();
+
+            // OptionsForm : Modal
+            using (OptionsForm game = new OptionsForm())
+            {
+                game.ShowDialog();
+            }
+
+            // Back to Main menu:
+            this.Show();
+        }
+
+        private void btnAbout_Click(object sender, EventArgs e)
+        {
+            // Hide main menu:
+            this.Hide();
+
+            // AboutForm : Modal
+            using (AboutForm game = new AboutForm())
+            {
+                game.ShowDialog();
+            }
+
+            // Back to Main menu:
+            this.Show();
+        }
+
+        private void btnQuit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        // ---------------------- 
     }
 }

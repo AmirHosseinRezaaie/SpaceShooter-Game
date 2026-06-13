@@ -8,15 +8,18 @@ using System.Windows.Forms;
 
 namespace Final_Ap_Project.UI
 {
-    public partial class GameForm : Form
+    public partial class AboutForm : Form
     {
-        public GameForm()
+        public AboutForm()
         {
             InitializeComponent();
 
             //this.Icon = Properties.Resources.SpaceShooterIcon;
+        }
 
-            this.DoubleBuffered = true;
+        private void AboutForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

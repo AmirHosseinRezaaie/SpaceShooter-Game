@@ -1,6 +1,6 @@
 ﻿namespace Final_Ap_Project.UI
 {
-    partial class GameForm
+    partial class OptionsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@
         {
             SuspendLayout();
             // 
-            // GameForm
+            // OptionsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -38,9 +38,9 @@
             ClientSize = new Size(884, 561);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
-            Name = "GameForm";
+            Name = "OptionsForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "GameForm";
+            Text = "OptionsForm";
             ResumeLayout(false);
         }
 

@@ -28,10 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "ShopForm";
+            SuspendLayout();
+            // 
+            // ShopForm
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.FromArgb(5, 7, 15);
+            ClientSize = new Size(884, 561);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            Name = "ShopForm";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "ShopForm";
+            ResumeLayout(false);
         }
 
         #endregion

@@ -13,6 +13,8 @@ namespace Final_Ap_Project.UI
         public ShopForm()
         {
             InitializeComponent();
+
+            //this.Icon = Properties.Resources.SpaceShooterIcon;
         }
     }
 }

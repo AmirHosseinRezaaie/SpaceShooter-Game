@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenuForm));
             btnPlay = new Button();
             btnOptions = new Button();
             btnShop = new Button();
@@ -48,6 +47,7 @@
             btnPlay.TabIndex = 0;
             btnPlay.Text = "Play";
             btnPlay.UseVisualStyleBackColor = false;
+            btnPlay.Click += btnPlay_Click;
             // 
             // btnOptions
             // 
@@ -60,6 +60,7 @@
             btnOptions.TabIndex = 1;
             btnOptions.Text = "Options";
             btnOptions.UseVisualStyleBackColor = false;
+            btnOptions.Click += btnOptions_Click;
             // 
             // btnShop
             // 
@@ -72,6 +73,7 @@
             btnShop.TabIndex = 2;
             btnShop.Text = "Shop";
             btnShop.UseVisualStyleBackColor = false;
+            btnShop.Click += btnShop_Click;
             // 
             // btnAbout
             // 
@@ -84,6 +86,7 @@
             btnAbout.TabIndex = 3;
             btnAbout.Text = "About";
             btnAbout.UseVisualStyleBackColor = false;
+            btnAbout.Click += btnAbout_Click;
             // 
             // btnQuit
             // 
@@ -96,6 +99,7 @@
             btnQuit.TabIndex = 4;
             btnQuit.Text = "Quit";
             btnQuit.UseVisualStyleBackColor = false;
+            btnQuit.Click += btnQuit_Click;
             // 
             // lblTitle
             // 
@@ -122,9 +126,9 @@
             Controls.Add(btnOptions);
             Controls.Add(btnPlay);
             FormBorderStyle = FormBorderStyle.FixedSingle;
-            Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximizeBox = false;
             Name = "MainMenuForm";
-            StartPosition = FormStartPosition.CenterParent;
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Space Shooter";
             Load += MainMenuForm_Load;
             ResumeLayout(false);
