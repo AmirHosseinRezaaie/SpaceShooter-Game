@@ -28,12 +28,115 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "MainMenuForm";
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenuForm));
+            btnPlay = new Button();
+            btnOptions = new Button();
+            btnShop = new Button();
+            btnAbout = new Button();
+            btnQuit = new Button();
+            lblTitle = new Label();
+            SuspendLayout();
+            // 
+            // btnPlay
+            // 
+            btnPlay.BackColor = Color.Black;
+            btnPlay.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnPlay.ForeColor = Color.White;
+            btnPlay.Location = new Point(350, 120);
+            btnPlay.Name = "btnPlay";
+            btnPlay.Size = new Size(200, 50);
+            btnPlay.TabIndex = 0;
+            btnPlay.Text = "Play";
+            btnPlay.UseVisualStyleBackColor = false;
+            // 
+            // btnOptions
+            // 
+            btnOptions.BackColor = Color.Black;
+            btnOptions.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnOptions.ForeColor = Color.White;
+            btnOptions.Location = new Point(350, 260);
+            btnOptions.Name = "btnOptions";
+            btnOptions.Size = new Size(200, 50);
+            btnOptions.TabIndex = 1;
+            btnOptions.Text = "Options";
+            btnOptions.UseVisualStyleBackColor = false;
+            // 
+            // btnShop
+            // 
+            btnShop.BackColor = Color.Black;
+            btnShop.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnShop.ForeColor = Color.White;
+            btnShop.Location = new Point(350, 190);
+            btnShop.Name = "btnShop";
+            btnShop.Size = new Size(200, 50);
+            btnShop.TabIndex = 2;
+            btnShop.Text = "Shop";
+            btnShop.UseVisualStyleBackColor = false;
+            // 
+            // btnAbout
+            // 
+            btnAbout.BackColor = Color.Black;
+            btnAbout.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnAbout.ForeColor = Color.White;
+            btnAbout.Location = new Point(350, 330);
+            btnAbout.Name = "btnAbout";
+            btnAbout.Size = new Size(200, 50);
+            btnAbout.TabIndex = 3;
+            btnAbout.Text = "About";
+            btnAbout.UseVisualStyleBackColor = false;
+            // 
+            // btnQuit
+            // 
+            btnQuit.BackColor = Color.Black;
+            btnQuit.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnQuit.ForeColor = Color.White;
+            btnQuit.Location = new Point(350, 400);
+            btnQuit.Name = "btnQuit";
+            btnQuit.Size = new Size(200, 50);
+            btnQuit.TabIndex = 4;
+            btnQuit.Text = "Quit";
+            btnQuit.UseVisualStyleBackColor = false;
+            // 
+            // lblTitle
+            // 
+            lblTitle.BackColor = Color.Transparent;
+            lblTitle.Font = new Font("Segoe UI Black", 24F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTitle.ForeColor = Color.White;
+            lblTitle.Location = new Point(200, 30);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(500, 60);
+            lblTitle.TabIndex = 5;
+            lblTitle.Text = "SPACE SHOOTER";
+            lblTitle.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // MainMenuForm
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.FromArgb(5, 7, 15);
+            ClientSize = new Size(884, 561);
+            Controls.Add(lblTitle);
+            Controls.Add(btnQuit);
+            Controls.Add(btnAbout);
+            Controls.Add(btnShop);
+            Controls.Add(btnOptions);
+            Controls.Add(btnPlay);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            Name = "MainMenuForm";
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "Space Shooter";
+            Load += MainMenuForm_Load;
+            ResumeLayout(false);
         }
 
         #endregion
+
+        private Button btnPlay;
+        private Button btnOptions;
+        private Button btnShop;
+        private Button btnAbout;
+        private Button btnQuit;
+        private Label lblTitle;
     }
 }
