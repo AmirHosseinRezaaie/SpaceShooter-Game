@@ -20,6 +20,8 @@ namespace Final_Ap_Project.UI
         {
             InitializeComponent();
 
+            this.Icon = Properties.Resources.SpaceShooterIcon;
+
             // Enable double buffering to reduce flickering:
             this.DoubleBuffered = true;
 

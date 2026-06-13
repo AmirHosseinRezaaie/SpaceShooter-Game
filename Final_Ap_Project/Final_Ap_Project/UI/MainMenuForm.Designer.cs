@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenuForm));
             btnPlay = new Button();
             btnOptions = new Button();
             btnShop = new Button();
@@ -121,6 +122,7 @@
             Controls.Add(btnOptions);
             Controls.Add(btnPlay);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "MainMenuForm";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Space Shooter";
