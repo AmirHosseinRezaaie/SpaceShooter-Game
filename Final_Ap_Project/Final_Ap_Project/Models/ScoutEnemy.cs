@@ -2,7 +2,7 @@
 using System;
 using System.Drawing;
 
-namespace SpaceShooter.Models
+namespace Final_Ap_Project.Models
 {
     public class ScoutEnemy : Enemy
     {
