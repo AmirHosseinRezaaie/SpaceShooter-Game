@@ -5,14 +5,78 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+// Use WinForms Timer explicitly to avoid conflict with Threading.Timer
+using Timer = System.Windows.Forms.Timer;
 
 namespace Final_Ap_Project.UI
 {
     public partial class MainMenuForm : Form
     {
+        List<Point> stars = new List<Point>();
+        Random rnd = new Random();
+        Timer timer = new Timer();
+
         public MainMenuForm()
         {
             InitializeComponent();
+
+            // Enable double buffering to reduce flickering:
+            this.DoubleBuffered = true;
+
+            // Initialize star positions randomly across the screen
+            for (int i = 0; i < 120; i++)
+            {
+                stars.Add(new Point(rnd.Next(Width), rnd.Next(Height)));
+            }
+
+            // Set timer speed (frame update interval in ms)
+            timer.Interval = 30;
+
+            // Run update method every timer tick
+            timer.Tick += Timer_Tick;
+
+            // Start the animation timer
+            timer.Start();
+
+            // Attach paint event to draw graphics on screen
+            this.Paint += MainMenuForm_Paint;
+        }
+
+        // Update star positions to create falling effect
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            for (int i = 0; i < stars.Count; i++)
+            {
+                Point p = stars[i];
+                // Move star downward
+                p.Y += 1;
+
+                // Reset star to top if it goes off screen
+                if (p.Y > Height)
+                    p = new Point(rnd.Next(Width), 0);
+
+                stars[i] = p;
+            }
+            // Redraw screen
+            Invalidate();
+        }
+
+        // Draw background and stars on screen
+        private void MainMenuForm_Paint(object sender, PaintEventArgs e)
+        {
+            // Fill background with dark space color
+            e.Graphics.Clear(Color.FromArgb(5, 7, 15));
+
+            // Draw each star as a small white dot
+            foreach (var star in stars)
+            {
+                e.Graphics.FillEllipse(Brushes.White, star.X, star.Y, 2, 2);
+            }
+        }
+
+        private void MainMenuForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
