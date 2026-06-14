@@ -28,10 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "GameForm";
+            SuspendLayout();
+            // 
+            // GameForm
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.FromArgb(5, 7, 15);
+            ClientSize = new Size(884, 561);
+            DoubleBuffered = true;
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            KeyPreview = true;
+            MaximizeBox = false;
+            Name = "GameForm";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "GameForm";
+            KeyDown += GameForm_KeyDown;
+            KeyUp += GameForm_KeyUp;
+            ResumeLayout(false);
         }
 
         #endregion

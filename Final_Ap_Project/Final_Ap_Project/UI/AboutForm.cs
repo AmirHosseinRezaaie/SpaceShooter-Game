@@ -4,19 +4,18 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Text;
-using System.Timers;
 using System.Windows.Forms;
 using Timer = System.Windows.Forms.Timer;
 
 namespace Final_Ap_Project.UI
 {
-    public partial class ShopForm : Form
+    public partial class AboutForm : Form
     {
         List<Point> stars = new List<Point>();
         Random rnd = new Random();
         Timer timer = new Timer();
 
-        public ShopForm()
+        public AboutForm()
         {
             InitializeComponent();
 
@@ -39,6 +38,24 @@ namespace Final_Ap_Project.UI
 
             // Attach paint event to draw graphics on screen
             this.Paint += MainMenuForm_Paint;
+        }
+
+        private void AboutForm_Load(object sender, EventArgs e)
+        {
+            // Timer 20ms
+            timer1.Start();
+        }
+
+        // For Scroll text:
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            lblAbout.Top--;
+
+            // ReStart scroll:
+            if (lblAbout.Bottom < 0)
+            {
+                lblAbout.Top = panelAbout.Height;
+            }
         }
 
         // Update star positions to create falling effect
@@ -86,7 +103,7 @@ namespace Final_Ap_Project.UI
             btnBack.BackColor = Color.FromArgb(10, 20, 30);
         }
 
-        private void ShopForm_KeyDown(object sender, KeyEventArgs e)
+        private void AboutForm_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
             {

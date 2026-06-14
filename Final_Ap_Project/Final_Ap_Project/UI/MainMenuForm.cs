@@ -5,7 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-// Use WinForms Timer explicitly to avoid conflict with Threading.Timer
+// Threading.Timer for avoid conflict
 using Timer = System.Windows.Forms.Timer;
 
 namespace Final_Ap_Project.UI
@@ -21,9 +21,6 @@ namespace Final_Ap_Project.UI
             InitializeComponent();
 
             this.Icon = Properties.Resources.SpaceShooterIcon;
-
-            // Enable double buffering to reduce flickering:
-            this.DoubleBuffered = true;
 
             // Initialize star positions randomly across the screen
             for (int i = 0; i < 120; i++)
@@ -80,5 +77,132 @@ namespace Final_Ap_Project.UI
         {
 
         }
+
+        // ------------------- Click Handle ---------------------
+
+        private void btnPlay_Click(object sender, EventArgs e)
+        {
+            // Hide main menu:
+            this.Hide();
+
+            // GameForm : Modal
+            using (GameForm game = new GameForm())
+            {
+                game.ShowDialog();
+            }
+
+            // Back to Main menu:
+            this.Show();
+        }
+
+        private void btnShop_Click(object sender, EventArgs e)
+        {
+            // Hide main menu:
+            this.Hide();
+
+            // ShopForm : Modal
+            using (ShopForm game = new ShopForm())
+            {
+                game.ShowDialog();
+            }
+
+            // Back to Main menu:
+            this.Show();
+        }
+
+        private void btnOptions_Click(object sender, EventArgs e)
+        {
+            // Hide main menu:
+            this.Hide();
+
+            // OptionsForm : Modal
+            using (OptionsForm game = new OptionsForm())
+            {
+                game.ShowDialog();
+            }
+
+            // Back to Main menu:
+            this.Show();
+        }
+
+        private void btnAbout_Click(object sender, EventArgs e)
+        {
+            // Hide main menu:
+            this.Hide();
+
+            // AboutForm : Modal
+            using (AboutForm game = new AboutForm())
+            {
+                game.ShowDialog();
+            }
+
+            // Back to Main menu:
+            this.Show();
+        }
+
+        private void btnQuit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void btnPlay_MouseHover(object sender, EventArgs e)
+        {
+            btnPlay.BackColor = Color.FromArgb(30, 30, 60);
+        }
+
+        private void btnShop_MouseHover(object sender, EventArgs e)
+        {
+            btnShop.BackColor = Color.FromArgb(30, 30, 60);
+        }
+
+        private void btnOptions_MouseHover(object sender, EventArgs e)
+        {
+            btnOptions.BackColor = Color.FromArgb(30, 30, 60);
+        }
+
+        private void btnAbout_MouseHover(object sender, EventArgs e)
+        {
+            btnAbout.BackColor = Color.FromArgb(30, 30, 60);
+        }
+
+        private void btnQuit_MouseHover(object sender, EventArgs e)
+        {
+            btnQuit.BackColor = Color.FromArgb(30, 30, 60);
+        }
+
+        private void btnPlay_MouseLeave(object sender, EventArgs e)
+        {
+            btnPlay.BackColor = Color.Black;
+        }
+
+        private void btnShop_MouseLeave(object sender, EventArgs e)
+        {
+            btnShop.BackColor = Color.Black;
+        }
+
+        private void btnOptions_MouseLeave(object sender, EventArgs e)
+        {
+            btnOptions.BackColor = Color.Black;
+        }
+
+        private void btnAbout_MouseLeave(object sender, EventArgs e)
+        {
+            btnAbout.BackColor = Color.Black;
+        }
+
+        private void btnQuit_MouseLeave(object sender, EventArgs e)
+        {
+            btnQuit.BackColor = Color.Black;
+        }
+
+        private void MainMenuForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                this.Close();
+            }
+        }
+
+        // ---------------------- 
     }
 }
