@@ -36,11 +36,15 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(5, 7, 15);
             ClientSize = new Size(884, 561);
+            DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            KeyPreview = true;
             MaximizeBox = false;
             Name = "GameForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "GameForm";
+            KeyDown += GameForm_KeyDown;
+            KeyUp += GameForm_KeyUp;
             ResumeLayout(false);
         }
 

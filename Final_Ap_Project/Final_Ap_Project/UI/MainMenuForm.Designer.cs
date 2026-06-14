@@ -48,6 +48,8 @@
             btnPlay.Text = "Play";
             btnPlay.UseVisualStyleBackColor = false;
             btnPlay.Click += btnPlay_Click;
+            btnPlay.MouseLeave += btnPlay_MouseLeave;
+            btnPlay.MouseHover += btnPlay_MouseHover;
             // 
             // btnOptions
             // 
@@ -61,6 +63,8 @@
             btnOptions.Text = "Options";
             btnOptions.UseVisualStyleBackColor = false;
             btnOptions.Click += btnOptions_Click;
+            btnOptions.MouseLeave += btnOptions_MouseLeave;
+            btnOptions.MouseHover += btnOptions_MouseHover;
             // 
             // btnShop
             // 
@@ -74,6 +78,8 @@
             btnShop.Text = "Shop";
             btnShop.UseVisualStyleBackColor = false;
             btnShop.Click += btnShop_Click;
+            btnShop.MouseLeave += btnShop_MouseLeave;
+            btnShop.MouseHover += btnShop_MouseHover;
             // 
             // btnAbout
             // 
@@ -87,6 +93,8 @@
             btnAbout.Text = "About";
             btnAbout.UseVisualStyleBackColor = false;
             btnAbout.Click += btnAbout_Click;
+            btnAbout.MouseLeave += btnAbout_MouseLeave;
+            btnAbout.MouseHover += btnAbout_MouseHover;
             // 
             // btnQuit
             // 
@@ -100,6 +108,8 @@
             btnQuit.Text = "Quit";
             btnQuit.UseVisualStyleBackColor = false;
             btnQuit.Click += btnQuit_Click;
+            btnQuit.MouseLeave += btnQuit_MouseLeave;
+            btnQuit.MouseHover += btnQuit_MouseHover;
             // 
             // lblTitle
             // 
@@ -125,12 +135,15 @@
             Controls.Add(btnShop);
             Controls.Add(btnOptions);
             Controls.Add(btnPlay);
+            DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            KeyPreview = true;
             MaximizeBox = false;
             Name = "MainMenuForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Space Shooter";
             Load += MainMenuForm_Load;
+            KeyDown += MainMenuForm_KeyDown;
             ResumeLayout(false);
         }
 

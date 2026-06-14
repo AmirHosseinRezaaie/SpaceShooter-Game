@@ -117,4 +117,44 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="lblAbout.Text" xml:space="preserve">
+    <value>====================================================
+    SPACE SHOOTER
+====================================================
+
+MISSION BRIEFING:
+You are the last hope of the galaxy. Navigate through 
+hostile sectors, eliminate enemy waves, and survive 
+the incoming onslaught. Upgrade your ship, master 
+your movement, and climb the leaderboards.
+
+GAME FEATURES:
+- Dynamic Wave System: Increasing difficulty with 
+  10 unique stages of relentless enemy encounters.
+- Advanced AI: Enemies with complex movement patterns
+  and combat logic.
+- Shop &amp; Upgrades: Collect coins to unlock new skins,
+  weapons, and power-ups.
+- Persistent High Scores: Powered by SQLite database.
+- Fluid Control: Precision movement and reaction.
+
+DEVELOPMENT TEAM:
+AmirHossein Rezaei - 403541474
+AmirHossein Ebrahimpoor - 404521003
+
+TECHNOLOGIES:
+Developed with C# .NET &amp; GDI+ for high-performance 
+rendering. Designed with an emphasis on Object-Oriented 
+Programming (OOP) principles, clean architecture, 
+and modular design.
+
+----------------------------------------------------
+           "Ad Astra Per Aspera"
+Copyright © 2026. Final Ap Project - IUST.
+All Rights Reserved.
+====================================================</value>
+  </data>
+  <metadata name="timer1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
 </root>
