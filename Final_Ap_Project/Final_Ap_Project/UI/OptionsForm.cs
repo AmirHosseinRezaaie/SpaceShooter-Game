@@ -10,13 +10,13 @@ using Timer = System.Windows.Forms.Timer;
 
 namespace Final_Ap_Project.UI
 {
-    public partial class ShopForm : Form
+    public partial class OptionsForm : Form
     {
         List<Point> stars = new List<Point>();
         Random rnd = new Random();
         Timer timer = new Timer();
 
-        public ShopForm()
+        public OptionsForm()
         {
             InitializeComponent();
 
@@ -86,7 +86,39 @@ namespace Final_Ap_Project.UI
             btnBack.BackColor = Color.FromArgb(10, 20, 30);
         }
 
-        private void ShopForm_KeyDown(object sender, KeyEventArgs e)
+        private void chkSFX_CheckedChanged_1(object sender, EventArgs e)
+        {
+            if (chkSFX.Checked)
+            {
+                chkSFX.Text = "ON";
+                chkSFX.ForeColor = Color.Lime;
+            }
+            else
+            {
+                chkSFX.Text = "OFF";
+                chkSFX.ForeColor = Color.Red;
+            }
+        }
+
+        private void chkMusic_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkMusic.Checked)
+            {
+                chkMusic.Text = "ON";
+                chkMusic.ForeColor = Color.Lime;
+
+                // MusicPlayer.Resume();
+            }
+            else
+            {
+                chkMusic.Text = "OFF";
+                chkMusic.ForeColor = Color.Red;
+
+                // MusicPlayer.Pause();
+            }
+        }
+
+        private void OptionsForm_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
             {
