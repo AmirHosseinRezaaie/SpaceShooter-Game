@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using Final_Ap_Project.Models;
 
 namespace Final_Ap_Project.UI
 {
@@ -15,6 +16,13 @@ namespace Final_Ap_Project.UI
         bool moveUp;
         bool moveDown;
 
+        private List<Enemy> activeEnemies;
+        private List<Bullet> activeBullets;
+        private List<Coin> activeCoins;
+        private Player myPlayer;
+        private System.Windows.Forms.Timer gameTimer;
+        private Random rnd = new Random();
+
         public GameForm()
         {
             InitializeComponent();
@@ -22,6 +30,67 @@ namespace Final_Ap_Project.UI
             //this.Icon = Properties.Resources.SpaceShooterIcon;
 
             this.DoubleBuffered = true;
+
+            activeEnemies = new List<Enemy>();
+            activeBullets = new List<Bullet>();
+            activeCoins = new List<Coin>();
+
+            myPlayer = new Player(350, 450, 50, 50, 5, null, 3);
+
+            gameTimer = new System.Windows.Forms.Timer();
+            gameTimer.Interval = 20;
+            gameTimer.Tick += GameLoop;
+            gameTimer.Start();
+        }
+        private void GameLoop(object sender, EventArgs e)
+        {
+            UpdatePlayerMovement();
+
+            for (int i = activeBullets.Count - 1; i >= 0; i--)
+            {
+                activeBullets[i].Move();
+                if (activeBullets[i].Y < 0)
+                {
+                    activeBullets.RemoveAt(i);
+                }
+            }
+
+            for (int i = activeEnemies.Count - 1; i >= 0; i--)
+            {
+                activeEnemies[i].Move();
+                if (activeEnemies[i].Y > this.ClientSize.Height)
+                {
+                    activeEnemies.RemoveAt(i);
+                }
+            }
+
+            CheckCollisions();
+
+            this.Invalidate();
+        }
+        private void UpdatePlayerMovement()
+        {
+            if (moveLeft && myPlayer.X > 0) myPlayer.X -= myPlayer.Speed;
+            if (moveRight && myPlayer.X + myPlayer.Width < this.ClientSize.Width) myPlayer.X += myPlayer.Speed;
+            if (moveUp && myPlayer.Y > 0) myPlayer.Y -= myPlayer.Speed;
+            if (moveDown && myPlayer.Y + myPlayer.Height < this.ClientSize.Height) myPlayer.Y += myPlayer.Speed;
+        }
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+            Graphics g = e.Graphics;
+
+            myPlayer.Draw(g);
+
+            foreach (var bullet in activeBullets)
+            {
+                bullet.Draw(g);
+            }
+
+            foreach (var enemy in activeEnemies)
+            {
+                enemy.Draw(g);
+            }
         }
 
         private void GameForm_KeyDown(object sender, KeyEventArgs e)
@@ -43,6 +112,88 @@ namespace Final_Ap_Project.UI
             if (e.KeyCode == Keys.D) { moveRight = false; }
             if (e.KeyCode == Keys.W) { moveUp = false; }
             if (e.KeyCode == Keys.S) { moveDown = false; }
+        }
+        private void CheckCollisions()
+        {
+
+            for (int i = activeBullets.Count - 1; i >= 0; i--)
+            {
+                if (activeBullets[i].IsPlayerBullet)
+                {
+                    for (int j = activeEnemies.Count - 1; j >= 0; j--)
+                    {
+                        if (activeBullets[i].GetBounds().IntersectsWith(activeEnemies[j].GetBounds()))
+                        {
+                            activeEnemies[j].HP--;
+                            activeBullets.RemoveAt(i);
+
+                            if (activeEnemies[j].HP <= 0)
+                            {
+                                myPlayer.Score += activeEnemies[j].ScoreValue;
+
+                                if (rnd.Next(1, 101) <= activeEnemies[j].CoinDropChance)
+                                {
+                                    
+                                    bool isGoldCoin = (rnd.Next(1, 101) <= 20);
+
+                                    Coin droppedCoin = new Coin(activeEnemies[j].X, activeEnemies[j].Y, 3, null, isGoldCoin);
+
+                                    activeCoins.Add(droppedCoin);
+                                }
+
+                                activeEnemies.RemoveAt(j);
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+            
+            for (int i = activeEnemies.Count - 1; i >= 0; i--)
+            {
+                if (myPlayer.GetBounds().IntersectsWith(activeEnemies[i].GetBounds()))
+                {
+                    myPlayer.HP--;
+                    activeEnemies.RemoveAt(i);
+
+                    if (myPlayer.HP <= 0)
+                    {
+                        gameTimer.Stop();
+                        MessageBox.Show("Game Over!");
+                    }
+                }
+            }
+            for (int i = activeBullets.Count - 1; i >= 0 ; i--)
+            {
+                if (!activeBullets[i].IsPlayerBullet && myPlayer.GetBounds().IntersectsWith(activeBullets[i].GetBounds()))
+                {
+                    myPlayer.HP--;
+                    activeBullets.RemoveAt(i);
+
+                    if (myPlayer.HP <= 0)
+                    {
+                        gameTimer.Stop();
+                        MessageBox.Show("Game Over!");
+                    }
+                }
+            }
+
+            for (int i = activeCoins.Count - 1; i >= 0; i--)
+            {
+                if (myPlayer.GetBounds().IntersectsWith(activeCoins[i].GetBounds()))
+                {
+                    if (activeCoins[i].IsGold)
+                    {
+                        myPlayer.Coins += 5;
+                    }
+                    else
+                    {
+                        myPlayer.Coins += 1;
+                    }
+
+                    activeCoins.RemoveAt(i);
+                }
+            }
         }
     }
 }
