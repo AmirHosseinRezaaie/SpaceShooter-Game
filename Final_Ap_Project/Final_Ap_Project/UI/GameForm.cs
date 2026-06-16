@@ -61,6 +61,8 @@ namespace Final_Ap_Project.UI
                 }
             }
 
+            CheckCollisions();
+
             this.Invalidate();
         }
         private void UpdatePlayerMovement()
@@ -107,6 +109,32 @@ namespace Final_Ap_Project.UI
             if (e.KeyCode == Keys.D) { moveRight = false; }
             if (e.KeyCode == Keys.W) { moveUp = false; }
             if (e.KeyCode == Keys.S) { moveDown = false; }
+        }
+        private void CheckCollisions()
+        {
+
+            for (int i = activeBullets.Count - 1; i >= 0; i--)
+            {
+                if (activeBullets[i].IsPlayerBullet)
+                {
+                    for (int j = activeEnemies.Count - 1; j >= 0; j--)
+                    {
+                        if (activeBullets[i].GetBounds().IntersectsWith(activeEnemies[j].GetBounds()))
+                        {
+                            activeEnemies[j].HP--;
+                            activeBullets.RemoveAt(i);
+
+                            if (activeEnemies[j].HP <= 0)
+                            {
+                                // TODO: putting Score to Player & drop down coin 
+
+                                activeEnemies.RemoveAt(j);
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
         }
     }
 }
