@@ -21,6 +21,7 @@ namespace Final_Ap_Project.UI
         private List<Coin> activeCoins;
         private Player myPlayer;
         private System.Windows.Forms.Timer gameTimer;
+        private Random rnd = new Random();
 
         public GameForm()
         {
@@ -130,10 +131,14 @@ namespace Final_Ap_Project.UI
                             {
                                 myPlayer.Score += activeEnemies[j].ScoreValue;
 
-                                Random rnd = new Random();
                                 if (rnd.Next(1, 101) <= activeEnemies[j].CoinDropChance)
                                 {
-                                    // TODO: create the coin & add it to ground
+                                    
+                                    bool isGoldCoin = (rnd.Next(1, 101) <= 20);
+
+                                    Coin droppedCoin = new Coin(activeEnemies[j].X, activeEnemies[j].Y, 3, null, isGoldCoin);
+
+                                    activeCoins.Add(droppedCoin);
                                 }
 
                                 activeEnemies.RemoveAt(j);
