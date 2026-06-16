@@ -126,7 +126,13 @@ namespace Final_Ap_Project.UI
 
                             if (activeEnemies[j].HP <= 0)
                             {
-                                // TODO: putting Score to Player & drop down coin 
+                                myPlayer.Score += activeEnemies[j].ScoreValue;
+
+                                Random rnd = new Random();
+                                if (rnd.Next(1, 101) <= activeEnemies[j].CoinDropChance)
+                                {
+                                    // TODO: create the coin & add it to ground
+                                }
 
                                 activeEnemies.RemoveAt(j);
                             }
@@ -145,9 +151,8 @@ namespace Final_Ap_Project.UI
 
                     if (myPlayer.HP <= 0)
                     {
-                        // TODO: منطق Game Over 
-                        // gameTimer.Stop();
-                        // MessageBox.Show("Game Over!");
+                        gameTimer.Stop();
+                        MessageBox.Show("Game Over!");
                     }
                 }
             }
@@ -160,9 +165,8 @@ namespace Final_Ap_Project.UI
 
                     if (myPlayer.HP <= 0)
                     {
-                        // TODO: منطق Game Over 
-                        // gameTimer.Stop();
-                        // MessageBox.Show("Game Over!");
+                        gameTimer.Stop();
+                        MessageBox.Show("Game Over!");
                     }
                 }
             }

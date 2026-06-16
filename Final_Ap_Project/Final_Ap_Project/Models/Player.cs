@@ -7,6 +7,8 @@ namespace Final_Ap_Project.Models
     public class Player : GameObject
     {
         public int HP { get; set; }
+        public int Score { get; set; }
+        public int Coins { get; set; }
         public int FireRateDelay { get; set; }
         public long LastFireTime { get; set; }
 
