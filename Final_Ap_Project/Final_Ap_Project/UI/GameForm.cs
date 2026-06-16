@@ -18,6 +18,7 @@ namespace Final_Ap_Project.UI
 
         private List<Enemy> activeEnemies;
         private List<Bullet> activeBullets;
+        private List<Coin> activeCoins;
         private Player myPlayer;
         private System.Windows.Forms.Timer gameTimer;
 
@@ -31,6 +32,7 @@ namespace Final_Ap_Project.UI
 
             activeEnemies = new List<Enemy>();
             activeBullets = new List<Bullet>();
+            activeCoins = new List<Coin>();
 
             myPlayer = new Player(350, 450, 50, 50, 5, null, 3);
 
@@ -168,6 +170,23 @@ namespace Final_Ap_Project.UI
                         gameTimer.Stop();
                         MessageBox.Show("Game Over!");
                     }
+                }
+            }
+
+            for (int i = activeCoins.Count - 1; i >= 0; i--)
+            {
+                if (myPlayer.GetBounds().IntersectsWith(activeCoins[i].GetBounds()))
+                {
+                    if (activeCoins[i].IsGold)
+                    {
+                        myPlayer.Coins += 5;
+                    }
+                    else
+                    {
+                        myPlayer.Coins += 1;
+                    }
+
+                    activeCoins.RemoveAt(i);
                 }
             }
         }
