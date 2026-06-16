@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using Final_Ap_Project.Models;
 
 namespace Final_Ap_Project.UI
 {
@@ -15,6 +16,11 @@ namespace Final_Ap_Project.UI
         bool moveUp;
         bool moveDown;
 
+        private List<Enemy> activeEnemies;
+        private List<Bullet> activeBullets;
+        private Player myPlayer;
+        private System.Windows.Forms.Timer gameTimer;
+
         public GameForm()
         {
             InitializeComponent();
@@ -22,6 +28,64 @@ namespace Final_Ap_Project.UI
             //this.Icon = Properties.Resources.SpaceShooterIcon;
 
             this.DoubleBuffered = true;
+
+            activeEnemies = new List<Enemy>();
+            activeBullets = new List<Bullet>();
+
+            myPlayer = new Player(350, 450, 50, 50, 5, null, 3);
+
+            gameTimer = new System.Windows.Forms.Timer();
+            gameTimer.Interval = 20;
+            gameTimer.Tick += GameLoop;
+            gameTimer.Start();
+        }
+        private void GameLoop(object sender, EventArgs e)
+        {
+            UpdatePlayerMovement();
+
+            for (int i = activeBullets.Count - 1; i >= 0; i--)
+            {
+                activeBullets[i].Move();
+                if (activeBullets[i].Y < 0)
+                {
+                    activeBullets.RemoveAt(i);
+                }
+            }
+
+            for (int i = activeEnemies.Count - 1; i >= 0; i--)
+            {
+                activeEnemies[i].Move();
+                if (activeEnemies[i].Y > this.ClientSize.Height)
+                {
+                    activeEnemies.RemoveAt(i);
+                }
+            }
+
+            this.Invalidate();
+        }
+        private void UpdatePlayerMovement()
+        {
+            if (moveLeft && myPlayer.X > 0) myPlayer.X -= myPlayer.Speed;
+            if (moveRight && myPlayer.X + myPlayer.Width < this.ClientSize.Width) myPlayer.X += myPlayer.Speed;
+            if (moveUp && myPlayer.Y > 0) myPlayer.Y -= myPlayer.Speed;
+            if (moveDown && myPlayer.Y + myPlayer.Height < this.ClientSize.Height) myPlayer.Y += myPlayer.Speed;
+        }
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+            Graphics g = e.Graphics;
+
+            myPlayer.Draw(g);
+
+            foreach (var bullet in activeBullets)
+            {
+                bullet.Draw(g);
+            }
+
+            foreach (var enemy in activeEnemies)
+            {
+                enemy.Draw(g);
+            }
         }
 
         private void GameForm_KeyDown(object sender, KeyEventArgs e)
