@@ -135,6 +135,37 @@ namespace Final_Ap_Project.UI
                     }
                 }
             }
+            
+            for (int i = activeEnemies.Count - 1; i >= 0; i--)
+            {
+                if (myPlayer.GetBounds().IntersectsWith(activeEnemies[i].GetBounds()))
+                {
+                    myPlayer.HP--;
+                    activeEnemies.RemoveAt(i);
+
+                    if (myPlayer.HP <= 0)
+                    {
+                        // TODO: منطق Game Over 
+                        // gameTimer.Stop();
+                        // MessageBox.Show("Game Over!");
+                    }
+                }
+            }
+            for (int i = activeBullets.Count - 1; i >= 0 ; i--)
+            {
+                if (!activeBullets[i].IsPlayerBullet && myPlayer.GetBounds().IntersectsWith(activeBullets[i].GetBounds()))
+                {
+                    myPlayer.HP--;
+                    activeBullets.RemoveAt(i);
+
+                    if (myPlayer.HP <= 0)
+                    {
+                        // TODO: منطق Game Over 
+                        // gameTimer.Stop();
+                        // MessageBox.Show("Game Over!");
+                    }
+                }
+            }
         }
     }
 }
