@@ -27,8 +27,6 @@ namespace Final_Ap_Project.UI
         {
             InitializeComponent();
 
-            //this.Icon = Properties.Resources.SpaceShooterIcon;
-
             this.DoubleBuffered = true;
 
             activeEnemies = new List<Enemy>();

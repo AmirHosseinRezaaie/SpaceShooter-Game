@@ -61,22 +61,12 @@ namespace Final_Ap_Project.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        public static System.Drawing.Icon SpaceShooterIcon {
+        public static byte[] SpaceShooterlcon {
             get {
-                object obj = ResourceManager.GetObject("SpaceShooterIcon", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
-        /// </summary>
-        public static System.Drawing.Icon SpaceShooterIcon2 {
-            get {
-                object obj = ResourceManager.GetObject("SpaceShooterIcon2", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
+                object obj = ResourceManager.GetObject("SpaceShooterlcon", resourceCulture);
+                return ((byte[])(obj));
             }
         }
     }
