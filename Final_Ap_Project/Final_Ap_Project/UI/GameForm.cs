@@ -32,11 +32,14 @@ namespace Final_Ap_Project.UI
 
             this.DoubleBuffered = true;
 
+            this.BackgroundImage = Properties.Resources.BackGround;
+            this.BackgroundImageLayout = ImageLayout.Stretch;
+
             activeEnemies = new List<Enemy>();
             activeBullets = new List<Bullet>();
             activeCoins = new List<Coin>();
 
-            myPlayer = new Player(350, 450, 50, 50, 5, null, 3);
+            myPlayer = new Player(425, 500, 50, 50, 5, Properties.Resources.PlayerSpaceship, 3);
 
             gameTimer = new System.Windows.Forms.Timer();
             gameTimer.Interval = 20;
@@ -45,7 +48,10 @@ namespace Final_Ap_Project.UI
             waveManager = new WaveManager(myPlayer);
             waveManager.StartWave();
 
+            UpdateHUD();
             gameTimer.Start();
+
+            AudioManager.PlayBackgroundMusic();
         }
         private void GameLoop(object sender, EventArgs e)
         {
@@ -75,8 +81,20 @@ namespace Final_Ap_Project.UI
 
             CheckWaveStatus();
 
+            UpdateHUD();
             this.Invalidate();
         }
+        private void UpdateHUD()
+        {
+            lblHP.Text = myPlayer.HP.ToString();
+
+            lblScore.Text = myPlayer.Score.ToString();
+
+            lblCoins.Text = myPlayer.Coins.ToString();
+
+            lblWave.Text = waveManager.CurrentWave.ToString();
+        }
+
         private void UpdatePlayerMovement()
         {
             if (moveLeft && myPlayer.X > 0) myPlayer.X -= myPlayer.Speed;
@@ -140,6 +158,7 @@ namespace Final_Ap_Project.UI
                         {
                             activeEnemies[j].HP--;
                             activeBullets.RemoveAt(i);
+                            AudioManager.PlayHit();
 
                             if (activeEnemies[j].HP <= 0)
                             {
@@ -147,38 +166,43 @@ namespace Final_Ap_Project.UI
 
                                 if (rnd.Next(1, 101) <= activeEnemies[j].CoinDropChance)
                                 {
-                                    
+
                                     bool isGoldCoin = (rnd.Next(1, 101) <= 20);
 
-                                    Coin droppedCoin = new Coin(activeEnemies[j].X, activeEnemies[j].Y, 3, null, isGoldCoin);
+                                    Coin droppedCoin = new Coin(activeEnemies[j].X, activeEnemies[j].Y, 3, isGoldCoin ? Properties.Resources.Coin2 : Properties.Resources.Coin, isGoldCoin);
 
                                     activeCoins.Add(droppedCoin);
                                 }
 
                                 activeEnemies.RemoveAt(j);
+
+                                AudioManager.PlayExplosion();
                             }
                             break;
                         }
                     }
                 }
             }
-            
+
             for (int i = activeEnemies.Count - 1; i >= 0; i--)
             {
                 if (myPlayer.GetBounds().IntersectsWith(activeEnemies[i].GetBounds()))
                 {
                     myPlayer.HP--;
                     activeEnemies.RemoveAt(i);
+                    AudioManager.PlayHit();
 
                     if (myPlayer.HP <= 0)
                     {
+                        AudioManager.PlayGameOver();
+                        AudioManager.StopMusic();
                         gameTimer.Stop();
                         MessageBox.Show("Game Over!");
                         this.Close();
                     }
                 }
             }
-            for (int i = activeBullets.Count - 1; i >= 0 ; i--)
+            for (int i = activeBullets.Count - 1; i >= 0; i--)
             {
                 if (!activeBullets[i].IsPlayerBullet && myPlayer.GetBounds().IntersectsWith(activeBullets[i].GetBounds()))
                 {
@@ -187,6 +211,8 @@ namespace Final_Ap_Project.UI
 
                     if (myPlayer.HP <= 0)
                     {
+                        AudioManager.PlayGameOver();
+                        AudioManager.StopMusic();
                         gameTimer.Stop();
                         MessageBox.Show("Game Over!");
                         this.Close();
@@ -232,11 +258,21 @@ namespace Final_Ap_Project.UI
                 {
                     gameTimer.Stop();
 
+                    UpdateHUD();
+
+                    AudioManager.PlaySuccess();
+                    AudioManager.StopMusic();
+
                     MessageBox.Show($"Congratulations!\nYou finished all 10 waves!\nScore: {myPlayer.Score}");
 
                     this.Close();
                 }
             }
+        }
+
+        private void lblScore_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

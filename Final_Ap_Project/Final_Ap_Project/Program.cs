@@ -1,3 +1,4 @@
+using Final_Ap_Project.Managers;
 using Final_Ap_Project.UI;
 
 namespace Final_Ap_Project
@@ -13,6 +14,7 @@ namespace Final_Ap_Project
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
+            AudioManager.Init();
             Application.Run(new MainMenuForm());
         }
     }

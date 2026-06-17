@@ -63,7 +63,7 @@ namespace Final_Ap_Project.Managers
 
         private Enemy CreateEnemy()
         {
-            int x = rnd.Next(0, 700);
+            int x = rnd.Next(0, 860);
 
             Enemy enemy;
 
@@ -72,42 +72,42 @@ namespace Final_Ap_Project.Managers
             if (CurrentWave <= 3)
             {
                 if (chance < 70)
-                    enemy = new StandardEnemy(x, -50, 2, null);
+                    enemy = new StandardEnemy(x, -50, 2, Properties.Resources.EnemySpaceship);
                 else
-                    enemy = new ScoutEnemy(x, -50, 3, null);
+                    enemy = new ScoutEnemy(x, -50, 3, Properties.Resources.ScoutShip);
             }
             else if (CurrentWave <= 6)
             {
                 if (chance < 50)
-                    enemy = new StandardEnemy(x, -50, 2, null);
+                    enemy = new StandardEnemy(x, -50, 2, Properties.Resources.EnemySpaceship);
                 else if (chance < 75)
-                    enemy = new ScoutEnemy(x, -50, 3, null);
+                    enemy = new ScoutEnemy(x, -50, 3, Properties.Resources.ScoutShip);
                 else
-                    enemy = new ShooterEnemy(x, -50, 2, null);
+                    enemy = new ShooterEnemy(x, -50, 2, Properties.Resources.ShooterSpaceship);
             }
             else if (CurrentWave <= 9)
             {
                 if (chance < 30)
-                    enemy = new StandardEnemy(x, -50, 2, null);
+                    enemy = new StandardEnemy(x, -50, 2, Properties.Resources.EnemySpaceship);
                 else if (chance < 55)
-                    enemy = new ScoutEnemy(x, -50, 3, null);
+                    enemy = new ScoutEnemy(x, -50, 3, Properties.Resources.ScoutShip);
                 else if (chance < 85)
-                    enemy = new ShooterEnemy(x, -50, 2, null);
+                    enemy = new ShooterEnemy(x, -50, 2, Properties.Resources.ShooterSpaceship);
                 else
-                    enemy = new TerroristEnemy(x, -50, 2, null, player);
+                    enemy = new TerroristEnemy(x, -50, 2, Properties.Resources.TerroristShip, player);
             }
             else
             {
                 if (chance < 20)
-                    enemy = new StandardEnemy(x, -50, 2, null);
+                    enemy = new StandardEnemy(x, -50, 2, Properties.Resources.EnemySpaceship);
                 else if (chance < 40)
-                    enemy = new ScoutEnemy(x, -50, 3, null);
+                    enemy = new ScoutEnemy(x, -50, 3, Properties.Resources.ScoutShip);
                 else if (chance < 70)
-                    enemy = new ShooterEnemy(x, -50, 2, null);
+                    enemy = new ShooterEnemy(x, -50, 2, Properties.Resources.ShooterSpaceship);
                 else if (chance < 90)
-                    enemy = new TerroristEnemy(x, -50, 2, null, player);
+                    enemy = new TerroristEnemy(x, -50, 2, Properties.Resources.TerroristShip, player);
                 else
-                    enemy = new HeavyTankEnemy(x, -50, 1, null);
+                    enemy = new HeavyTankEnemy(x, -50, 1, Properties.Resources.HeavyTank);
             }
 
             ApplyDifficulty(enemy);

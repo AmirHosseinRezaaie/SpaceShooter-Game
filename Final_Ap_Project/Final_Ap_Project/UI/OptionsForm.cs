@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Final_Ap_Project.Managers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -72,6 +73,8 @@ namespace Final_Ap_Project.UI
 
         private void chkSFX_CheckedChanged_1(object sender, EventArgs e)
         {
+            AudioManager.SFXEnabled = chkSFX.Checked;
+
             if (chkSFX.Checked)
             {
                 chkSFX.Text = "ON";
@@ -86,19 +89,21 @@ namespace Final_Ap_Project.UI
 
         private void chkMusic_CheckedChanged(object sender, EventArgs e)
         {
+            AudioManager.MusicEnabled = chkMusic.Checked;
+
             if (chkMusic.Checked)
             {
                 chkMusic.Text = "ON";
                 chkMusic.ForeColor = Color.Lime;
 
-                // MusicPlayer.Resume();
+                AudioManager.PlayMenuMusic();
             }
             else
             {
                 chkMusic.Text = "OFF";
                 chkMusic.ForeColor = Color.Red;
 
-                // MusicPlayer.Pause();
+                AudioManager.StopMusic();
             }
         }
 

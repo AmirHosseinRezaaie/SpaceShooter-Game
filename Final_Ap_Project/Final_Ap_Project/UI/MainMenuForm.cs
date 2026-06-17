@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Final_Ap_Project.Managers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -33,6 +34,8 @@ namespace Final_Ap_Project.UI
 
             // Paint Event to draw on screen
             this.Paint += MainMenuForm_Paint;
+
+            AudioManager.PlayMenuMusic();
         }
 
         // Update star positions
@@ -71,6 +74,8 @@ namespace Final_Ap_Project.UI
             // Hide main menu:
             this.Hide();
 
+            AudioManager.StopMusic();
+
             // GameForm : Modal
             using (GameForm game = new GameForm())
             {
@@ -79,12 +84,15 @@ namespace Final_Ap_Project.UI
 
             // Back to Main menu:
             this.Show();
+            AudioManager.PlayMenuMusic();
         }
 
         private void btnShop_Click(object sender, EventArgs e)
         {
             // Hide main menu:
             this.Hide();
+
+            AudioManager.StopMusic();
 
             // ShopForm : Modal
             using (ShopForm game = new ShopForm())
@@ -94,12 +102,15 @@ namespace Final_Ap_Project.UI
 
             // Back to Main menu:
             this.Show();
+            AudioManager.PlayMenuMusic();
         }
 
         private void btnOptions_Click(object sender, EventArgs e)
         {
             // Hide main menu:
             this.Hide();
+
+            AudioManager.StopMusic();
 
             // OptionsForm : Modal
             using (OptionsForm game = new OptionsForm())
@@ -109,12 +120,15 @@ namespace Final_Ap_Project.UI
 
             // Back to Main menu:
             this.Show();
+            AudioManager.PlayMenuMusic();
         }
 
         private void btnAbout_Click(object sender, EventArgs e)
         {
             // Hide main menu:
             this.Hide();
+
+            AudioManager.StopMusic();
 
             // AboutForm : Modal
             using (AboutForm game = new AboutForm())
@@ -124,6 +138,7 @@ namespace Final_Ap_Project.UI
 
             // Back to Main menu:
             this.Show();
+            AudioManager.PlayMenuMusic();
         }
 
         private void btnQuit_Click(object sender, EventArgs e)
