@@ -188,7 +188,5 @@ namespace Final_Ap_Project.UI
                 this.Close();
             }
         }
-
-        // ---------------------- 
     }
 }

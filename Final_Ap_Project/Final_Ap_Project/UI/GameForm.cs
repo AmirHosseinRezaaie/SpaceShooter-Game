@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using Final_Ap_Project.Models;
+using Final_Ap_Project.Managers;
 
 namespace Final_Ap_Project.UI
 {
@@ -23,6 +24,8 @@ namespace Final_Ap_Project.UI
         private System.Windows.Forms.Timer gameTimer;
         private Random rnd = new Random();
 
+        private WaveManager waveManager;
+
         public GameForm()
         {
             InitializeComponent();
@@ -38,6 +41,10 @@ namespace Final_Ap_Project.UI
             gameTimer = new System.Windows.Forms.Timer();
             gameTimer.Interval = 20;
             gameTimer.Tick += GameLoop;
+
+            waveManager = new WaveManager(myPlayer);
+            waveManager.StartWave();
+
             gameTimer.Start();
         }
         private void GameLoop(object sender, EventArgs e)
@@ -64,6 +71,10 @@ namespace Final_Ap_Project.UI
 
             CheckCollisions();
 
+            waveManager.Update(activeEnemies);
+
+            CheckWaveStatus();
+
             this.Invalidate();
         }
         private void UpdatePlayerMovement()
@@ -88,6 +99,11 @@ namespace Final_Ap_Project.UI
             foreach (var enemy in activeEnemies)
             {
                 enemy.Draw(g);
+            }
+
+            foreach (var coin in activeCoins)
+            {
+                coin.Draw(g);
             }
         }
 
@@ -158,6 +174,7 @@ namespace Final_Ap_Project.UI
                     {
                         gameTimer.Stop();
                         MessageBox.Show("Game Over!");
+                        this.Close();
                     }
                 }
             }
@@ -172,6 +189,7 @@ namespace Final_Ap_Project.UI
                     {
                         gameTimer.Stop();
                         MessageBox.Show("Game Over!");
+                        this.Close();
                     }
                 }
             }
@@ -190,6 +208,33 @@ namespace Final_Ap_Project.UI
                     }
 
                     activeCoins.RemoveAt(i);
+                }
+            }
+        }
+
+        private void CheckWaveStatus()
+        {
+            if (waveManager.WaveCompleted)
+            {
+                if (waveManager.CurrentWave < 10)
+                {
+                    gameTimer.Stop();
+
+                    MessageBox.Show($"Wave {waveManager.CurrentWave} Completed!");
+
+                    System.Threading.Thread.Sleep(2000);
+
+                    waveManager.NextWave();
+
+                    gameTimer.Start();
+                }
+                else
+                {
+                    gameTimer.Stop();
+
+                    MessageBox.Show($"Congratulations!\nYou finished all 10 waves!\nScore: {myPlayer.Score}");
+
+                    this.Close();
                 }
             }
         }
