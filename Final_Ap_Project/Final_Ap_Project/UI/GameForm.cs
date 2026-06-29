@@ -5,8 +5,6 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using Final_Ap_Project.Models;
-using Final_Ap_Project.Managers;
 
 namespace Final_Ap_Project.UI
 {
