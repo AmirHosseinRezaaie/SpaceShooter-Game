@@ -1,9 +1,13 @@
-﻿using System;
+﻿using Final_Ap_Project.Data;
+using Final_Ap_Project.Managers;
+using Final_Ap_Project.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Final_Ap_Project.UI
@@ -19,11 +23,17 @@ namespace Final_Ap_Project.UI
         private List<Bullet> activeBullets;
         private List<Coin> activeCoins;
         private List<PowerUp> activePowerUps;
+
         private Player myPlayer;
         private System.Windows.Forms.Timer gameTimer;
+        private System.Windows.Forms.Timer waveDelayTimer;
         private Random rnd = new Random();
 
         private WaveManager waveManager;
+
+        private Image playerBulletImg = Properties.Resources.PlayerBullet;
+        private Image coinImg = Properties.Resources.Coin;
+        private Image coin2Img = Properties.Resources.Coin2;
 
         public GameForm()
         {
@@ -39,11 +49,18 @@ namespace Final_Ap_Project.UI
             activeCoins = new List<Coin>();
             activePowerUps = new List<PowerUp>();
 
-            myPlayer = new Player(425, 500, 50, 50, 5, Properties.Resources.PlayerSpaceship, 3);
+            myPlayer = new Player(425, 500, 100, 100, 7 + GameData.ExtraSpeed, Properties.Resources.PlayerSpaceship, 3 + GameData.ExtraHP);
+
+            int currentFireRate = 500 - (GameData.FireRateLevel * 50);
+            myPlayer.FireRateDelay = currentFireRate;
 
             gameTimer = new System.Windows.Forms.Timer();
             gameTimer.Interval = 20;
             gameTimer.Tick += GameLoop;
+
+            waveDelayTimer = new System.Windows.Forms.Timer();
+            waveDelayTimer.Interval = 2000;
+            waveDelayTimer.Tick += WaveDelayTimer_Tick;
 
             waveManager = new WaveManager(myPlayer);
             waveManager.StartWave();
@@ -73,6 +90,14 @@ namespace Final_Ap_Project.UI
                 if (activeEnemies[i].Y > this.ClientSize.Height)
                 {
                     activeEnemies.RemoveAt(i);
+                }
+            }
+            for (int i = activePowerUps.Count - 1; i >= 0; i--)
+            {
+                activePowerUps[i].Move();
+                if (activePowerUps[i].Y > this.ClientSize.Height)
+                {
+                    activePowerUps.RemoveAt(i);
                 }
             }
 
@@ -124,6 +149,10 @@ namespace Final_Ap_Project.UI
             {
                 coin.Draw(g);
             }
+            foreach (var powerUp in activePowerUps)
+            {
+                powerUp.Draw(g);
+            }
         }
 
         private void GameForm_KeyDown(object sender, KeyEventArgs e)
@@ -171,7 +200,7 @@ namespace Final_Ap_Project.UI
 
                                     bool isGoldCoin = (rnd.Next(1, 101) <= 20);
 
-                                    Coin droppedCoin = new Coin(activeEnemies[j].X, activeEnemies[j].Y, 3, isGoldCoin ? Properties.Resources.Coin2 : Properties.Resources.Coin, isGoldCoin);
+                                    Coin droppedCoin = new Coin(activeEnemies[j].X, activeEnemies[j].Y, 3, isGoldCoin ? coin2Img : coinImg, isGoldCoin);
 
                                     activeCoins.Add(droppedCoin);
                                 }
@@ -203,8 +232,10 @@ namespace Final_Ap_Project.UI
                             AudioManager.PlayGameOver();
                             AudioManager.StopMusic();
                             gameTimer.Stop();
+                            GameData.TotalCoins += myPlayer.Coins;
                             MessageBox.Show("Game Over!");
                             this.Close();
+                            return;
                         }
                     }
                 }
@@ -221,14 +252,13 @@ namespace Final_Ap_Project.UI
 
                         if (myPlayer.HP <= 0)
                         {
-                            if (myPlayer.HP <= 0)
-                            {
-                                AudioManager.PlayGameOver();
-                                AudioManager.StopMusic();
-                                gameTimer.Stop();
-                                MessageBox.Show("Game Over!");
-                                this.Close();
-                            }
+                            AudioManager.PlayGameOver();
+                            AudioManager.StopMusic();
+                            gameTimer.Stop();
+                            GameData.TotalCoins += myPlayer.Coins;
+                            MessageBox.Show("Game Over!");
+                            this.Close();
+                            return;
                         }
                     }
                 }
@@ -288,11 +318,7 @@ namespace Final_Ap_Project.UI
 
                     MessageBox.Show($"Wave {waveManager.CurrentWave} Completed!");
 
-                    System.Threading.Thread.Sleep(2000);
-
-                    waveManager.NextWave();
-
-                    gameTimer.Start();
+                    waveDelayTimer.Start();
                 }
                 else
                 {
@@ -309,6 +335,13 @@ namespace Final_Ap_Project.UI
                 }
             }
         }
+        private void WaveDelayTimer_Tick(object sender, EventArgs e)
+        {
+            waveDelayTimer.Stop();
+
+            waveManager.NextWave();
+            gameTimer.Start();
+        }
 
         private void lblScore_Click(object sender, EventArgs e)
         {
@@ -318,16 +351,15 @@ namespace Final_Ap_Project.UI
         private void FireBullet()
         {
             long currentTime = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
-            if (currentTime - myPlayer.LastFireTime < myPlayer.FireRateDelay)
-                return;
+            if (currentTime - myPlayer.LastFireTime < myPlayer.FireRateDelay) return;
 
             myPlayer.LastFireTime = currentTime;
 
             if (myPlayer.HasTripleShot)
             {
-                Bullet leftBullet = new Bullet(myPlayer.X + 10, myPlayer.Y, 10, 20, -4, -14, Properties.Resources.PlayerBullet, true);
-                Bullet centerBullet = new Bullet(myPlayer.X + (myPlayer.Width / 2) - 5, myPlayer.Y - 10, 10, 20, 0, -15, Properties.Resources.PlayerBullet, true);
-                Bullet rightBullet = new Bullet(myPlayer.X + myPlayer.Width - 20, myPlayer.Y, 10, 20, 4, -14, Properties.Resources.PlayerBullet, true);
+                Bullet leftBullet = new Bullet(myPlayer.X + 10, myPlayer.Y, 10, 20, -4, -14, playerBulletImg, true);
+                Bullet centerBullet = new Bullet(myPlayer.X + (myPlayer.Width / 2) - 5, myPlayer.Y - 10, 10, 20, 0, -15, playerBulletImg, true);
+                Bullet rightBullet = new Bullet(myPlayer.X + myPlayer.Width - 20, myPlayer.Y, 10, 20, 4, -14, playerBulletImg, true);
 
                 activeBullets.Add(leftBullet);
                 activeBullets.Add(centerBullet);
@@ -335,7 +367,7 @@ namespace Final_Ap_Project.UI
             }
             else
             {
-                Bullet normalBullet = new Bullet(myPlayer.X + (myPlayer.Width / 2) - 5, myPlayer.Y, 10, 20, 0, -15, Properties.Resources.PlayerBullet, true);
+                Bullet normalBullet = new Bullet(myPlayer.X + (myPlayer.Width / 2) - 5, myPlayer.Y, 10, 20, 0, -15, playerBulletImg, true);
                 activeBullets.Add(normalBullet);
             }
         }

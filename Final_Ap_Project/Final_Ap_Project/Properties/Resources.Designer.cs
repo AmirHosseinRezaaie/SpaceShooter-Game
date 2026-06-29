@@ -82,6 +82,16 @@ namespace Final_Ap_Project.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap ChatGPT_Image_Jun_29__2026__06_41_32_PM {
+            get {
+                object obj = ResourceManager.GetObject("ChatGPT Image Jun 29, 2026, 06_41_32 PM", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap Coin {
             get {
                 object obj = ResourceManager.GetObject("Coin", resourceCulture);
@@ -134,6 +144,16 @@ namespace Final_Ap_Project.Properties {
         public static System.IO.UnmanagedMemoryStream ExposionSound {
             get {
                 return ResourceManager.GetStream("ExposionSound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Extra_Health {
+            get {
+                object obj = ResourceManager.GetObject("Extra_Health", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -227,6 +247,16 @@ namespace Final_Ap_Project.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap Rapid_fire {
+            get {
+                object obj = ResourceManager.GetObject("Rapid_fire", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap Score {
             get {
                 object obj = ResourceManager.GetObject("Score", resourceCulture);
@@ -261,6 +291,16 @@ namespace Final_Ap_Project.Properties {
             get {
                 object obj = ResourceManager.GetObject("SpaceShooterlcon", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap speed_boost {
+            get {
+                object obj = ResourceManager.GetObject("speed_boost", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

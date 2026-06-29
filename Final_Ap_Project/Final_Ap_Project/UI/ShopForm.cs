@@ -7,6 +7,7 @@ using System.Text;
 using System.Timers;
 using System.Windows.Forms;
 using Timer = System.Windows.Forms.Timer;
+using Final_Ap_Project.Data;
 
 namespace Final_Ap_Project.UI
 {
@@ -77,5 +78,80 @@ namespace Final_Ap_Project.UI
                 this.Close();
             }
         }
+
+        private void ShopForm_Load(object sender, EventArgs e)
+        {
+            UpdateCoinDisplay();
+        }
+        private void UpdateCoinDisplay()
+        {
+            lblCoins.Text = "Coins: " + GameData.TotalCoins.ToString();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            int price = 50;
+
+            if (GameData.TotalCoins >= price)
+            {
+                GameData.TotalCoins -= price;
+
+                GameData.ExtraHP++;
+
+                UpdateCoinDisplay();
+
+                MessageBox.Show("1 Health Point Added!");
+            }
+            else
+            {
+                MessageBox.Show("Not enough coins!");
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            int price = 75;
+
+            if (GameData.TotalCoins >= price)
+            {
+                GameData.TotalCoins -= price;
+
+                GameData.ExtraSpeed++;
+
+                UpdateCoinDisplay();
+
+                MessageBox.Show("1 Speed Point Added!");
+            }
+            else
+            {
+                MessageBox.Show("Not enough coins!");
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            int price = 1;
+
+            if (GameData.TotalCoins >= price)
+            {
+                if (GameData.FireRateLevel < 2)
+                {
+                    GameData.TotalCoins -= price;
+                    GameData.FireRateLevel++;
+
+                    MessageBox.Show("Rapid Fire Upgraded!");
+                }
+                else
+                {
+                    MessageBox.Show("Maximum Level Reached!");
+                }
+                UpdateCoinDisplay();
+            }
+            else
+            {
+                MessageBox.Show("Not enough coins!");
+            }
+        }
+
     }
 }
