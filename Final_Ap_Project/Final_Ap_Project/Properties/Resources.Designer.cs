@@ -119,6 +119,15 @@ namespace Final_Ap_Project.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        public static System.IO.UnmanagedMemoryStream Damagewav {
+            get {
+                return ResourceManager.GetStream("Damagewav", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap EnemyBullet {
@@ -163,6 +172,15 @@ namespace Final_Ap_Project.Properties {
         public static System.IO.UnmanagedMemoryStream GameOverSound {
             get {
                 return ResourceManager.GetStream("GameOverSound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        public static System.IO.UnmanagedMemoryStream healthPackSound {
+            get {
+                return ResourceManager.GetStream("healthPackSound", resourceCulture);
             }
         }
         
@@ -237,6 +255,16 @@ namespace Final_Ap_Project.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap PlayerSpaceship1 {
+            get {
+                object obj = ResourceManager.GetObject("PlayerSpaceship1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap PlayerSpaceship2 {
             get {
                 object obj = ResourceManager.GetObject("PlayerSpaceship2", resourceCulture);
@@ -261,6 +289,15 @@ namespace Final_Ap_Project.Properties {
             get {
                 object obj = ResourceManager.GetObject("Score", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        public static System.IO.UnmanagedMemoryStream ScoreSound {
+            get {
+                return ResourceManager.GetStream("ScoreSound", resourceCulture);
             }
         }
         

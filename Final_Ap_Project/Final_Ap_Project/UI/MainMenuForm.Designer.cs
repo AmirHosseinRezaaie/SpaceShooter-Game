@@ -144,7 +144,6 @@
             Name = "MainMenuForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Space Shooter";
-            Load += MainMenuForm_Load;
             KeyDown += MainMenuForm_KeyDown;
             ResumeLayout(false);
         }

@@ -14,6 +14,8 @@ namespace Final_Ap_Project.Managers
         private static SoundPlayer successSound;
         private static SoundPlayer menuMusic;
         private static SoundPlayer backgroundMusic;
+        private static SoundPlayer scoreSound;
+        private static SoundPlayer healthPackSound;
 
         public static bool SFXEnabled { get; set; } = true;
         public static bool MusicEnabled { get; set; } = true;
@@ -23,8 +25,10 @@ namespace Final_Ap_Project.Managers
             coinSound = new SoundPlayer(Properties.Resources.CoinSound);
             explosionSound = new SoundPlayer(Properties.Resources.ExposionSound);
             gameOverSound = new SoundPlayer(Properties.Resources.GameOverSound);
-            hitDamageSound = new SoundPlayer(Properties.Resources.HitDamageSound);
+            hitDamageSound = new SoundPlayer(Properties.Resources.Damagewav);
             successSound = new SoundPlayer(Properties.Resources.SuccesSound);
+            scoreSound = new SoundPlayer(Properties.Resources.ScoreSound);
+            healthPackSound = new SoundPlayer(Properties.Resources.healthPackSound);
 
             menuMusic = new SoundPlayer(Properties.Resources.MenuMusic);
             backgroundMusic = new SoundPlayer(Properties.Resources.BackgroundMusic);
@@ -38,12 +42,7 @@ namespace Final_Ap_Project.Managers
 
         public static void PlayExplosion()
         {
-            if (!SFXEnabled) return;
-
-            using (SoundPlayer sp = new SoundPlayer(Properties.Resources.ExposionSound))
-            {
-                sp.Play();
-            }
+            if (SFXEnabled) explosionSound?.Play();
         }
 
         public static void PlayHit()
@@ -60,6 +59,16 @@ namespace Final_Ap_Project.Managers
         {
             if (SFXEnabled) gameOverSound?.Play();
         }
+        public static void PlayScore()
+        {
+            if (SFXEnabled) scoreSound?.Play();
+        }
+
+        public static void PlayHealthPack()
+        {
+            if (SFXEnabled) healthPackSound?.Play();
+        }
+
 
         // Music:
         public static void PlayMenuMusic()

@@ -49,7 +49,7 @@ namespace Final_Ap_Project.UI
             activeCoins = new List<Coin>();
             activePowerUps = new List<PowerUp>();
 
-            myPlayer = new Player(425, 500, 100, 100, 7 + GameData.ExtraSpeed, Properties.Resources.PlayerSpaceship, 3 + GameData.ExtraHP);
+            myPlayer = new Player(425, 500, 100, 80, 7 + GameData.ExtraSpeed, Properties.Resources.PlayerSpaceship1, 3 + GameData.ExtraHP);
 
             int currentFireRate = 200 - (GameData.FireRateLevel * 50);
             myPlayer.FireRateDelay = currentFireRate;
@@ -189,7 +189,8 @@ namespace Final_Ap_Project.UI
                         {
                             activeEnemies[j].HP--;
                             activeBullets.RemoveAt(i);
-                            AudioManager.PlayHit();
+                            //AudioManager.PlayHit();
+
 
                             if (activeEnemies[j].HP <= 0)
                             {
@@ -229,11 +230,15 @@ namespace Final_Ap_Project.UI
 
                         if (myPlayer.HP <= 0)
                         {
-                            AudioManager.PlayGameOver();
-                            AudioManager.StopMusic();
                             gameTimer.Stop();
+
+                            AudioManager.StopMusic();
+                            AudioManager.PlayGameOver();
+                            
                             GameData.TotalCoins += myPlayer.Coins;
+                            
                             MessageBox.Show("Game Over!");
+                            
                             this.Close();
                             return;
                         }
@@ -252,11 +257,15 @@ namespace Final_Ap_Project.UI
 
                         if (myPlayer.HP <= 0)
                         {
-                            AudioManager.PlayGameOver();
-                            AudioManager.StopMusic();
                             gameTimer.Stop();
+
+                            AudioManager.StopMusic();
+                            AudioManager.PlayGameOver();
+                            
                             GameData.TotalCoins += myPlayer.Coins;
+                            
                             MessageBox.Show("Game Over!");
+                            
                             this.Close();
                             return;
                         }
@@ -276,7 +285,7 @@ namespace Final_Ap_Project.UI
                     {
                         myPlayer.Coins += 1;
                     }
-
+                    AudioManager.PlayCoin();
                     activeCoins.RemoveAt(i);
                 }
             }
@@ -289,17 +298,19 @@ namespace Final_Ap_Project.UI
                     {
                         case PowerUpType.HealthPack:
                             myPlayer.HP++;
-                                           // اینجا یه صدای خاص هم پخش بشه خوبخه
+                            AudioManager.PlayHealthPack();
                             break;
 
                         case PowerUpType.Shield:
                             myPlayer.HasShield = true;
                             myPlayer.ShieldCounter = 250;
+                            AudioManager.PlayHealthPack();
                             break;
 
                         case PowerUpType.TripleShot:
                             myPlayer.HasTripleShot = true;
                             myPlayer.TripleShotCounter = 500;
+                            AudioManager.PlayHealthPack();
                             break;
                     }
 
@@ -310,11 +321,14 @@ namespace Final_Ap_Project.UI
 
         private void CheckWaveStatus()
         {
+            if (myPlayer.HP <= 0) return;
             if (waveManager.WaveCompleted)
             {
                 if (waveManager.CurrentWave < 10)
                 {
                     gameTimer.Stop();
+
+                    AudioManager.PlaySuccess();
 
                     MessageBox.Show($"Wave {waveManager.CurrentWave} Completed!");
 
@@ -326,8 +340,9 @@ namespace Final_Ap_Project.UI
 
                     UpdateHUD();
 
-                    AudioManager.PlaySuccess();
                     AudioManager.StopMusic();
+
+                    AudioManager.PlayScore();
 
                     MessageBox.Show($"Congratulations!\nYou finished all 10 waves!\nScore: {myPlayer.Score}");
 
@@ -338,7 +353,7 @@ namespace Final_Ap_Project.UI
         private void WaveDelayTimer_Tick(object sender, EventArgs e)
         {
             waveDelayTimer.Stop();
-
+            AudioManager.PlayBackgroundMusic();
             waveManager.NextWave();
             gameTimer.Start();
         }
@@ -370,6 +385,17 @@ namespace Final_Ap_Project.UI
                 Bullet normalBullet = new Bullet(myPlayer.X + (myPlayer.Width / 2) - 5, myPlayer.Y, 10, 20, 0, -15, playerBulletImg, true);
                 activeBullets.Add(normalBullet);
             }
+        }
+
+        private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            gameTimer.Stop();
+            waveDelayTimer.Stop();
+
+            gameTimer.Tick -= GameLoop;
+            waveDelayTimer.Tick -= WaveDelayTimer_Tick;
+
+            AudioManager.StopMusic();
         }
     }
 }

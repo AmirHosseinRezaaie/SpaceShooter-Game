@@ -30,19 +30,19 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameForm));
             pnlHUD = new Panel();
-            picHP = new PictureBox();
-            lblHP = new Label();
-            picScore = new PictureBox();
-            lblScore = new Label();
-            picCoins = new PictureBox();
+            lblWave = new Label();
             lblCoins = new Label();
             picWave = new PictureBox();
-            lblWave = new Label();
+            picCoins = new PictureBox();
+            lblScore = new Label();
+            picScore = new PictureBox();
+            lblHP = new Label();
+            picHP = new PictureBox();
             pnlHUD.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picHP).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)picScore).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)picCoins).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picWave).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picCoins).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picScore).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picHP).BeginInit();
             SuspendLayout();
             // 
             // pnlHUD
@@ -62,58 +62,17 @@
             pnlHUD.Size = new Size(884, 60);
             pnlHUD.TabIndex = 0;
             // 
-            // picHP
+            // lblWave
             // 
-            picHP.Image = Properties.Resources.HP;
-            picHP.Location = new Point(10, 14);
-            picHP.Name = "picHP";
-            picHP.Size = new Size(32, 32);
-            picHP.SizeMode = PictureBoxSizeMode.Zoom;
-            picHP.TabIndex = 0;
-            picHP.TabStop = false;
-            // 
-            // lblHP
-            // 
-            lblHP.AutoSize = true;
-            lblHP.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblHP.ForeColor = Color.Red;
-            lblHP.Location = new Point(50, 15);
-            lblHP.Name = "lblHP";
-            lblHP.Size = new Size(25, 30);
-            lblHP.TabIndex = 1;
-            lblHP.Text = "3";
-            // 
-            // picScore
-            // 
-            picScore.Image = Properties.Resources.Score;
-            picScore.Location = new Point(170, 14);
-            picScore.Name = "picScore";
-            picScore.Size = new Size(32, 32);
-            picScore.SizeMode = PictureBoxSizeMode.Zoom;
-            picScore.TabIndex = 0;
-            picScore.TabStop = false;
-            // 
-            // lblScore
-            // 
-            lblScore.AutoSize = true;
-            lblScore.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblScore.ForeColor = Color.FromArgb(0, 192, 192);
-            lblScore.Location = new Point(210, 15);
-            lblScore.Name = "lblScore";
-            lblScore.Size = new Size(25, 30);
-            lblScore.TabIndex = 1;
-            lblScore.Text = "0";
-            lblScore.Click += lblScore_Click;
-            // 
-            // picCoins
-            // 
-            picCoins.Image = Properties.Resources.PlayerCoin;
-            picCoins.Location = new Point(380, 14);
-            picCoins.Name = "picCoins";
-            picCoins.Size = new Size(32, 32);
-            picCoins.SizeMode = PictureBoxSizeMode.Zoom;
-            picCoins.TabIndex = 0;
-            picCoins.TabStop = false;
+            lblWave.AutoSize = true;
+            lblWave.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblWave.ForeColor = Color.DeepSkyBlue;
+            lblWave.Location = new Point(660, 15);
+            lblWave.Name = "lblWave";
+            lblWave.Size = new Size(25, 30);
+            lblWave.TabIndex = 1;
+            lblWave.Text = "1";
+            lblWave.Click += lblScore_Click;
             // 
             // lblCoins
             // 
@@ -137,17 +96,58 @@
             picWave.TabIndex = 0;
             picWave.TabStop = false;
             // 
-            // lblWave
+            // picCoins
             // 
-            lblWave.AutoSize = true;
-            lblWave.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblWave.ForeColor = Color.DeepSkyBlue;
-            lblWave.Location = new Point(660, 15);
-            lblWave.Name = "lblWave";
-            lblWave.Size = new Size(25, 30);
-            lblWave.TabIndex = 1;
-            lblWave.Text = "1";
-            lblWave.Click += lblScore_Click;
+            picCoins.Image = Properties.Resources.PlayerCoin;
+            picCoins.Location = new Point(380, 14);
+            picCoins.Name = "picCoins";
+            picCoins.Size = new Size(32, 32);
+            picCoins.SizeMode = PictureBoxSizeMode.Zoom;
+            picCoins.TabIndex = 0;
+            picCoins.TabStop = false;
+            // 
+            // lblScore
+            // 
+            lblScore.AutoSize = true;
+            lblScore.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblScore.ForeColor = Color.FromArgb(0, 192, 192);
+            lblScore.Location = new Point(210, 15);
+            lblScore.Name = "lblScore";
+            lblScore.Size = new Size(25, 30);
+            lblScore.TabIndex = 1;
+            lblScore.Text = "0";
+            lblScore.Click += lblScore_Click;
+            // 
+            // picScore
+            // 
+            picScore.Image = Properties.Resources.Score;
+            picScore.Location = new Point(170, 14);
+            picScore.Name = "picScore";
+            picScore.Size = new Size(32, 32);
+            picScore.SizeMode = PictureBoxSizeMode.Zoom;
+            picScore.TabIndex = 0;
+            picScore.TabStop = false;
+            // 
+            // lblHP
+            // 
+            lblHP.AutoSize = true;
+            lblHP.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblHP.ForeColor = Color.Red;
+            lblHP.Location = new Point(50, 15);
+            lblHP.Name = "lblHP";
+            lblHP.Size = new Size(25, 30);
+            lblHP.TabIndex = 1;
+            lblHP.Text = "3";
+            // 
+            // picHP
+            // 
+            picHP.Image = Properties.Resources.HP;
+            picHP.Location = new Point(10, 14);
+            picHP.Name = "picHP";
+            picHP.Size = new Size(32, 32);
+            picHP.SizeMode = PictureBoxSizeMode.Zoom;
+            picHP.TabIndex = 0;
+            picHP.TabStop = false;
             // 
             // GameForm
             // 
@@ -164,14 +164,15 @@
             Name = "GameForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "GameForm";
+            FormClosing += GameForm_FormClosing;
             KeyDown += GameForm_KeyDown;
             KeyUp += GameForm_KeyUp;
             pnlHUD.ResumeLayout(false);
             pnlHUD.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)picHP).EndInit();
-            ((System.ComponentModel.ISupportInitialize)picScore).EndInit();
-            ((System.ComponentModel.ISupportInitialize)picCoins).EndInit();
             ((System.ComponentModel.ISupportInitialize)picWave).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picCoins).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picScore).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picHP).EndInit();
             ResumeLayout(false);
         }
 
