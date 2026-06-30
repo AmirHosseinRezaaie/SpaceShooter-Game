@@ -51,7 +51,7 @@ namespace Final_Ap_Project.UI
 
             myPlayer = new Player(425, 500, 100, 100, 7 + GameData.ExtraSpeed, Properties.Resources.PlayerSpaceship, 3 + GameData.ExtraHP);
 
-            int currentFireRate = 500 - (GameData.FireRateLevel * 50);
+            int currentFireRate = 200 - (GameData.FireRateLevel * 50);
             myPlayer.FireRateDelay = currentFireRate;
 
             gameTimer = new System.Windows.Forms.Timer();

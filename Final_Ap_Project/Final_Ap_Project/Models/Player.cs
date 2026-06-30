@@ -20,7 +20,7 @@ namespace Final_Ap_Project.Models
             : base(x, y, width, height, speed, image)
         {
             HP = hp;
-            FireRateDelay = 500;
+            FireRateDelay = 200;
             LastFireTime = 0;
         }
         public override void Move()
