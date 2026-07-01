@@ -49,7 +49,19 @@ namespace Final_Ap_Project.UI
             activeCoins = new List<Coin>();
             activePowerUps = new List<PowerUp>();
 
-            myPlayer = new Player(425, 500, 100, 100, 7 + GameData.ExtraSpeed, Properties.Resources.PlayerSpaceship, 3 + GameData.ExtraHP);
+            Image GetCurrentSkin()
+            {
+                switch (GameData.CurrentSkinIndex)
+                {
+                    case 1: return Properties.Resources.PlayerSpaceship_red;
+                    case 2: return Properties.Resources.PlayerSpaceship_pink;
+                    case 3: return Properties.Resources.PlayerSpaceship_green;
+                    case 4: return Properties.Resources.special_skin;
+                    default: return Properties.Resources.PlayerSpaceshipّSize;
+                }
+            }
+
+            myPlayer = new Player(425, 500, 100, 100, 7 + GameData.ExtraSpeed, GetCurrentSkin(), 3 + GameData.ExtraHP);
 
             int currentFireRate = 200 - (GameData.FireRateLevel * 50);
             myPlayer.FireRateDelay = currentFireRate;
@@ -160,6 +172,7 @@ namespace Final_Ap_Project.UI
             if (e.KeyCode == Keys.Escape)
             {
                 this.Close();
+                return;
             }
             if (e.KeyCode == Keys.A) { moveLeft = true; }
             if (e.KeyCode == Keys.D) { moveRight = true; }
@@ -332,6 +345,7 @@ namespace Final_Ap_Project.UI
                     MessageBox.Show($"Congratulations!\nYou finished all 10 waves!\nScore: {myPlayer.Score}");
 
                     this.Close();
+                    return;
                 }
             }
         }
