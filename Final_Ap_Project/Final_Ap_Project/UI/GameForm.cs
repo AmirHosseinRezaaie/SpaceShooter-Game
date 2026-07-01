@@ -42,7 +42,7 @@ namespace Final_Ap_Project.UI
 
             this.DoubleBuffered = true;
 
-            this.BackgroundImage = Properties.Resources.BackGround;
+            this.BackgroundImage = Properties.Resources.BG_Game;
             this.BackgroundImageLayout = ImageLayout.Stretch;
 
             activeEnemies = new List<Enemy>();
@@ -62,7 +62,7 @@ namespace Final_Ap_Project.UI
                 }
             }
 
-            myPlayer = new Player(425, 500, 100, 100, 7 + GameData.ExtraSpeed, GetCurrentSkin(), 3 + GameData.ExtraHP);
+            myPlayer = new Player(395, 440, 100, 100, 7 + GameData.ExtraSpeed, GetCurrentSkin(), 3 + GameData.ExtraHP);
 
             int currentFireRate = 200 - (GameData.FireRateLevel * 50);
             myPlayer.FireRateDelay = currentFireRate;
@@ -148,13 +148,14 @@ namespace Final_Ap_Project.UI
         }
         private void UpdateHUD()
         {
-            lblHP.Text = myPlayer.HP.ToString();
-
             lblScore.Text = myPlayer.Score.ToString();
-
             lblCoins.Text = myPlayer.Coins.ToString();
-
             lblWave.Text = waveManager.CurrentWave.ToString();
+
+            picHP1.Visible = myPlayer.HP >= 1;
+            picHP2.Visible = myPlayer.HP >= 2;
+            picHP3.Visible = myPlayer.HP >= 3;
+            picHP4.Visible = GameData.ExtraHP == 1 && myPlayer.HP >= 4;
         }
 
         private void UpdatePlayerMovement()
@@ -169,25 +170,43 @@ namespace Final_Ap_Project.UI
             base.OnPaint(e);
             Graphics g = e.Graphics;
 
-            myPlayer.Draw(g);
-
-            foreach (var bullet in activeBullets)
+            foreach (var coin in activeCoins)
             {
-                bullet.Draw(g);
+                coin.Draw(g);
             }
+
+            foreach (var powerUp in activePowerUps)
+            {
+                powerUp.Draw(g);
+            }
+
+            DrawPowerUpHUD(g);
 
             foreach (var enemy in activeEnemies)
             {
                 enemy.Draw(g);
             }
 
-            foreach (var coin in activeCoins)
+            foreach (var bullet in activeBullets)
             {
-                coin.Draw(g);
+                bullet.Draw(g);
             }
-            foreach (var powerUp in activePowerUps)
+
+            myPlayer.Draw(g);
+        }
+
+        private void DrawPowerUpHUD(Graphics g)
+        {
+            if (myPlayer.HasTripleShot)
             {
-                powerUp.Draw(g);
+                g.DrawImage(Properties.Resources.Rapid_fire,
+                            25, 500, 45, 45);
+            }
+
+            if (myPlayer.HasShield)
+            {
+                g.DrawImage(Properties.Resources.speed_boost,
+                            80, 500, 45, 45);
             }
         }
 
@@ -269,11 +288,11 @@ namespace Final_Ap_Project.UI
 
                             AudioManager.StopMusic();
                             AudioManager.PlayGameOver();
-                            
+
                             GameData.TotalCoins += myPlayer.Coins;
-                            
+
                             MessageBox.Show("Game Over!");
-                            
+
                             this.Close();
                             return;
                         }
@@ -298,11 +317,11 @@ namespace Final_Ap_Project.UI
 
                             AudioManager.StopMusic();
                             AudioManager.PlayGameOver();
-                            
+
                             GameData.TotalCoins += myPlayer.Coins;
-                            
+
                             MessageBox.Show("Game Over!");
-                            
+
                             this.Close();
                             return;
                         }
@@ -334,19 +353,34 @@ namespace Final_Ap_Project.UI
                     switch (activePowerUps[i].Type)
                     {
                         case PowerUpType.HealthPack:
-                            myPlayer.HP++;
+
+                            int maxHP = 3 + GameData.ExtraHP;
+
+                            if (myPlayer.HP < maxHP)
+                                myPlayer.HP++;
+
                             AudioManager.PlayHealthPack();
                             break;
 
                         case PowerUpType.Shield:
-                            myPlayer.HasShield = true;
-                            myPlayer.ShieldCounter = 250;
+
+                            if (!myPlayer.HasShield)
+                            {
+                                myPlayer.HasShield = true;
+                                myPlayer.ShieldCounter = 250;
+                            }
+
                             AudioManager.PlayHealthPack();
                             break;
 
                         case PowerUpType.TripleShot:
-                            myPlayer.HasTripleShot = true;
-                            myPlayer.TripleShotCounter = 500;
+
+                            if (!myPlayer.HasTripleShot)
+                            {
+                                myPlayer.HasTripleShot = true;
+                                myPlayer.TripleShotCounter = 500;
+                            }
+
                             AudioManager.PlayHealthPack();
                             break;
                     }
@@ -394,11 +428,6 @@ namespace Final_Ap_Project.UI
             AudioManager.PlayBackgroundMusic();
             waveManager.NextWave();
             gameTimer.Start();
-        }
-
-        private void lblScore_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void FireBullet()
@@ -459,6 +488,11 @@ namespace Final_Ap_Project.UI
             waveDelayTimer.Tick -= WaveDelayTimer_Tick;
 
             AudioManager.StopMusic();
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

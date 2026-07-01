@@ -29,133 +29,143 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameForm));
-            pnlHUD = new Panel();
-            lblWave = new Label();
-            lblCoins = new Label();
-            picWave = new PictureBox();
-            picCoins = new PictureBox();
             lblScore = new Label();
-            picScore = new PictureBox();
-            lblHP = new Label();
-            picHP = new PictureBox();
-            pnlHUD.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picWave).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)picCoins).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)picScore).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)picHP).BeginInit();
+            lblWave = new Label();
+            picHP1 = new PictureBox();
+            picHP2 = new PictureBox();
+            picHP3 = new PictureBox();
+            lblCoins = new Label();
+            pnlLU_HUD = new Panel();
+            picHP4 = new PictureBox();
+            pnlCU_HUD = new Panel();
+            pnlRL_HUD = new Panel();
+            ((System.ComponentModel.ISupportInitialize)picHP1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picHP2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picHP3).BeginInit();
+            pnlLU_HUD.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picHP4).BeginInit();
+            pnlCU_HUD.SuspendLayout();
+            pnlRL_HUD.SuspendLayout();
             SuspendLayout();
-            // 
-            // pnlHUD
-            // 
-            pnlHUD.BackColor = Color.FromArgb(20, 20, 20);
-            pnlHUD.Controls.Add(lblWave);
-            pnlHUD.Controls.Add(lblCoins);
-            pnlHUD.Controls.Add(picWave);
-            pnlHUD.Controls.Add(picCoins);
-            pnlHUD.Controls.Add(lblScore);
-            pnlHUD.Controls.Add(picScore);
-            pnlHUD.Controls.Add(lblHP);
-            pnlHUD.Controls.Add(picHP);
-            pnlHUD.Dock = DockStyle.Top;
-            pnlHUD.Location = new Point(0, 0);
-            pnlHUD.Name = "pnlHUD";
-            pnlHUD.Size = new Size(884, 60);
-            pnlHUD.TabIndex = 0;
-            // 
-            // lblWave
-            // 
-            lblWave.AutoSize = true;
-            lblWave.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblWave.ForeColor = Color.DeepSkyBlue;
-            lblWave.Location = new Point(660, 15);
-            lblWave.Name = "lblWave";
-            lblWave.Size = new Size(25, 30);
-            lblWave.TabIndex = 1;
-            lblWave.Text = "1";
-            lblWave.Click += lblScore_Click;
-            // 
-            // lblCoins
-            // 
-            lblCoins.AutoSize = true;
-            lblCoins.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblCoins.ForeColor = Color.FromArgb(192, 192, 0);
-            lblCoins.Location = new Point(420, 15);
-            lblCoins.Name = "lblCoins";
-            lblCoins.Size = new Size(25, 30);
-            lblCoins.TabIndex = 1;
-            lblCoins.Text = "0";
-            lblCoins.Click += lblScore_Click;
-            // 
-            // picWave
-            // 
-            picWave.Image = Properties.Resources.Wave;
-            picWave.Location = new Point(620, 14);
-            picWave.Name = "picWave";
-            picWave.Size = new Size(32, 32);
-            picWave.SizeMode = PictureBoxSizeMode.Zoom;
-            picWave.TabIndex = 0;
-            picWave.TabStop = false;
-            // 
-            // picCoins
-            // 
-            picCoins.Image = Properties.Resources.PlayerCoin;
-            picCoins.Location = new Point(380, 14);
-            picCoins.Name = "picCoins";
-            picCoins.Size = new Size(32, 32);
-            picCoins.SizeMode = PictureBoxSizeMode.Zoom;
-            picCoins.TabIndex = 0;
-            picCoins.TabStop = false;
             // 
             // lblScore
             // 
             lblScore.AutoSize = true;
-            lblScore.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblScore.ForeColor = Color.FromArgb(0, 192, 192);
-            lblScore.Location = new Point(210, 15);
+            lblScore.Font = new Font("SWMono", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblScore.ForeColor = Color.FromArgb(1, 171, 227);
+            lblScore.Location = new Point(133, 33);
             lblScore.Name = "lblScore";
-            lblScore.Size = new Size(25, 30);
+            lblScore.Size = new Size(28, 27);
             lblScore.TabIndex = 1;
             lblScore.Text = "0";
-            lblScore.Click += lblScore_Click;
             // 
-            // picScore
+            // lblWave
             // 
-            picScore.Image = Properties.Resources.Score;
-            picScore.Location = new Point(170, 14);
-            picScore.Name = "picScore";
-            picScore.Size = new Size(32, 32);
-            picScore.SizeMode = PictureBoxSizeMode.Zoom;
-            picScore.TabIndex = 0;
-            picScore.TabStop = false;
+            lblWave.AutoSize = true;
+            lblWave.Font = new Font("SWMono", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblWave.ForeColor = Color.FromArgb(1, 171, 227);
+            lblWave.Location = new Point(217, 33);
+            lblWave.Name = "lblWave";
+            lblWave.Size = new Size(28, 27);
+            lblWave.TabIndex = 1;
+            lblWave.Text = "1";
             // 
-            // lblHP
+            // picHP1
             // 
-            lblHP.AutoSize = true;
-            lblHP.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblHP.ForeColor = Color.Red;
-            lblHP.Location = new Point(50, 15);
-            lblHP.Name = "lblHP";
-            lblHP.Size = new Size(25, 30);
-            lblHP.TabIndex = 1;
-            lblHP.Text = "3";
+            picHP1.Image = Properties.Resources.HP;
+            picHP1.Location = new Point(45, 30);
+            picHP1.Name = "picHP1";
+            picHP1.Size = new Size(32, 32);
+            picHP1.SizeMode = PictureBoxSizeMode.Zoom;
+            picHP1.TabIndex = 0;
+            picHP1.TabStop = false;
             // 
-            // picHP
+            // picHP2
             // 
-            picHP.Image = Properties.Resources.HP;
-            picHP.Location = new Point(10, 14);
-            picHP.Name = "picHP";
-            picHP.Size = new Size(32, 32);
-            picHP.SizeMode = PictureBoxSizeMode.Zoom;
-            picHP.TabIndex = 0;
-            picHP.TabStop = false;
+            picHP2.Image = Properties.Resources.HP;
+            picHP2.Location = new Point(85, 30);
+            picHP2.Name = "picHP2";
+            picHP2.Size = new Size(32, 32);
+            picHP2.SizeMode = PictureBoxSizeMode.Zoom;
+            picHP2.TabIndex = 0;
+            picHP2.TabStop = false;
+            // 
+            // picHP3
+            // 
+            picHP3.Image = Properties.Resources.HP;
+            picHP3.Location = new Point(125, 30);
+            picHP3.Name = "picHP3";
+            picHP3.Size = new Size(32, 32);
+            picHP3.SizeMode = PictureBoxSizeMode.Zoom;
+            picHP3.TabIndex = 0;
+            picHP3.TabStop = false;
+            // 
+            // lblCoins
+            // 
+            lblCoins.AutoSize = true;
+            lblCoins.Font = new Font("SWMono", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblCoins.ForeColor = Color.FromArgb(222, 148, 24);
+            lblCoins.Location = new Point(79, 33);
+            lblCoins.Name = "lblCoins";
+            lblCoins.Size = new Size(28, 27);
+            lblCoins.TabIndex = 1;
+            lblCoins.Text = "0";
+            // 
+            // pnlLU_HUD
+            // 
+            pnlLU_HUD.BackgroundImage = Properties.Resources.LeftUp_HUD;
+            pnlLU_HUD.BackgroundImageLayout = ImageLayout.Stretch;
+            pnlLU_HUD.Controls.Add(picHP1);
+            pnlLU_HUD.Controls.Add(picHP2);
+            pnlLU_HUD.Controls.Add(picHP4);
+            pnlLU_HUD.Controls.Add(picHP3);
+            pnlLU_HUD.Location = new Point(-4, 0);
+            pnlLU_HUD.Name = "pnlLU_HUD";
+            pnlLU_HUD.Size = new Size(250, 85);
+            pnlLU_HUD.TabIndex = 2;
+            // 
+            // picHP4
+            // 
+            picHP4.Image = Properties.Resources.HP;
+            picHP4.Location = new Point(165, 30);
+            picHP4.Name = "picHP4";
+            picHP4.Size = new Size(32, 32);
+            picHP4.SizeMode = PictureBoxSizeMode.Zoom;
+            picHP4.TabIndex = 0;
+            picHP4.TabStop = false;
+            // 
+            // pnlCU_HUD
+            // 
+            pnlCU_HUD.BackgroundImage = Properties.Resources.CenterUp_HUD;
+            pnlCU_HUD.BackgroundImageLayout = ImageLayout.Stretch;
+            pnlCU_HUD.Controls.Add(lblScore);
+            pnlCU_HUD.Location = new Point(283, 0);
+            pnlCU_HUD.Name = "pnlCU_HUD";
+            pnlCU_HUD.Size = new Size(290, 85);
+            pnlCU_HUD.TabIndex = 2;
+            // 
+            // pnlRL_HUD
+            // 
+            pnlRL_HUD.BackgroundImage = Properties.Resources.RirhtUp_HUD;
+            pnlRL_HUD.BackgroundImageLayout = ImageLayout.Stretch;
+            pnlRL_HUD.Controls.Add(lblCoins);
+            pnlRL_HUD.Controls.Add(lblWave);
+            pnlRL_HUD.Location = new Point(581, 0);
+            pnlRL_HUD.Name = "pnlRL_HUD";
+            pnlRL_HUD.Size = new Size(302, 85);
+            pnlRL_HUD.TabIndex = 2;
             // 
             // GameForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(5, 7, 15);
+            BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
+            BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(884, 561);
-            Controls.Add(pnlHUD);
+            Controls.Add(pnlRL_HUD);
+            Controls.Add(pnlCU_HUD);
+            Controls.Add(pnlLU_HUD);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -167,25 +177,28 @@
             FormClosing += GameForm_FormClosing;
             KeyDown += GameForm_KeyDown;
             KeyUp += GameForm_KeyUp;
-            pnlHUD.ResumeLayout(false);
-            pnlHUD.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)picWave).EndInit();
-            ((System.ComponentModel.ISupportInitialize)picCoins).EndInit();
-            ((System.ComponentModel.ISupportInitialize)picScore).EndInit();
-            ((System.ComponentModel.ISupportInitialize)picHP).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picHP1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picHP2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picHP3).EndInit();
+            pnlLU_HUD.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)picHP4).EndInit();
+            pnlCU_HUD.ResumeLayout(false);
+            pnlCU_HUD.PerformLayout();
+            pnlRL_HUD.ResumeLayout(false);
+            pnlRL_HUD.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
-
-        private Panel pnlHUD;
-        private PictureBox picHP;
-        private Label lblHP;
         private Label lblScore;
-        private PictureBox picScore;
-        private Label lblCoins;
-        private PictureBox picCoins;
         private Label lblWave;
-        private PictureBox picWave;
+        private PictureBox picHP1;
+        private PictureBox picHP2;
+        private PictureBox picHP3;
+        private PictureBox picHP4;
+        private Label lblCoins;
+        private Panel pnlLU_HUD;
+        private Panel pnlCU_HUD;
+        private Panel pnlRL_HUD;
     }
 }

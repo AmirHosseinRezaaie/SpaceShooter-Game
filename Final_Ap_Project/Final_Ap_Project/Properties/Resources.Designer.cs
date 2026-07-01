@@ -82,6 +82,26 @@ namespace Final_Ap_Project.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap BG_Game {
+            get {
+                object obj = ResourceManager.GetObject("BG_Game", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap CenterUp_HUD {
+            get {
+                object obj = ResourceManager.GetObject("CenterUp_HUD", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap Coin {
             get {
                 object obj = ResourceManager.GetObject("Coin", resourceCulture);
@@ -204,6 +224,26 @@ namespace Final_Ap_Project.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap LeftBottom_HUD {
+            get {
+                object obj = ResourceManager.GetObject("LeftBottom_HUD", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap LeftUp_HUD {
+            get {
+                object obj = ResourceManager.GetObject("LeftUp_HUD", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
         /// </summary>
         public static System.IO.UnmanagedMemoryStream MenuMusic {
@@ -298,6 +338,16 @@ namespace Final_Ap_Project.Properties {
         public static System.Drawing.Bitmap Rapid_fire {
             get {
                 object obj = ResourceManager.GetObject("Rapid_fire", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap RirhtUp_HUD {
+            get {
+                object obj = ResourceManager.GetObject("RirhtUp_HUD", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

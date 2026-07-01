@@ -223,4 +223,19 @@
   <data name="PlayerSpaceship1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\PlayerSpaceship1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="LeftUp_HUD" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LeftUp_HUD.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LeftBottom_HUD" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LeftBottom_HUD.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CenterUp_HUD" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CenterUp_HUD.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RirhtUp_HUD" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RirhtUp_HUD.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BG_Game" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BG_Game.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
