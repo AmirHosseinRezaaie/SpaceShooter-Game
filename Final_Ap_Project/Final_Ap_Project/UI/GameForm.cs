@@ -1,12 +1,14 @@
-﻿using System;
+﻿using Final_Ap_Project.Data;
+using Final_Ap_Project.Managers;
+using Final_Ap_Project.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using Final_Ap_Project.Models;
-using Final_Ap_Project.Managers;
 
 namespace Final_Ap_Project.UI
 {
@@ -21,11 +23,17 @@ namespace Final_Ap_Project.UI
         private List<Bullet> activeBullets;
         private List<Coin> activeCoins;
         private List<PowerUp> activePowerUps;
+
         private Player myPlayer;
         private System.Windows.Forms.Timer gameTimer;
+        private System.Windows.Forms.Timer waveDelayTimer;
         private Random rnd = new Random();
 
         private WaveManager waveManager;
+
+        private Image playerBulletImg = Properties.Resources.PlayerBullet;
+        private Image coinImg = Properties.Resources.Coin;
+        private Image coin2Img = Properties.Resources.Coin2;
 
         public GameForm()
         {
@@ -41,11 +49,18 @@ namespace Final_Ap_Project.UI
             activeCoins = new List<Coin>();
             activePowerUps = new List<PowerUp>();
 
-            myPlayer = new Player(425, 500, 50, 50, 5, Properties.Resources.PlayerSpaceship, 3);
+            myPlayer = new Player(425, 500, 100, 80, 7 + GameData.ExtraSpeed, Properties.Resources.PlayerSpaceship1, 3 + GameData.ExtraHP);
+
+            int currentFireRate = 200 - (GameData.FireRateLevel * 50);
+            myPlayer.FireRateDelay = currentFireRate;
 
             gameTimer = new System.Windows.Forms.Timer();
             gameTimer.Interval = 20;
             gameTimer.Tick += GameLoop;
+
+            waveDelayTimer = new System.Windows.Forms.Timer();
+            waveDelayTimer.Interval = 2000;
+            waveDelayTimer.Tick += WaveDelayTimer_Tick;
 
             waveManager = new WaveManager(myPlayer);
             waveManager.StartWave();
@@ -75,6 +90,14 @@ namespace Final_Ap_Project.UI
                 if (activeEnemies[i].Y > this.ClientSize.Height)
                 {
                     activeEnemies.RemoveAt(i);
+                }
+            }
+            for (int i = activePowerUps.Count - 1; i >= 0; i--)
+            {
+                activePowerUps[i].Move();
+                if (activePowerUps[i].Y > this.ClientSize.Height)
+                {
+                    activePowerUps.RemoveAt(i);
                 }
             }
 
@@ -126,6 +149,10 @@ namespace Final_Ap_Project.UI
             {
                 coin.Draw(g);
             }
+            foreach (var powerUp in activePowerUps)
+            {
+                powerUp.Draw(g);
+            }
         }
 
         private void GameForm_KeyDown(object sender, KeyEventArgs e)
@@ -162,7 +189,8 @@ namespace Final_Ap_Project.UI
                         {
                             activeEnemies[j].HP--;
                             activeBullets.RemoveAt(i);
-                            AudioManager.PlayHit();
+                            //AudioManager.PlayHit();
+
 
                             if (activeEnemies[j].HP <= 0)
                             {
@@ -173,7 +201,7 @@ namespace Final_Ap_Project.UI
 
                                     bool isGoldCoin = (rnd.Next(1, 101) <= 20);
 
-                                    Coin droppedCoin = new Coin(activeEnemies[j].X, activeEnemies[j].Y, 3, isGoldCoin ? Properties.Resources.Coin2 : Properties.Resources.Coin, isGoldCoin);
+                                    Coin droppedCoin = new Coin(activeEnemies[j].X, activeEnemies[j].Y, 3, isGoldCoin ? coin2Img : coinImg, isGoldCoin);
 
                                     activeCoins.Add(droppedCoin);
                                 }
@@ -202,11 +230,17 @@ namespace Final_Ap_Project.UI
 
                         if (myPlayer.HP <= 0)
                         {
-                            AudioManager.PlayGameOver();
-                            AudioManager.StopMusic();
                             gameTimer.Stop();
+
+                            AudioManager.StopMusic();
+                            AudioManager.PlayGameOver();
+                            
+                            GameData.TotalCoins += myPlayer.Coins;
+                            
                             MessageBox.Show("Game Over!");
+                            
                             this.Close();
+                            return;
                         }
                     }
                 }
@@ -223,14 +257,17 @@ namespace Final_Ap_Project.UI
 
                         if (myPlayer.HP <= 0)
                         {
-                            if (myPlayer.HP <= 0)
-                            {
-                                AudioManager.PlayGameOver();
-                                AudioManager.StopMusic();
-                                gameTimer.Stop();
-                                MessageBox.Show("Game Over!");
-                                this.Close();
-                            }
+                            gameTimer.Stop();
+
+                            AudioManager.StopMusic();
+                            AudioManager.PlayGameOver();
+                            
+                            GameData.TotalCoins += myPlayer.Coins;
+                            
+                            MessageBox.Show("Game Over!");
+                            
+                            this.Close();
+                            return;
                         }
                     }
                 }
@@ -248,7 +285,7 @@ namespace Final_Ap_Project.UI
                     {
                         myPlayer.Coins += 1;
                     }
-
+                    AudioManager.PlayCoin();
                     activeCoins.RemoveAt(i);
                 }
             }
@@ -261,17 +298,19 @@ namespace Final_Ap_Project.UI
                     {
                         case PowerUpType.HealthPack:
                             myPlayer.HP++;
-                                           // اینجا یه صدای خاص هم پخش بشه خوبخه
+                            AudioManager.PlayHealthPack();
                             break;
 
                         case PowerUpType.Shield:
                             myPlayer.HasShield = true;
                             myPlayer.ShieldCounter = 250;
+                            AudioManager.PlayHealthPack();
                             break;
 
                         case PowerUpType.TripleShot:
                             myPlayer.HasTripleShot = true;
                             myPlayer.TripleShotCounter = 500;
+                            AudioManager.PlayHealthPack();
                             break;
                     }
 
@@ -282,19 +321,18 @@ namespace Final_Ap_Project.UI
 
         private void CheckWaveStatus()
         {
+            if (myPlayer.HP <= 0) return;
             if (waveManager.WaveCompleted)
             {
                 if (waveManager.CurrentWave < 10)
                 {
                     gameTimer.Stop();
 
+                    AudioManager.PlaySuccess();
+
                     MessageBox.Show($"Wave {waveManager.CurrentWave} Completed!");
 
-                    System.Threading.Thread.Sleep(2000);
-
-                    waveManager.NextWave();
-
-                    gameTimer.Start();
+                    waveDelayTimer.Start();
                 }
                 else
                 {
@@ -302,14 +340,22 @@ namespace Final_Ap_Project.UI
 
                     UpdateHUD();
 
-                    AudioManager.PlaySuccess();
                     AudioManager.StopMusic();
+
+                    AudioManager.PlayScore();
 
                     MessageBox.Show($"Congratulations!\nYou finished all 10 waves!\nScore: {myPlayer.Score}");
 
                     this.Close();
                 }
             }
+        }
+        private void WaveDelayTimer_Tick(object sender, EventArgs e)
+        {
+            waveDelayTimer.Stop();
+            AudioManager.PlayBackgroundMusic();
+            waveManager.NextWave();
+            gameTimer.Start();
         }
 
         private void lblScore_Click(object sender, EventArgs e)
@@ -320,16 +366,15 @@ namespace Final_Ap_Project.UI
         private void FireBullet()
         {
             long currentTime = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
-            if (currentTime - myPlayer.LastFireTime < myPlayer.FireRateDelay)
-                return;
+            if (currentTime - myPlayer.LastFireTime < myPlayer.FireRateDelay) return;
 
             myPlayer.LastFireTime = currentTime;
 
             if (myPlayer.HasTripleShot)
             {
-                Bullet leftBullet = new Bullet(myPlayer.X + 10, myPlayer.Y, 10, 20, -4, -14, Properties.Resources.PlayerBullet, true);
-                Bullet centerBullet = new Bullet(myPlayer.X + (myPlayer.Width / 2) - 5, myPlayer.Y - 10, 10, 20, 0, -15, Properties.Resources.PlayerBullet, true);
-                Bullet rightBullet = new Bullet(myPlayer.X + myPlayer.Width - 20, myPlayer.Y, 10, 20, 4, -14, Properties.Resources.PlayerBullet, true);
+                Bullet leftBullet = new Bullet(myPlayer.X + 10, myPlayer.Y, 10, 20, -4, -14, playerBulletImg, true);
+                Bullet centerBullet = new Bullet(myPlayer.X + (myPlayer.Width / 2) - 5, myPlayer.Y - 10, 10, 20, 0, -15, playerBulletImg, true);
+                Bullet rightBullet = new Bullet(myPlayer.X + myPlayer.Width - 20, myPlayer.Y, 10, 20, 4, -14, playerBulletImg, true);
 
                 activeBullets.Add(leftBullet);
                 activeBullets.Add(centerBullet);
@@ -337,9 +382,20 @@ namespace Final_Ap_Project.UI
             }
             else
             {
-                Bullet normalBullet = new Bullet(myPlayer.X + (myPlayer.Width / 2) - 5, myPlayer.Y, 10, 20, 0, -15, Properties.Resources.PlayerBullet, true);
+                Bullet normalBullet = new Bullet(myPlayer.X + (myPlayer.Width / 2) - 5, myPlayer.Y, 10, 20, 0, -15, playerBulletImg, true);
                 activeBullets.Add(normalBullet);
             }
+        }
+
+        private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            gameTimer.Stop();
+            waveDelayTimer.Stop();
+
+            gameTimer.Tick -= GameLoop;
+            waveDelayTimer.Tick -= WaveDelayTimer_Tick;
+
+            AudioManager.StopMusic();
         }
     }
 }

@@ -63,11 +63,6 @@ namespace Final_Ap_Project.UI
             }
         }
 
-        private void MainMenuForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
         // Input Manage:
         private void btnPlay_Click(object sender, EventArgs e)
         {
@@ -92,8 +87,6 @@ namespace Final_Ap_Project.UI
             // Hide main menu:
             this.Hide();
 
-            AudioManager.StopMusic();
-
             // ShopForm : Modal
             using (ShopForm game = new ShopForm())
             {
@@ -110,8 +103,6 @@ namespace Final_Ap_Project.UI
             // Hide main menu:
             this.Hide();
 
-            AudioManager.StopMusic();
-
             // OptionsForm : Modal
             using (OptionsForm game = new OptionsForm())
             {
@@ -127,8 +118,6 @@ namespace Final_Ap_Project.UI
         {
             // Hide main menu:
             this.Hide();
-
-            AudioManager.StopMusic();
 
             // AboutForm : Modal
             using (AboutForm game = new AboutForm())

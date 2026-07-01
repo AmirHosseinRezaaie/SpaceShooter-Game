@@ -118,14 +118,47 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="SpaceShooterlcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SpaceShooterlcon.ico;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SuccesSound" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SuccesSound.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="PlayerCoin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PlayerCoin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Rapid_fire" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Rapid_fire.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ChatGPT Image Jun 29, 2026, 06_41_32 PM" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ChatGPT Image Jun 29, 2026, 06_41_32 PM.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="HP" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\HP.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PlayerSpaceship" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PlayerSpaceship.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="BackGround" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\BackGround.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="BackgroundMusic" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\BackgroundMusic.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="EnemySpaceship" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\EnemySpaceship.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Coin" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Coin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Wave" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Wave.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PlayerBullet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PlayerBullet.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TerroristShip" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TerroristShip.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ShooterSpaceship" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ShooterSpaceship.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="HeavyTank" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\HeavyTank.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Coin2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Coin2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -133,61 +166,52 @@
   <data name="CoinSound" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CoinSound.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="EnemyBullet" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\EnemyBullet.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="EnemySpaceship" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\EnemySpaceship.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ExposionSound" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ExposionSound.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="GameOverSound" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\GameOverSound.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="HeavyTank" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\HeavyTank.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="HitDamageSound" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\HitDamageSound.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="HP" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\HP.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="BackgroundMusic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BackgroundMusic.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="MenuMusic" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\MenuMusic.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="PlayerBullet" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\PlayerBullet.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PlayerCoin" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\PlayerCoin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PlayerSpaceship" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\PlayerSpaceship.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ScoutShip" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ScoutShip.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="PlayerSpaceship2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\PlayerSpaceship2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="GameOverSound" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GameOverSound.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ExposionSound" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ExposionSound.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="speed_boost" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\speed_boost.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="EnemyBullet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\EnemyBullet.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Coin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Coin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="HitDamageSound" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\HitDamageSound.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="Score" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Score.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ScoutShip" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ScoutShip.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Extra_Health" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Extra_Health.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ShooterSpaceship" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ShooterSpaceship.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Damagewav" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Damagewav.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="SpaceShooterlcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SpaceShooterlcon.ico;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="ScoreSound" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Scorewav.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="SuccesSound" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SuccesSound.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="healthPackSound" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\HealthPeakUpwav.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="TerroristShip" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TerroristShip.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Wave" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Wave.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="PlayerSpaceship1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PlayerSpaceship1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
