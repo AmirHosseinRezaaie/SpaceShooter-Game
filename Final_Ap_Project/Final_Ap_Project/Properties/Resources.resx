@@ -127,8 +127,8 @@
   <data name="PlayerCoin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\PlayerCoin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Rapid_fire" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Rapid_fire.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="TerroristShip" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TerroristShip.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ChatGPT Image Jun 29, 2026, 06_41_32 PM" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ChatGPT Image Jun 29, 2026, 06_41_32 PM.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -150,9 +150,6 @@
   </data>
   <data name="PlayerBullet" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\PlayerBullet.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TerroristShip" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TerroristShip.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ShooterSpaceship" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ShooterSpaceship.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -181,25 +178,31 @@
   <data name="GameOverSound" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GameOverSound.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="ExposionSound" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ExposionSound.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="speed_boost" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\speed_boost.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Rapid_fire" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Rapid_fire.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="EnemyBullet" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\EnemyBullet.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Coin" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Coin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="HitDamageSound" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\HitDamageSound.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Score" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Score.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Extra_Health" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Extra_Health.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ExposionSound" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ExposionSound.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="HitDamageSound" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\HitDamageSound.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Coin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Coin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="special_skin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\special_skin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

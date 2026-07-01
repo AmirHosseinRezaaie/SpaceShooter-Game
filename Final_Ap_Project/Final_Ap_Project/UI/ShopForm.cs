@@ -130,7 +130,7 @@ namespace Final_Ap_Project.UI
 
         private void button3_Click(object sender, EventArgs e)
         {
-            int price = 1;
+            int price = 100;
 
             if (GameData.TotalCoins >= price)
             {
