@@ -63,7 +63,7 @@ namespace Final_Ap_Project.Managers
 
         private Enemy CreateEnemy()
         {
-            int x = rnd.Next(0, 860);
+            int x = rnd.Next(60, 840);
 
             Enemy enemy;
 
@@ -72,7 +72,13 @@ namespace Final_Ap_Project.Managers
             if (CurrentWave <= 3)
             {
                 if (chance < 70)
+                {
                     enemy = new StandardEnemy(x, -50, 2, Properties.Resources.EnemySpaceship);
+                    enemy = new HeavyTankEnemy(x, -50, 1, Properties.Resources.HeavyTank);
+
+                }
+
+
                 else
                     enemy = new ScoutEnemy(x, -50, 3, Properties.Resources.ScoutShip);
             }

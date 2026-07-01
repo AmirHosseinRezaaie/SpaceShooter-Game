@@ -32,6 +32,7 @@ namespace Final_Ap_Project.UI
         private WaveManager waveManager;
 
         private Image playerBulletImg = Properties.Resources.PlayerBullet;
+        private Image enemyBulletImg = Properties.Resources.EnemyBullet;
         private Image coinImg = Properties.Resources.Coin;
         private Image coin2Img = Properties.Resources.Coin2;
 
@@ -78,7 +79,7 @@ namespace Final_Ap_Project.UI
             for (int i = activeBullets.Count - 1; i >= 0; i--)
             {
                 activeBullets[i].Move();
-                if (activeBullets[i].Y < 0)
+                if (activeBullets[i].Y < -30 || activeBullets[i].Y > 630 || activeBullets[i].X < -30 || activeBullets[i].X > 930)
                 {
                     activeBullets.RemoveAt(i);
                 }
@@ -87,6 +88,29 @@ namespace Final_Ap_Project.UI
             for (int i = activeEnemies.Count - 1; i >= 0; i--)
             {
                 activeEnemies[i].Move();
+
+                if (activeEnemies[i] is ShooterEnemy shooter)
+                {
+                    long currentTime = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+
+                    if (currentTime - shooter.LastFireTime >= shooter.FireDelay)
+                    {
+                        shooter.LastFireTime = currentTime;
+                        FireEnemyBullet(shooter);
+                    }
+                }
+
+                if (activeEnemies[i] is HeavyTankEnemy tank)
+                {
+                    long currentTime = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+
+                    if (currentTime - tank.LastFireTime >= tank.FireDelay)
+                    {
+                        tank.LastFireTime = currentTime;
+                        FireHeavyTankBullets(tank);
+                    }
+                }
+
                 if (activeEnemies[i].Y > this.ClientSize.Height)
                 {
                     activeEnemies.RemoveAt(i);
@@ -189,7 +213,6 @@ namespace Final_Ap_Project.UI
                         {
                             activeEnemies[j].HP--;
                             activeBullets.RemoveAt(i);
-                            //AudioManager.PlayHit();
 
 
                             if (activeEnemies[j].HP <= 0)
@@ -198,7 +221,6 @@ namespace Final_Ap_Project.UI
 
                                 if (rnd.Next(1, 101) <= activeEnemies[j].CoinDropChance)
                                 {
-
                                     bool isGoldCoin = (rnd.Next(1, 101) <= 20);
 
                                     Coin droppedCoin = new Coin(activeEnemies[j].X, activeEnemies[j].Y, 3, isGoldCoin ? coin2Img : coinImg, isGoldCoin);
@@ -253,7 +275,9 @@ namespace Final_Ap_Project.UI
 
                     if (!myPlayer.HasShield)
                     {
-                        myPlayer.HP--;
+                        myPlayer.HP -= activeBullets[i].Damage;
+
+                        AudioManager.PlayHit();
 
                         if (myPlayer.HP <= 0)
                         {
@@ -279,11 +303,11 @@ namespace Final_Ap_Project.UI
                 {
                     if (activeCoins[i].IsGold)
                     {
-                        myPlayer.Coins += 5;
+                        myPlayer.Coins += 10;
                     }
                     else
                     {
-                        myPlayer.Coins += 1;
+                        myPlayer.Coins += 5;
                     }
                     AudioManager.PlayCoin();
                     activeCoins.RemoveAt(i);
@@ -385,6 +409,31 @@ namespace Final_Ap_Project.UI
                 Bullet normalBullet = new Bullet(myPlayer.X + (myPlayer.Width / 2) - 5, myPlayer.Y, 10, 20, 0, -15, playerBulletImg, true);
                 activeBullets.Add(normalBullet);
             }
+        }
+
+        private void FireEnemyBullet(ShooterEnemy enemy)
+        {
+            Bullet bullet = new Bullet(enemy.X + enemy.Width / 2 - 5, enemy.Y + enemy.Height, 12, 24, 0, 8, enemyBulletImg, false);
+
+            activeBullets.Add(bullet);
+        }
+
+        private void FireHeavyTankBullets(HeavyTankEnemy enemy)
+        {
+            int centerX = enemy.X + enemy.Width / 2 - 5;
+            int centerY = enemy.Y + enemy.Height / 2 - 5;
+
+            int speed = 3;
+
+            activeBullets.Add(new Bullet(centerX, centerY, 16, 32, 0, -speed, enemyBulletImg, false, 180, 2));       // بالا
+            activeBullets.Add(new Bullet(centerX, centerY, 16, 32, speed, 0, enemyBulletImg, false, 270, 2));        // راست
+            activeBullets.Add(new Bullet(centerX, centerY, 16, 32, 0, speed, enemyBulletImg, false, 0, 2));        // پایین
+            activeBullets.Add(new Bullet(centerX, centerY, 16, 32, -speed, 0, enemyBulletImg, false, 90, 2));       // چپ
+
+            activeBullets.Add(new Bullet(centerX, centerY, 16, 32, speed, speed, enemyBulletImg, false, 315, 2));    // پایین راست
+            activeBullets.Add(new Bullet(centerX, centerY, 16, 32, -speed, speed, enemyBulletImg, false, 45, 2));   // پایین چپ
+            activeBullets.Add(new Bullet(centerX, centerY, 16, 32, speed, -speed, enemyBulletImg, false, 225, 2));   // بالا راست
+            activeBullets.Add(new Bullet(centerX, centerY, 16, 32, -speed, -speed, enemyBulletImg, false, 135, 2));  // بالا چپ
         }
 
         private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
