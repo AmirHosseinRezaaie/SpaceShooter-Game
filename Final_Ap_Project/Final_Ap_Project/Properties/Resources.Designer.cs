@@ -82,16 +82,6 @@ namespace Final_Ap_Project.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap ChatGPT_Image_Jun_29__2026__06_41_32_PM {
-            get {
-                object obj = ResourceManager.GetObject("ChatGPT Image Jun 29, 2026, 06_41_32 PM", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         public static System.Drawing.Bitmap Coin {
             get {
                 object obj = ResourceManager.GetObject("Coin", resourceCulture);
@@ -245,9 +235,29 @@ namespace Final_Ap_Project.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap PlayerSpaceship {
+        public static System.Drawing.Bitmap PlayerSpaceship_green {
             get {
-                object obj = ResourceManager.GetObject("PlayerSpaceship", resourceCulture);
+                object obj = ResourceManager.GetObject("PlayerSpaceship_green", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap PlayerSpaceship_pink {
+            get {
+                object obj = ResourceManager.GetObject("PlayerSpaceship_pink", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap PlayerSpaceship_red {
+            get {
+                object obj = ResourceManager.GetObject("PlayerSpaceship_red", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -268,6 +278,16 @@ namespace Final_Ap_Project.Properties {
         public static System.Drawing.Bitmap PlayerSpaceship2 {
             get {
                 object obj = ResourceManager.GetObject("PlayerSpaceship2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap PlayerSpaceshipّSize {
+            get {
+                object obj = ResourceManager.GetObject("PlayerSpaceshipّSize", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -328,6 +348,16 @@ namespace Final_Ap_Project.Properties {
             get {
                 object obj = ResourceManager.GetObject("SpaceShooterlcon", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap special_skin {
+            get {
+                object obj = ResourceManager.GetObject("special_skin", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
