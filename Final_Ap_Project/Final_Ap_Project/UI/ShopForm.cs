@@ -13,6 +13,17 @@ namespace Final_Ap_Project.UI
 {
     public partial class ShopForm : Form
     {
+        private int viewedSkinIndex = 0;
+        private int[] skinPrices = { 0, 100, 100, 100, 500 };
+
+        private Image[] skinImages = new Image[]
+        {
+            Properties.Resources.PlayerSpaceshipّSize,
+            Properties.Resources.PlayerSpaceship_red,
+            Properties.Resources.PlayerSpaceship_pink,
+            Properties.Resources.PlayerSpaceship_green
+        };
+
         List<Point> stars = new List<Point>();
         Random rnd = new Random();
         Timer timer = new Timer();
@@ -81,7 +92,14 @@ namespace Final_Ap_Project.UI
 
         private void ShopForm_Load(object sender, EventArgs e)
         {
+            viewedSkinIndex = GameData.CurrentSkinIndex;
+
+            if (viewedSkinIndex > 3) viewedSkinIndex = 0;
+
+            pictureBox7.Image = skinImages[viewedSkinIndex];
+
             UpdateCoinDisplay();
+            UpdateShopUI();
         }
         private void UpdateCoinDisplay()
         {
@@ -130,7 +148,7 @@ namespace Final_Ap_Project.UI
 
         private void button3_Click(object sender, EventArgs e)
         {
-            int price = 1;
+            int price = 100;
 
             if (GameData.TotalCoins >= price)
             {
@@ -153,5 +171,91 @@ namespace Final_Ap_Project.UI
             }
         }
 
+        private void UpdateShopUI()
+        {
+            if (GameData.CurrentSkinIndex == viewedSkinIndex)
+            {
+                button7.Text = "Equipped";
+                button7.Enabled = false;
+            }
+            else if (GameData.UnlockedSkins[viewedSkinIndex])
+            {
+                button7.Text = "Equip";
+                button7.Enabled = true;
+            }
+            else
+            {
+                button7.Text = $"Buy: {skinPrices[viewedSkinIndex]}";
+                button7.Enabled = true;
+            }
+
+            if (GameData.CurrentSkinIndex == 4)
+            {
+                button4.Text = "Equipped";
+                button4.Enabled = false;
+            }
+            else if (GameData.UnlockedSkins[4])
+            {
+                button4.Text = "Equip";
+                button4.Enabled = true;
+            }
+            else
+            {
+                button4.Text = $"Buy: {skinPrices[4]}";
+                button4.Enabled = true;
+            }
+
+            UpdateCoinDisplay();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            viewedSkinIndex++;
+            if (viewedSkinIndex > 3) viewedSkinIndex = 0;
+
+            pictureBox7.Image = skinImages[viewedSkinIndex];
+
+            UpdateShopUI();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            viewedSkinIndex--;
+            if (viewedSkinIndex < 0) viewedSkinIndex = 3;
+
+            pictureBox7.Image = skinImages[viewedSkinIndex];
+
+            UpdateShopUI();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            ProcessSkinAction(viewedSkinIndex);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            ProcessSkinAction(4);
+        }
+        private void ProcessSkinAction(int index)
+        {
+            if (GameData.UnlockedSkins[index])
+            {
+                GameData.CurrentSkinIndex = index;
+            }
+            else if (GameData.TotalCoins >= skinPrices[index])
+            {
+                GameData.TotalCoins -= skinPrices[index];
+                GameData.UnlockedSkins[index] = true;
+                GameData.CurrentSkinIndex = index;
+                MessageBox.Show("Skin Unlocked!");
+            }
+            else
+            {
+                MessageBox.Show("Not enough coins!");
+            }
+
+            UpdateShopUI();
+        }
     }
 }
