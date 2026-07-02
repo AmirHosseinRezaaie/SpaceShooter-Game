@@ -384,6 +384,16 @@ namespace Final_Ap_Project.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap Shild {
+            get {
+                object obj = ResourceManager.GetObject("Shild", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap ShooterSpaceship {
             get {
                 object obj = ResourceManager.GetObject("ShooterSpaceship", resourceCulture);
@@ -414,6 +424,16 @@ namespace Final_Ap_Project.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap specialskinGIF {
+            get {
+                object obj = ResourceManager.GetObject("specialskinGIF", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap speed_boost {
             get {
                 object obj = ResourceManager.GetObject("speed_boost", resourceCulture);
@@ -436,6 +456,16 @@ namespace Final_Ap_Project.Properties {
         public static System.Drawing.Bitmap TerroristShip {
             get {
                 object obj = ResourceManager.GetObject("TerroristShip", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Triple_fire {
+            get {
+                object obj = ResourceManager.GetObject("Triple_fire", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

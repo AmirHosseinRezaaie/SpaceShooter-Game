@@ -253,15 +253,35 @@ namespace Final_Ap_Project.UI
 
                                 if (rnd.Next(1, 101) <= activeEnemies[j].CoinDropChance)
                                 {
-                                    bool isGoldCoin = (rnd.Next(1, 101) <= 20);
-
+                                    bool isGoldCoin = (rnd.Next(1, 101) <= 30);
                                     Coin droppedCoin = new Coin(activeEnemies[j].X, activeEnemies[j].Y, 3, isGoldCoin ? coin2Img : coinImg, isGoldCoin);
-
                                     activeCoins.Add(droppedCoin);
+                                }
+                                else if (rnd.Next(1, 101) <= 20) 
+                                {
+                                    Array values = Enum.GetValues(typeof(PowerUpType));
+                                    PowerUpType randomType = (PowerUpType)values.GetValue(rnd.Next(values.Length));
+
+                                    Image powerUpImg = null;
+
+                                    switch (randomType)
+                                    {
+                                        case PowerUpType.HealthPack:
+                                            powerUpImg = Properties.Resources.HP;
+                                            break;
+                                        case PowerUpType.Shield:
+                                            powerUpImg = Properties.Resources.Shild;
+                                            break;
+                                        case PowerUpType.TripleShot:
+                                            powerUpImg = Properties.Resources.Triple_fire;
+                                            break;
+                                    }
+
+                                    PowerUp droppedPowerUp = new PowerUp(activeEnemies[j].X, activeEnemies[j].Y, 3, powerUpImg, randomType);
+                                    activePowerUps.Add(droppedPowerUp);
                                 }
 
                                 activeEnemies.RemoveAt(j);
-
                                 AudioManager.PlayExplosion();
                             }
                             break;

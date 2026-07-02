@@ -112,13 +112,17 @@ namespace Final_Ap_Project.UI
 
             if (GameData.TotalCoins >= price)
             {
-                GameData.TotalCoins -= price;
-
-                GameData.ExtraHP++;
-
-                UpdateCoinDisplay();
-
-                MessageBox.Show("1 Health Point Added!");
+                if (GameData.ExtraHP < 2)
+                {
+                    GameData.TotalCoins -= price;
+                    GameData.ExtraHP++;
+                    UpdateCoinDisplay();
+                    MessageBox.Show("1 Health Point Added!");
+                }
+                else
+                {
+                    MessageBox.Show("Maximum Health Level Reached!");
+                }
             }
             else
             {
@@ -132,13 +136,17 @@ namespace Final_Ap_Project.UI
 
             if (GameData.TotalCoins >= price)
             {
-                GameData.TotalCoins -= price;
-
-                GameData.ExtraSpeed++;
-
-                UpdateCoinDisplay();
-
-                MessageBox.Show("1 Speed Point Added!");
+                if (GameData.ExtraSpeed < 3)
+                {
+                    GameData.TotalCoins -= price;
+                    GameData.ExtraSpeed++;
+                    UpdateCoinDisplay();
+                    MessageBox.Show("1 Speed Point Added!");
+                }
+                else
+                {
+                    MessageBox.Show("Maximum Speed Level Reached!");
+                }
             }
             else
             {
@@ -257,5 +265,6 @@ namespace Final_Ap_Project.UI
 
             UpdateShopUI();
         }
+
     }
 }
