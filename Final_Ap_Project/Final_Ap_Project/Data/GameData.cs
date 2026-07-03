@@ -7,6 +7,7 @@
         public static int ExtraSpeed { get; set; } = 0;
         public static int FireRateLevel { get; set; } = 0;
         public static int CurrentSkinIndex { get; set; } = 0;
+        public static int HighScore { get; set; } = 0;
 
         public static bool[] UnlockedSkins { get; set; } = { true, false, false, false, false };
     }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Final_Ap_Project.Data;
+using Final_Ap_Project.Managers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,7 +9,6 @@ using System.Text;
 using System.Timers;
 using System.Windows.Forms;
 using Timer = System.Windows.Forms.Timer;
-using Final_Ap_Project.Data;
 
 namespace Final_Ap_Project.UI
 {
@@ -116,6 +117,9 @@ namespace Final_Ap_Project.UI
                 {
                     GameData.TotalCoins -= price;
                     GameData.ExtraHP++;
+
+                    DatabaseManager.SaveGame();
+
                     UpdateCoinDisplay();
                     MessageBox.Show("1 Health Point Added!");
                 }
@@ -140,6 +144,9 @@ namespace Final_Ap_Project.UI
                 {
                     GameData.TotalCoins -= price;
                     GameData.ExtraSpeed++;
+
+                    DatabaseManager.SaveGame();
+
                     UpdateCoinDisplay();
                     MessageBox.Show("1 Speed Point Added!");
                 }
@@ -164,6 +171,8 @@ namespace Final_Ap_Project.UI
                 {
                     GameData.TotalCoins -= price;
                     GameData.FireRateLevel++;
+
+                    DatabaseManager.SaveGame();
 
                     MessageBox.Show("Rapid Fire Upgraded!");
                 }
@@ -263,6 +272,7 @@ namespace Final_Ap_Project.UI
                 MessageBox.Show("Not enough coins!");
             }
 
+            DatabaseManager.SaveGame();
             UpdateShopUI();
         }
 

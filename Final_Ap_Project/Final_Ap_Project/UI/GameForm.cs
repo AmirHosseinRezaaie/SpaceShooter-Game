@@ -310,8 +310,15 @@ namespace Final_Ap_Project.UI
                             AudioManager.PlayGameOver();
 
                             GameData.TotalCoins += myPlayer.Coins;
+                            DatabaseManager.SaveGame();
 
                             MessageBox.Show("Game Over!");
+
+                            if (myPlayer.Score > GameData.HighScore)
+                            {
+                                GameData.HighScore = myPlayer.Score;
+                            }
+                            DatabaseManager.SaveGame();
 
                             this.Close();
                             return;
@@ -339,8 +346,15 @@ namespace Final_Ap_Project.UI
                             AudioManager.PlayGameOver();
 
                             GameData.TotalCoins += myPlayer.Coins;
+                            DatabaseManager.SaveGame();
 
                             MessageBox.Show("Game Over!");
+
+                            if (myPlayer.Score > GameData.HighScore)
+                            {
+                                GameData.HighScore = myPlayer.Score;
+                            }
+                            DatabaseManager.SaveGame();
 
                             this.Close();
                             return;
@@ -436,6 +450,12 @@ namespace Final_Ap_Project.UI
                     AudioManager.PlayScore();
 
                     MessageBox.Show($"Congratulations!\nYou finished all 10 waves!\nScore: {myPlayer.Score}");
+
+                    if (myPlayer.Score > GameData.HighScore)
+                    {
+                        GameData.HighScore = myPlayer.Score;
+                    }
+                    DatabaseManager.SaveGame();
 
                     this.Close();
                     return;

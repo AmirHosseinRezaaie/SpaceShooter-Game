@@ -14,7 +14,12 @@ namespace Final_Ap_Project
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
+            
             AudioManager.Init();
+
+            DatabaseManager.Initialize();
+            DatabaseManager.LoadGame();
+            
             Application.Run(new MainMenuForm());
         }
     }
