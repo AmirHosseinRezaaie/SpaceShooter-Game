@@ -199,13 +199,13 @@ namespace Final_Ap_Project.UI
         {
             if (myPlayer.HasTripleShot)
             {
-                g.DrawImage(Properties.Resources.Rapid_fire,
+                g.DrawImage(Properties.Resources.Triple_fire,
                             25, 500, 45, 45);
             }
 
             if (myPlayer.HasShield)
             {
-                g.DrawImage(Properties.Resources.speed_boost,
+                g.DrawImage(Properties.Resources.Shild,
                             80, 500, 45, 45);
             }
         }
@@ -251,13 +251,15 @@ namespace Final_Ap_Project.UI
                             {
                                 myPlayer.Score += activeEnemies[j].ScoreValue;
 
-                                if (rnd.Next(1, 101) <= activeEnemies[j].CoinDropChance)
+                                int dropChance = rnd.Next(1, 101);
+
+                                if (dropChance <= activeEnemies[j].CoinDropChance)
                                 {
                                     bool isGoldCoin = (rnd.Next(1, 101) <= 30);
                                     Coin droppedCoin = new Coin(activeEnemies[j].X, activeEnemies[j].Y, 3, isGoldCoin ? coin2Img : coinImg, isGoldCoin);
                                     activeCoins.Add(droppedCoin);
                                 }
-                                else if (rnd.Next(1, 101) <= 20) 
+                                else if (dropChance <= 20) 
                                 {
                                     Array values = Enum.GetValues(typeof(PowerUpType));
                                     PowerUpType randomType = (PowerUpType)values.GetValue(rnd.Next(values.Length));
@@ -310,7 +312,6 @@ namespace Final_Ap_Project.UI
                             AudioManager.PlayGameOver();
 
                             GameData.TotalCoins += myPlayer.Coins;
-                            DatabaseManager.SaveGame();
 
                             MessageBox.Show("Game Over!");
 
@@ -328,13 +329,16 @@ namespace Final_Ap_Project.UI
             }
             for (int i = activeBullets.Count - 1; i >= 0; i--)
             {
-                if (!activeBullets[i].IsPlayerBullet && myPlayer.GetBounds().IntersectsWith(activeBullets[i].GetBounds()))
+                if (!activeBullets[i].IsPlayerBullet &&
+                    myPlayer.GetBounds().IntersectsWith(activeBullets[i].GetBounds()))
                 {
+                    int damage = activeBullets[i].Damage;
+
                     activeBullets.RemoveAt(i);
 
                     if (!myPlayer.HasShield)
                     {
-                        myPlayer.HP -= activeBullets[i].Damage;
+                        myPlayer.HP -= damage;
 
                         AudioManager.PlayHit();
 
@@ -346,17 +350,15 @@ namespace Final_Ap_Project.UI
                             AudioManager.PlayGameOver();
 
                             GameData.TotalCoins += myPlayer.Coins;
+
+                            if (myPlayer.Score > GameData.HighScore)
+                                GameData.HighScore = myPlayer.Score;
+
                             DatabaseManager.SaveGame();
 
                             MessageBox.Show("Game Over!");
 
-                            if (myPlayer.Score > GameData.HighScore)
-                            {
-                                GameData.HighScore = myPlayer.Score;
-                            }
-                            DatabaseManager.SaveGame();
-
-                            this.Close();
+                            Close();
                             return;
                         }
                     }

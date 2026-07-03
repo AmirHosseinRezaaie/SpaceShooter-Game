@@ -18,9 +18,8 @@ namespace Final_Ap_Project
             AudioManager.Init();
 
             DatabaseManager.Initialize();
-            DatabaseManager.LoadGame();
             
-            Application.Run(new MainMenuForm());
+            Application.Run(new LoginForm());
         }
     }
 }

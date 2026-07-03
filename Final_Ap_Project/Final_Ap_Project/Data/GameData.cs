@@ -9,6 +9,10 @@
         public static int CurrentSkinIndex { get; set; } = 0;
         public static int HighScore { get; set; } = 0;
 
+        public static int CurrentPlayerId;
+
+        public static string CurrentUsername = "";
+
         public static bool[] UnlockedSkins { get; set; } = { true, false, false, false, false };
     }
 }
