@@ -22,6 +22,8 @@ namespace Final_Ap_Project.Managers
         private static WaveOutEvent backgroundMusicPlayer;
         private static WaveStream backgroundMusicStream;
 
+        public static bool IsGameMusicPlaying { get; set; }
+
         public static bool SFXEnabled { get; set; } = true;
         public static bool MusicEnabled { get; set; } = true;
 
@@ -77,14 +79,21 @@ namespace Final_Ap_Project.Managers
         // Music:
         public static void PlayMenuMusic()
         {
-            if (!MusicEnabled) return;
+            if (!MusicEnabled)
+                return;
+
+            StopBackgroundMusic();
             menuMusic?.PlayLooping();
+
+            IsGameMusicPlaying = false;
         }
 
         public static void PlayBackgroundMusic()
         {
             if (!MusicEnabled)
                 return;
+
+            menuMusic?.Stop();
 
             StopBackgroundMusic();
 
@@ -97,6 +106,8 @@ namespace Final_Ap_Project.Managers
             backgroundMusicPlayer.Init(backgroundMusicStream);
 
             backgroundMusicPlayer.Play();
+
+            IsGameMusicPlaying = true;
         }
 
         private static void StopBackgroundMusic()

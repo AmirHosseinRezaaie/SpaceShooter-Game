@@ -119,7 +119,7 @@ namespace Final_Ap_Project.Managers
         {
             enemy.Speed = (int)(enemy.Speed * (1 + 0.1 * CurrentWave));
 
-            enemy.HP += 2 * CurrentWave;
+            enemy.HP += 1;
         }
 
         public void NextWave()

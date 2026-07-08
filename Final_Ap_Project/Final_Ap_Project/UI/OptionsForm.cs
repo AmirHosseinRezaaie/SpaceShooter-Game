@@ -21,6 +21,8 @@ namespace Final_Ap_Project.UI
         {
             InitializeComponent();
 
+            UpdateAudioSettingsUI();
+
             // Add Stars in BackGround:
             for (int i = 0; i < 120; i++)
             {
@@ -29,6 +31,7 @@ namespace Final_Ap_Project.UI
             timer.Interval = 30;
             timer.Tick += Timer_Tick;
             timer.Start();
+
             this.Paint += MainMenuForm_Paint;
         }
 
@@ -96,7 +99,10 @@ namespace Final_Ap_Project.UI
                 chkMusic.Text = "ON";
                 chkMusic.ForeColor = Color.Lime;
 
-                AudioManager.PlayMenuMusic();
+                if (AudioManager.IsGameMusicPlaying)
+                    AudioManager.PlayBackgroundMusic();
+                else
+                    AudioManager.PlayMenuMusic();
             }
             else
             {
@@ -113,6 +119,12 @@ namespace Final_Ap_Project.UI
             {
                 this.Close();
             }
+        }
+
+        private void UpdateAudioSettingsUI()
+        {
+            chkSFX.Checked = AudioManager.SFXEnabled;
+            chkMusic.Checked = AudioManager.MusicEnabled;
         }
     }
 }

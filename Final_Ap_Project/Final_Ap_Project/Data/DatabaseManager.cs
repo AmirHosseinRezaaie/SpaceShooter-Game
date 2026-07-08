@@ -196,7 +196,7 @@ namespace Final_Ap_Project.Managers
                 (
                     @Username,
                     @Password,
-                    10000,
+                    100,
                     0,
                     0,
                     0,

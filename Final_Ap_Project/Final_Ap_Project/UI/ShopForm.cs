@@ -275,6 +275,5 @@ namespace Final_Ap_Project.UI
             DatabaseManager.SaveGame();
             UpdateShopUI();
         }
-
     }
 }

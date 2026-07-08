@@ -75,9 +75,9 @@
             // picHP1
             // 
             picHP1.Image = Properties.Resources.HP2;
-            picHP1.Location = new Point(30, 29);
+            picHP1.Location = new Point(39, 30);
             picHP1.Name = "picHP1";
-            picHP1.Size = new Size(33, 32);
+            picHP1.Size = new Size(30, 30);
             picHP1.SizeMode = PictureBoxSizeMode.Zoom;
             picHP1.TabIndex = 0;
             picHP1.TabStop = false;
@@ -85,9 +85,9 @@
             // picHP2
             // 
             picHP2.Image = Properties.Resources.HP2;
-            picHP2.Location = new Point(70, 29);
+            picHP2.Location = new Point(74, 30);
             picHP2.Name = "picHP2";
-            picHP2.Size = new Size(31, 32);
+            picHP2.Size = new Size(30, 30);
             picHP2.SizeMode = PictureBoxSizeMode.Zoom;
             picHP2.TabIndex = 0;
             picHP2.TabStop = false;
@@ -95,9 +95,9 @@
             // picHP3
             // 
             picHP3.Image = Properties.Resources.HP2;
-            picHP3.Location = new Point(108, 29);
+            picHP3.Location = new Point(109, 30);
             picHP3.Name = "picHP3";
-            picHP3.Size = new Size(31, 32);
+            picHP3.Size = new Size(30, 30);
             picHP3.SizeMode = PictureBoxSizeMode.Zoom;
             picHP3.TabIndex = 0;
             picHP3.TabStop = false;
@@ -105,9 +105,9 @@
             // picHP4
             // 
             picHP4.Image = Properties.Resources.HP2;
-            picHP4.Location = new Point(146, 29);
+            picHP4.Location = new Point(144, 30);
             picHP4.Name = "picHP4";
-            picHP4.Size = new Size(31, 32);
+            picHP4.Size = new Size(30, 30);
             picHP4.SizeMode = PictureBoxSizeMode.Zoom;
             picHP4.TabIndex = 0;
             picHP4.TabStop = false;
@@ -115,9 +115,9 @@
             // picHP5
             // 
             picHP5.Image = Properties.Resources.HP2;
-            picHP5.Location = new Point(185, 29);
+            picHP5.Location = new Point(180, 30);
             picHP5.Name = "picHP5";
-            picHP5.Size = new Size(31, 32);
+            picHP5.Size = new Size(30, 30);
             picHP5.SizeMode = PictureBoxSizeMode.Zoom;
             picHP5.TabIndex = 0;
             picHP5.TabStop = false;
@@ -138,8 +138,8 @@
             pnlLU_HUD.BackgroundImage = Properties.Resources.LeftUp_HUD;
             pnlLU_HUD.BackgroundImageLayout = ImageLayout.Stretch;
             pnlLU_HUD.Controls.Add(picHP1);
-            pnlLU_HUD.Controls.Add(picHP2);
             pnlLU_HUD.Controls.Add(picHP5);
+            pnlLU_HUD.Controls.Add(picHP2);
             pnlLU_HUD.Controls.Add(picHP4);
             pnlLU_HUD.Controls.Add(picHP3);
             pnlLU_HUD.Location = new Point(-4, 0);

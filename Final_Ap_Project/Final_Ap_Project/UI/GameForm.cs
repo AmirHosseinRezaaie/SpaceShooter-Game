@@ -236,7 +236,6 @@ namespace Final_Ap_Project.UI
         }
         private void CheckCollisions()
         {
-
             for (int i = activeBullets.Count - 1; i >= 0; i--)
             {
                 if (activeBullets[i].IsPlayerBullet)
@@ -247,7 +246,6 @@ namespace Final_Ap_Project.UI
                         {
                             activeEnemies[j].HP--;
                             activeBullets.RemoveAt(i);
-
 
                             if (activeEnemies[j].HP <= 0)
                             {
@@ -314,8 +312,6 @@ namespace Final_Ap_Project.UI
                             AudioManager.StopMusic();
                             AudioManager.PlayGameOver();
 
-                            GameData.TotalCoins += myPlayer.Coins;
-
                             MessageBox.Show("Game Over!");
 
                             if (myPlayer.Score > GameData.HighScore)
@@ -353,8 +349,6 @@ namespace Final_Ap_Project.UI
                             AudioManager.StopMusic();
                             AudioManager.PlayGameOver();
 
-                            GameData.TotalCoins += myPlayer.Coins;
-
                             if (myPlayer.Score > GameData.HighScore)
                                 GameData.HighScore = myPlayer.Score;
 
@@ -376,10 +370,14 @@ namespace Final_Ap_Project.UI
                     if (activeCoins[i].IsGold)
                     {
                         myPlayer.Coins += 10;
+                        GameData.TotalCoins += 10;
+                        DatabaseManager.SaveGame();
                     }
                     else
                     {
                         myPlayer.Coins += 5;
+                        GameData.TotalCoins += 5;
+                        DatabaseManager.SaveGame();
                     }
                     AudioManager.PlayCoin();
                     activeCoins.RemoveAt(i);
