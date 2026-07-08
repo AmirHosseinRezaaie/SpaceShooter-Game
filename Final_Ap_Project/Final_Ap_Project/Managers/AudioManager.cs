@@ -1,21 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Media;
-using System.Text;
+using NAudio.Wave;
 
 namespace Final_Ap_Project.Managers
 {
     public static class AudioManager
     {
+        // Sound Effects
         private static SoundPlayer coinSound;
         private static SoundPlayer explosionSound;
         private static SoundPlayer gameOverSound;
         private static SoundPlayer hitDamageSound;
         private static SoundPlayer successSound;
-        private static SoundPlayer menuMusic;
-        private static SoundPlayer backgroundMusic;
         private static SoundPlayer scoreSound;
         private static SoundPlayer healthPackSound;
+
+        // Menu Music
+        private static SoundPlayer menuMusic;
+
+        // Background Music (NAudio)
+        private static WaveOutEvent backgroundMusicPlayer;
+        private static WaveStream backgroundMusicStream;
 
         public static bool SFXEnabled { get; set; } = true;
         public static bool MusicEnabled { get; set; } = true;
@@ -31,7 +36,6 @@ namespace Final_Ap_Project.Managers
             healthPackSound = new SoundPlayer(Properties.Resources.healthPackSound);
 
             menuMusic = new SoundPlayer(Properties.Resources.MenuMusic);
-            backgroundMusic = new SoundPlayer(Properties.Resources.BackgroundMusic);
         }
 
         // SFX Methods:
@@ -79,15 +83,36 @@ namespace Final_Ap_Project.Managers
 
         public static void PlayBackgroundMusic()
         {
-            if (!MusicEnabled) return;
-            if (backgroundMusic == null) return;
-            backgroundMusic?.PlayLooping();
+            if (!MusicEnabled)
+                return;
+
+            StopBackgroundMusic();
+
+            WaveFileReader musicFile = new WaveFileReader(Properties.Resources.BackgroundMusic);
+
+            backgroundMusicStream = new LoopStream(musicFile);
+
+            backgroundMusicPlayer = new WaveOutEvent();
+
+            backgroundMusicPlayer.Init(backgroundMusicStream);
+
+            backgroundMusicPlayer.Play();
+        }
+
+        private static void StopBackgroundMusic()
+        {
+            backgroundMusicPlayer?.Stop();
+            backgroundMusicPlayer?.Dispose();
+            backgroundMusicPlayer = null;
+
+            backgroundMusicStream?.Dispose();
+            backgroundMusicStream = null;
         }
 
         public static void StopMusic()
         {
             menuMusic?.Stop();
-            backgroundMusic?.Stop();
+            StopBackgroundMusic();
         }
     }
 }
