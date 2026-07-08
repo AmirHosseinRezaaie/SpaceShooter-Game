@@ -226,6 +226,16 @@ namespace Final_Ap_Project.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap HP2 {
+            get {
+                object obj = ResourceManager.GetObject("HP2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap LeftBottom_HUD {
             get {
                 object obj = ResourceManager.GetObject("LeftBottom_HUD", resourceCulture);

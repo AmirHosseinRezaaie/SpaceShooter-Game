@@ -155,7 +155,9 @@ namespace Final_Ap_Project.UI
             picHP1.Visible = myPlayer.HP >= 1;
             picHP2.Visible = myPlayer.HP >= 2;
             picHP3.Visible = myPlayer.HP >= 3;
-            picHP4.Visible = GameData.ExtraHP == 1 && myPlayer.HP >= 4;
+
+            picHP4.Visible = GameData.ExtraHP >= 1 && myPlayer.HP >= 4;
+            picHP5.Visible = GameData.ExtraHP >= 2 && myPlayer.HP >= 5;
         }
 
         private void UpdatePlayerMovement()
@@ -303,6 +305,7 @@ namespace Final_Ap_Project.UI
                     if (!myPlayer.HasShield)
                     {
                         myPlayer.HP--;
+                        ConsumeExtraHeart();
 
                         if (myPlayer.HP <= 0)
                         {
@@ -339,6 +342,7 @@ namespace Final_Ap_Project.UI
                     if (!myPlayer.HasShield)
                     {
                         myPlayer.HP -= damage;
+                        ConsumeExtraHeart();
 
                         AudioManager.PlayHit();
 
@@ -532,9 +536,30 @@ namespace Final_Ap_Project.UI
             AudioManager.StopMusic();
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void ConsumeExtraHeart()
         {
+            int normalHP = 3;
 
+            if (myPlayer.HP >= normalHP)
+            {
+                int remainingExtra = myPlayer.HP - normalHP;
+
+                if (GameData.ExtraHP != remainingExtra)
+                {
+                    GameData.ExtraHP = remainingExtra;
+
+                    DatabaseManager.SaveGame();
+                }
+            }
+            else
+            {
+                if (GameData.ExtraHP != 0)
+                {
+                    GameData.ExtraHP = 0;
+
+                    DatabaseManager.SaveGame();
+                }
+            }
         }
     }
 }

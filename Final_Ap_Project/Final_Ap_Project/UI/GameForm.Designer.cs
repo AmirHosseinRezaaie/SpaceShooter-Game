@@ -34,16 +34,18 @@
             picHP1 = new PictureBox();
             picHP2 = new PictureBox();
             picHP3 = new PictureBox();
+            picHP4 = new PictureBox();
+            picHP5 = new PictureBox();
             lblCoins = new Label();
             pnlLU_HUD = new Panel();
-            picHP4 = new PictureBox();
             pnlCU_HUD = new Panel();
             pnlRL_HUD = new Panel();
             ((System.ComponentModel.ISupportInitialize)picHP1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picHP2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picHP3).BeginInit();
-            pnlLU_HUD.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picHP4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picHP5).BeginInit();
+            pnlLU_HUD.SuspendLayout();
             pnlCU_HUD.SuspendLayout();
             pnlRL_HUD.SuspendLayout();
             SuspendLayout();
@@ -53,7 +55,7 @@
             lblScore.AutoSize = true;
             lblScore.Font = new Font("SWMono", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblScore.ForeColor = Color.FromArgb(1, 171, 227);
-            lblScore.Location = new Point(133, 33);
+            lblScore.Location = new Point(129, 33);
             lblScore.Name = "lblScore";
             lblScore.Size = new Size(28, 27);
             lblScore.TabIndex = 1;
@@ -72,33 +74,53 @@
             // 
             // picHP1
             // 
-            picHP1.Image = Properties.Resources.HP;
-            picHP1.Location = new Point(45, 30);
+            picHP1.Image = Properties.Resources.HP2;
+            picHP1.Location = new Point(30, 29);
             picHP1.Name = "picHP1";
-            picHP1.Size = new Size(32, 32);
+            picHP1.Size = new Size(33, 32);
             picHP1.SizeMode = PictureBoxSizeMode.Zoom;
             picHP1.TabIndex = 0;
             picHP1.TabStop = false;
             // 
             // picHP2
             // 
-            picHP2.Image = Properties.Resources.HP;
-            picHP2.Location = new Point(85, 30);
+            picHP2.Image = Properties.Resources.HP2;
+            picHP2.Location = new Point(70, 29);
             picHP2.Name = "picHP2";
-            picHP2.Size = new Size(32, 32);
+            picHP2.Size = new Size(31, 32);
             picHP2.SizeMode = PictureBoxSizeMode.Zoom;
             picHP2.TabIndex = 0;
             picHP2.TabStop = false;
             // 
             // picHP3
             // 
-            picHP3.Image = Properties.Resources.HP;
-            picHP3.Location = new Point(125, 30);
+            picHP3.Image = Properties.Resources.HP2;
+            picHP3.Location = new Point(108, 29);
             picHP3.Name = "picHP3";
-            picHP3.Size = new Size(32, 32);
+            picHP3.Size = new Size(31, 32);
             picHP3.SizeMode = PictureBoxSizeMode.Zoom;
             picHP3.TabIndex = 0;
             picHP3.TabStop = false;
+            // 
+            // picHP4
+            // 
+            picHP4.Image = Properties.Resources.HP2;
+            picHP4.Location = new Point(146, 29);
+            picHP4.Name = "picHP4";
+            picHP4.Size = new Size(31, 32);
+            picHP4.SizeMode = PictureBoxSizeMode.Zoom;
+            picHP4.TabIndex = 0;
+            picHP4.TabStop = false;
+            // 
+            // picHP5
+            // 
+            picHP5.Image = Properties.Resources.HP2;
+            picHP5.Location = new Point(185, 29);
+            picHP5.Name = "picHP5";
+            picHP5.Size = new Size(31, 32);
+            picHP5.SizeMode = PictureBoxSizeMode.Zoom;
+            picHP5.TabIndex = 0;
+            picHP5.TabStop = false;
             // 
             // lblCoins
             // 
@@ -117,22 +139,13 @@
             pnlLU_HUD.BackgroundImageLayout = ImageLayout.Stretch;
             pnlLU_HUD.Controls.Add(picHP1);
             pnlLU_HUD.Controls.Add(picHP2);
+            pnlLU_HUD.Controls.Add(picHP5);
             pnlLU_HUD.Controls.Add(picHP4);
             pnlLU_HUD.Controls.Add(picHP3);
             pnlLU_HUD.Location = new Point(-4, 0);
             pnlLU_HUD.Name = "pnlLU_HUD";
             pnlLU_HUD.Size = new Size(250, 85);
             pnlLU_HUD.TabIndex = 2;
-            // 
-            // picHP4
-            // 
-            picHP4.Image = Properties.Resources.HP;
-            picHP4.Location = new Point(165, 30);
-            picHP4.Name = "picHP4";
-            picHP4.Size = new Size(32, 32);
-            picHP4.SizeMode = PictureBoxSizeMode.Zoom;
-            picHP4.TabIndex = 0;
-            picHP4.TabStop = false;
             // 
             // pnlCU_HUD
             // 
@@ -180,8 +193,9 @@
             ((System.ComponentModel.ISupportInitialize)picHP1).EndInit();
             ((System.ComponentModel.ISupportInitialize)picHP2).EndInit();
             ((System.ComponentModel.ISupportInitialize)picHP3).EndInit();
-            pnlLU_HUD.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)picHP4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picHP5).EndInit();
+            pnlLU_HUD.ResumeLayout(false);
             pnlCU_HUD.ResumeLayout(false);
             pnlCU_HUD.PerformLayout();
             pnlRL_HUD.ResumeLayout(false);
@@ -196,6 +210,7 @@
         private PictureBox picHP2;
         private PictureBox picHP3;
         private PictureBox picHP4;
+        private PictureBox picHP5;
         private Label lblCoins;
         private Panel pnlLU_HUD;
         private Panel pnlCU_HUD;
