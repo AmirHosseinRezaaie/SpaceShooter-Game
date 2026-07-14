@@ -101,8 +101,8 @@ The codebase is organized into dedicated managers, models, and user interface la
 
 ## 👨‍💻 Developers
 
-- **Your Name**
-- **Your Friend's Name**
+- **Amirhossein Rezaaie**
+- **Amirhossein Ebrahimpoor**
 
 ---
 
