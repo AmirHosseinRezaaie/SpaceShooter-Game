@@ -1,129 +1,164 @@
-# 🚀 Space Shooter Game
+<div align="center">
 
-**An arcade-style 2D space shooter built with C#, Windows Forms, and SQLite, featuring wave-based gameplay, enemy AI, an upgrade system, and persistent player progress.**
+# ✦ SPACE SHOOTER
 
-Fight through endless waves of hostile spaceships, earn coins by defeating enemies, upgrade your ship in the in-game shop, and push your survival skills to the limit. Built with an object-oriented architecture, this project combines classic arcade mechanics with modern software design principles to deliver a fun and maintainable desktop game.
+### From a C# learning project to a universe of its own.
 
----
+**An object-oriented space shooter, built from scratch with C# and Windows Forms — now presented through an interactive, playable web experience.**
 
-## ✨ Features
+[![Live showcase](https://img.shields.io/badge/Live_Showcase-Visit_the_site-78e6f2?style=for-the-badge&logo=googlechrome&logoColor=07111b)](https://amirhosseinrezaaie.github.io/SpaceShooter-Game/)
+[![C#](https://img.shields.io/badge/C%23-.NET_10-68217a?style=flat-square&logo=dotnet)](https://dotnet.microsoft.com/)
+[![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=nextdotjs)](https://nextjs.org/)
+[![GitHub Pages](https://img.shields.io/badge/Deployed_with-GitHub_Pages-222?style=flat-square&logo=github)](https://pages.github.com/)
 
-- 🚀 Fast-paced 2D arcade gameplay
-- 👾 Multiple enemy spaceship types with unique behaviors
-- 🌊 Progressive wave-based combat system
-- 💥 Challenging boss encounters
-- 🔫 Shooting, collision detection, and damage system
-- ❤️ Health and survival mechanics
-- 💰 Coin collection and upgrade shop
-- 🎵 Background music and sound effects
-- 💾 SQLite database for user accounts and game progress
-- 🏆 High score tracking
-- 🧩 Object-Oriented Programming (OOP) architecture
-- 🎨 Clean and user-friendly Windows Forms interface
+<br />
 
----
+**[Explore the live experience ↗](https://amirhosseinrezaaie.github.io/SpaceShooter-Game/)** · **[Meet the developer](#-the-developer)** · **[فارسی](#-معرفی-پروژه)**
 
-## 🛠 Tech Stack
+<br />
 
-- **Language:** C#
-- **Framework:** .NET Framework (Windows Forms)
-- **Database:** SQLite
-- **IDE:** Visual Studio
-- **Architecture:** Object-Oriented Programming (OOP)
+![Space Shooter gameplay](public/game/gameplay.png)
 
----
+</div>
 
-## 🎮 Gameplay
+## 🚀 The project
 
-The player controls a spaceship and must survive increasingly difficult enemy waves.
+Space Shooter is a Windows desktop game I created while learning C#. I built its gameplay systems, enemy behaviors, wave progression, player upgrades, shop, audio controls, login flow and persistent player data from the ground up.
 
-Throughout the game, you can:
+The repository now also includes a dedicated interactive showcase. It tells the story behind the game as you scroll, then lets visitors launch a browser-based playable preview and experiment with its settings.
 
-- Destroy enemy spaceships
-- Dodge incoming attacks
-- Collect coins from defeated enemies
-- Upgrade your equipment through the shop
-- Unlock stronger weapons and abilities
-- Reach higher waves and beat your previous high score
+## ✨ Explore the experience
 
-Every new wave introduces greater challenges, encouraging strategic upgrades and quick decision-making.
+| Chapter | What you will discover |
+| --- | --- |
+| **01 — The world** | Space environment, player ships, enemy fleet, coins and power-ups. |
+| **02 — Architecture** | Object-oriented entities, individual enemy behaviors and wave progression. |
+| **03 — Game logic** | The game loop, movement, collision detection, health, scoring and drops. |
+| **04 — The result** | Login, shop, upgrades, audio and persistent player progress. |
+| **05 — Player lab** | A playable browser demo with live difficulty, ship, speed, health and audio settings. |
 
----
+### The original game
 
-## 📂 Project Structure
+<div align="center">
 
-```text
-SpaceShooter
-│
-├── Data
-├── Managers
-├── Models
-├── Resources
-├── UI
-└── Program.cs
+| Main menu | Audio settings | In-game shop |
+|:---:|:---:|:---:|
+| ![Main menu](public/game/main-menu.png) | ![Options](public/game/options.png) | ![Shop](public/game/shop.png) |
+
+</div>
+
+## 🧩 Technology
+
+**Desktop game:** C#, .NET 10, Windows Forms, SQLite, NAudio.
+
+**Interactive showcase:** Next.js 15, React 19, TypeScript, HTML Canvas and custom CSS animations.
+
+**Publishing:** GitHub Actions and GitHub Pages.
+
+## ▶️ Run locally
+
+### Interactive website
+
+Requirements: Node.js 22 or later.
+
+```bash
+npm ci
+npm run dev
 ```
 
+Open [http://localhost:3000](http://localhost:3000).
+
+To create the production static export:
+
+```bash
+npm run typecheck
+npm run build
+```
+
+The generated website is written to `out/`.
+
+### Original Windows game
+
+Open `Final_Ap_Project/Final_Ap_Project.slnx` in Visual Studio with the .NET 10 Windows desktop workload, restore NuGet packages and run the `Final_Ap_Project` project.
+
+## 🎮 Controls
+
+| Action | Key |
+| --- | --- |
+| Move | W / A / S / D or arrow keys |
+| Shoot | Space |
+| Return / pause menu | Esc |
+
+## 🧠 About the player lab
+
+The web playground is a lightweight browser simulation inspired by the original game's mechanics and visual assets. It supports live ship selection, movement speed, firing interval, starting health, difficulty, music, sound effects and visual effects.
+
+The prediction panel is a transparent local heuristic demo. It estimates difficulty and survival from the selected settings and the visitor's prompt; it does not call an external AI model or claim to predict a completed real gameplay session.
+
+## 🌐 Deployment
+
+The `Deploy Space Shooter showcase` workflow builds and publishes the static Next.js export to GitHub Pages whenever changes reach `main`. The repository's Pages publishing source must be set to **GitHub Actions** in Settings → Pages.
+
+**Live website:** https://amirhosseinrezaaie.github.io/SpaceShooter-Game/
+
+## 👨‍🚀 The developer
+
+<div align="center">
+
+### Amirhossein Rezaaie
+
+I enjoy turning ideas into working software, exploring new technologies and learning by building real projects.
+
+This academic project was developed with contributions from **Amirhossein Ebrahimpoor**.
+
+[![GitHub](https://img.shields.io/badge/GitHub-AmirHosseinRezaaie-181717?style=for-the-badge&logo=github)](https://github.com/AmirHosseinRezaaie)
+[![Resume](https://img.shields.io/badge/Portfolio-View_Resume-6c63d9?style=for-the-badge&logo=readthedocs&logoColor=white)](https://amirhosseinrezaaie.github.io/CW_project_Resume-Web-Page/)
+
+| Contact | Link |
+| --- | --- |
+| Telegram | [@amirhossein122333](https://t.me/amirhossein122333) |
+| WhatsApp | [Message me](https://wa.me/qr/DXZSKFSOLGCMH1) |
+| Eitaa | [@amirhossein122333](https://eitaa.com/amirhossein122333) |
+| Email | [ah.rezaaie@gmail.com](mailto:ah.rezaaie@gmail.com) |
+| Instagram | [@amir_hosein122333](https://instagram.com/amir_hosein122333) |
+
+</div>
+
 ---
 
-## 💾 Database
+<div dir="rtl">
 
-SQLite is used to store and manage:
+## ✦ معرفی پروژه
 
-- User accounts
-- Login information
-- Player progress
-- High scores
-- Purchased upgrades
+**Space Shooter** یک بازی سفینه‌ای برای ویندوز است که در مسیر یادگیری زبان #C از صفر طراحی و پیاده‌سازی کردم. معماری شیءگرا، رفتار اختصاصی دشمن‌ها، سیستم موج‌ها، مدیریت برخورد، جان و امتیاز، فروشگاه، ارتقای سفینه و ذخیره اطلاعات بازیکن، بخش‌هایی از این تجربه هستند.
 
----
+در کنار بازی اصلی، یک وب‌سایت تعاملی هم برای نمایش روند ساخت آن آماده شده است. با اسکرول، فصل‌های مختلف پروژه را می‌بینی و در آزمایشگاه پایانی می‌توانی بازی را اجرا کنی، تنظیمات را تغییر بدهی و نتیجه را همان لحظه مشاهده کنی.
 
-## 🏗 Software Design
+**[ورود به وب‌سایت پروژه ↗](https://amirhosseinrezaaie.github.io/SpaceShooter-Game/)**
 
-This project follows the principles of **Object-Oriented Programming (OOP)** by separating responsibilities into independent components.
+### بخش‌های پروژه
 
-The codebase is organized into dedicated managers, models, and user interface layers, making it easier to maintain, extend, and improve over time.
+- طراحی جهان بازی، پس‌زمینه و سفینه‌های قابل انتخاب
+- پنج نوع دشمن با رفتارها و ویژگی‌های متفاوت
+- مدیریت موج‌ها و افزایش تدریجی سختی بازی
+- حلقه بازی، شلیک، برخورد، جان، امتیاز و آیتم‌های ویژه
+- ورود بازیکن، فروشگاه، ارتقا و ذخیره‌سازی SQLite
+- موسیقی پس‌زمینه و کنترل افکت‌های صوتی
+- آزمایشگاه تعاملی نسخه مرورگری
 
----
+### ارتباط با سازنده
 
-## 🚀 Future Improvements
+من **امیرحسین رضایی** هستم. خوشحال می‌شوم درباره پروژه‌ها، ایده‌ها و فرصت‌های همکاری گفت‌وگو کنیم.
 
-- Additional enemy types
-- New boss battles
-- More weapons and special abilities
-- New maps and environments
-- Achievement system
-- Difficulty selection
-- Visual effects and animations
-- Online leaderboard
-- Multiplayer support
+- [گیت‌هاب](https://github.com/AmirHosseinRezaaie)
+- [رزومه](https://amirhosseinrezaaie.github.io/CW_project_Resume-Web-Page/)
+- [تلگرام](https://t.me/amirhossein122333) · [واتساپ](https://wa.me/qr/DXZSKFSOLGCMH1) · [ایتا](https://eitaa.com/amirhossein122333)
+- [ایمیل](mailto:ah.rezaaie@gmail.com) · [اینستاگرام](https://instagram.com/amir_hosein122333)
 
----
+</div>
 
-## 👨‍💻 Developers
+<div align="center">
 
-- **Amirhossein Rezaaie**
-- **Amirhossein Ebrahimpoor**
+**Made with curiosity and a love for building games.** ✦
 
----
-
-## 📚 Academic Purpose
-
-This project was developed as part of the **Advanced Programming** course to demonstrate practical concepts such as object-oriented design, desktop application development, game programming, and database integration using C#.
-
----
-
-## ⭐ Support
-
-If you enjoyed this project or found it useful, consider giving it a **⭐ Star** on GitHub.
-
-Your support is greatly appreciated!
-
----
-
-# خلاصه پروژه
-
-این پروژه یک بازی دوبعدی سبک **Space Shooter** است که با استفاده از **C#، Windows Forms و SQLite** توسعه داده شده است.
-
-بازیکن با کنترل یک سفینه فضایی باید با موج‌های متوالی دشمنان مبارزه کند، امتیاز و سکه جمع‌آوری کند، تجهیزات خود را ارتقا دهد و تا جای ممکن زنده بماند.
-
-در پیاده‌سازی این پروژه از اصول **برنامه‌نویسی شی‌گرا (OOP)**، مدیریت پایگاه داده، طراحی رابط کاربری و ساختار ماژولار استفاده شده است تا علاوه بر تجربه‌ای سرگرم‌کننده، کدی منظم و قابل توسعه ارائه شود.
+</div>
