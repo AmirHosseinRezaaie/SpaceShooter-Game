@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import GameCanvas, { type GameConfig } from "@/components/GameCanvas";
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
@@ -12,47 +12,63 @@ type Stats = { score: number; wave: number; health: number; coins: number };
 
 const copy = {
   fa: {
-    nav: ["شروع سفر", "جهان بازی", "موتور بازی", "منطق و محاسبات", "نتیجه", "آزمایشگاه"],
+    nav: ["شروع سفر", "جهان بازی", "طراحی دشمن‌ها", "منطق بازی", "سیستم‌ها", "آزمایشگاه", "سازنده"],
     heroEyebrow: "یک پروژه شخصی · ساخته‌شده با C#",
     heroTitle: "از یک ایده ساده، تا یک جهان در حال نبرد.",
     heroBody: "این‌جا فقط یک بازی سفینه‌ای را تماشا نمی‌کنی؛ قدم‌به‌قدم وارد دنیایی می‌شوی که از صفر طراحی، برنامه‌نویسی و زنده شده است.",
     explore: "شروع سفر در پروژه", play: "رفتن به آزمایشگاه", scroll: "برای ادامه اسکرول کن",
     chapters: [
-      { eyebrow: "01 / WORLD BUILDING", title: "اول، جهان بازی شکل گرفت.", body: "قبل از اولین شلیک، باید صحنه‌ای می‌ساختیم که ارزش کشف کردن داشته باشد. پس‌زمینه فضایی، سفینه بازیکن، ناوگان دشمن و آیتم‌های ویژه کنار هم قرار گرفتند تا یک میدان نبرد زنده شکل بگیرد.", points: ["پس‌زمینه فضایی و HUD اختصاصی", "۵ ظاهر برای سفینه بازیکن", "دشمن‌ها، سکه‌ها و Power-upها"], tag: "طراحی صحنه و دارایی‌ها" },
-      { eyebrow: "02 / GAME ARCHITECTURE", title: "هر دشمن، رفتار خودش را دارد.", body: "بازی با چند تصویر متحرک ساخته نشده است. هر موجود یک شیء مستقل است؛ حرکت، جان، امتیاز و شانس رها کردن آیتم دارد. Wave Manager ترکیب دشمن‌ها را با بالا رفتن مرحله تغییر می‌دهد.", points: ["Standard · حرکت مستقیم", "Scout · حرکت موجی سینوسی", "Shooter · شلیک زمان‌بندی‌شده", "Terrorist و Heavy Tank · تهدیدهای ویژه"], tag: "معماری شیءگرا و موج‌ها" },
-      { eyebrow: "03 / THE GAME LOOP", title: "پشت هر فریم، یک زنجیره محاسبه است.", body: "در حلقه بازی، ورودی بازیکن، حرکت موجودات، شلیک‌ها، برخوردها، امتیاز و وضعیت موج با هم هماهنگ می‌شوند. برخورد هر گلوله می‌تواند جان دشمن را کم کند و شکست دشمن، امتیاز یا آیتم جدیدی به میدان برگرداند.", points: ["Game Loop با بازه ۲۰ میلی‌ثانیه", "بررسی برخورد و مدیریت جان", "امتیاز، سکه و ارتقای توانایی‌ها", "ذخیره اطلاعات بازیکن در SQLite"], tag: "قوانین، وضعیت و محاسبات" },
-      { eyebrow: "04 / THE EXPERIENCE", title: "وقتی همه سیستم‌ها کنار هم می‌نشینند.", body: "منوی اصلی، ورود بازیکن، فروشگاه، تنظیمات صدا و میدان نبرد یک تجربه واحد می‌سازند. پیشرفت بازیکن ذخیره می‌شود و با هر موج، ترکیب و قدرت دشمن‌ها جدی‌تر می‌شود.", points: ["ورود و ذخیره اطلاعات بازیکن", "فروشگاه سفینه و ارتقای توانایی‌ها", "موسیقی پس‌زمینه و افکت‌های صوتی", "افزایش تدریجی سختی موج‌ها"], tag: "تجربه نهایی بازی" },
+      { eyebrow: "01 / WORLD BUILDING", title: "جهان بازی را از اجزای مستقل ساختیم.", body: "ساخت بازی را با تعریف قاب تجربه شروع کردیم: پس‌زمینه‌ای که عمق میدان را منتقل کند، سفینه‌ای که همیشه خوانا بماند، HUD برای نمایش وضعیت و آیتم‌هایی که تصمیم بازیکن را عوض می‌کنند. هر دارایی برای نقشی مشخص انتخاب و در صحنه جای‌گذاری شد.", points: ["پس‌زمینه چندلایه و HUD اختصاصی", "۵ پوسته قابل انتخاب برای بازیکن", "سکه، جان، سپر و شلیک سه‌تایی", "تفکیک فایل‌های تصویری و صوتی منابع"], tag: "ترکیب صحنه و دارایی‌ها" },
+      { eyebrow: "02 / ENEMY DESIGN", title: "برای هر دشمن، یک نقش و قانون تعریف کردیم.", body: "روی هر سفینه کلیک کن تا مشخصات و تصمیم طراحی آن را ببینی. تفاوت دشمن‌ها فقط ظاهر نیست: الگوی حرکت، جان، سرعت، امتیاز، نوع حمله و احتمال پاداش تعیین می‌کند بازیکن با چه تهدیدی روبه‌رو است.", points: ["۵ کلاس دشمن با نقش متفاوت", "حرکت مستقیم، موجی و تعقیب بازیکن", "شلیک دشمنان دوربرد و تانک", "جان و پاداش متناسب با سطح تهدید"], tag: "رفتارهای مستقل دشمنان" },
+      { eyebrow: "03 / GAME LOOP", title: "هر فریم، جهان بازی را یک قدم جلو می‌برد.", body: "حلقه اصلی ورودی‌ها را می‌خواند، موقعیت سفینه‌ها را به‌روزرسانی می‌کند، گلوله‌ها و برخوردها را بررسی می‌کند و در پایان صحنه را رسم می‌کند. زمان‌بندی ثابت کمک می‌کند حرکت و شلیک قابل پیش‌بینی و هماهنگ بمانند.", points: ["به‌روزرسانی بازی در بازه ۲۰ میلی‌ثانیه", "حرکت با صفحه‌کلید و محدودیت محدوده", "تولید موج و افزایش تدریجی فشار", "رسم فریم و به‌روزرسانی HUD"], tag: "چرخه اجرای بازی" },
+      { eyebrow: "04 / GAME RULES", title: "برخوردها، جان و پاداش‌ها یک زنجیره‌اند.", body: "برخورد گلوله با دشمن ابتدا جان را کم می‌کند؛ با رسیدن جان به صفر، دشمن حذف می‌شود، امتیاز متناسب ثبت می‌شود و ممکن است سکه یا Power-up رها کند. برخورد بازیکن با دشمن یا گلوله هم جان را کم می‌کند، مگر سپر فعال باشد.", points: ["بررسی محدوده برخورد گلوله و دشمن", "محاسبه جان و امتیاز بر اساس کلاس", "احتمال افتادن سکه و آیتم کمکی", "سپر موقت و شلیک سه‌تایی زمان‌دار"], tag: "قوانین و محاسبات گیم‌پلی" },
+      { eyebrow: "05 / COMPLETE EXPERIENCE", title: "سیستم‌ها به یک بازی کامل متصل شدند.", body: "منوی اصلی، ورود بازیکن، فروشگاه، تنظیمات، موسیقی و میدان نبرد بخش‌های یک تجربه پیوسته‌اند. اطلاعات بازیکن در SQLite ذخیره می‌شود و سیستم موج، با پیشرفت بازی ترکیب دشمن‌ها و شدت نبرد را تغییر می‌دهد.", points: ["ورود و نگهداری اطلاعات بازیکن", "فروشگاه سفینه و ارتقای توانایی‌ها", "موسیقی و افکت‌های قابل تنظیم", "موج‌های پویا و ذخیره پیشرفت"], tag: "اتصال سیستم‌ها و تجربه نهایی" },
     ],
-    labEyebrow: "05 / PLAYER LAB", labTitle: "حالا نوبت توست؛ قوانین میدان را تغییر بده.", labBody: "تنظیمات را تغییر بده، نتیجه را همان لحظه در بازی ببین و بعد توضیح بده چه تجربه‌ای می‌خواهی. تحلیل‌گر نمایشی، اثر تنظیمات و خواسته‌ات را روی سختی و بقا تخمین می‌زند.",
-    settings: "تنظیمات آزمایش", preview: "میدان آزمایش زنده", model: "پیش‌بینی تحلیل‌گر", modelTag: "تحلیل محلی · بدون اتصال به سرویس AI", promptLabel: "چه تجربه‌ای می‌خواهی؟", promptPlaceholder: "مثلاً: یک نبرد سریع می‌خواهم که شلیک زیاد باشد و فرصت زنده ماندن هم داشته باشم...", predict: "تحلیل تنظیمات من", reset: "شروع دوباره بازی", music: "موسیقی پس‌زمینه", sfx: "افکت‌های صوتی", effects: "ذرات و انفجارها", difficulty: "ضریب سختی", speed: "سرعت سفینه", fireRate: "سرعت شلیک", health: "جان اولیه", musicVolume: "بلندی موسیقی", sfxVolume: "بلندی افکت‌ها", skin: "ظاهر سفینه", statScore: "امتیاز", statWave: "موج", statHealth: "جان", statCoins: "سکه", keys: "حرکت با WASD یا کلیدهای جهت‌دار · شلیک با Space", predictionWave: "موج تخمینی", predictionRisk: "ریسک برخورد", predictionSurvival: "شانس بقا", predictionNote: "این تخمین از روی تنظیمات فعلی و واژه‌های متن تو ساخته شده و نتیجه اجرای واقعی یا مدل هوش مصنوعی متصل نیست.",
+    labEyebrow: "06 / PLAYER LAB", labTitle: "حالا نوبت توست؛ قوانین میدان را تغییر بده.", labBody: "سفینه، سرعت، جان، سختی، موسیقی و افکت‌ها را تغییر بده و اثر هر انتخاب را همان لحظه در نسخه قابل‌بازی ببین. با صفحه‌کلید یا کنترل‌های لمسی سفینه را هدایت کن.",
+    settings: "تنظیمات آزمایش", preview: "میدان آزمایش زنده", reset: "شروع دوباره بازی", music: "موسیقی پس‌زمینه", sfx: "افکت‌های صوتی", effects: "ذرات و انفجارها", difficulty: "ضریب سختی", speed: "سرعت سفینه", fireRate: "سرعت شلیک", health: "جان اولیه", musicVolume: "بلندی موسیقی", sfxVolume: "بلندی افکت‌ها", skin: "ظاهر سفینه", statScore: "امتیاز", statWave: "موج", statHealth: "جان", statCoins: "سکه", keys: "حرکت با WASD یا کلیدهای جهت‌دار · شلیک با Space",
     skins: ["کلاسیک", "قرمز", "صورتی", "سبز", "ویژه"],
     creatorEyebrow: "THE MAKER", creatorTitle: "ساخته‌شده با کنجکاوی، کدنویسی و کلی آزمون‌وخطا.", creatorBody: "من امیرحسین رضایی هستم. این بازی را در مسیر یادگیری C# از ابتدا تا انتها ساختم؛ از طراحی موجودیت‌ها و حلقه بازی تا رابط کاربری، صدا و ذخیره‌سازی اطلاعات.", contact: "راه‌های ارتباطی", github: "گیت‌هاب", resume: "رزومه", email: "ایمیل", telegram: "تلگرام", whatsapp: "واتساپ", eitaa: "ایتا", instagram: "اینستاگرام", source: "مشاهده کد پروژه", footer: "یک پروژه مستقل، با عشق به ساختن بازی‌ها.",
-    modelEasy: "تنظیمات فعلی برای شروع آرام مناسب‌اند.", modelHard: "میدان پرتنش است؛ واکنش سریع و جاخالی دادن اهمیت زیادی دارد.", modelBalanced: "ترکیب فعلی تعادل مناسبی بین سرعت و فشار دشمن ایجاد می‌کند.",
   },
   en: {
-    nav: ["Start", "Game world", "Game engine", "Game logic", "The result", "Playground"],
+    nav: ["Start", "World", "Enemy design", "Game loop", "Game rules", "Playground", "Creator"],
     heroEyebrow: "A personal project · Built with C#",
     heroTitle: "A simple idea. A universe ready for battle.",
     heroBody: "This is more than a space shooter walkthrough. Explore a game designed, programmed and brought to life from the ground up.",
     explore: "Explore the project", play: "Jump to the playground", scroll: "Scroll to continue",
     chapters: [
-      { eyebrow: "01 / WORLD BUILDING", title: "First, we built the world.", body: "Before the first shot, we needed a world worth exploring. A cosmic backdrop, player ships, enemy fleets and power-ups come together to create a living battlefield.", points: ["Cosmic backdrop and custom HUD", "Five player ship skins", "Enemies, coins and power-ups"], tag: "Scene and asset design" },
-      { eyebrow: "02 / GAME ARCHITECTURE", title: "Every enemy has its own behavior.", body: "This is more than a collection of animated images. Each enemy is an independent object with movement, health, score value and drop chance. The Wave Manager changes the fleet as the player progresses.", points: ["Standard · straight movement", "Scout · sine-wave movement", "Shooter · timed attacks", "Terrorist and Heavy Tank · special threats"], tag: "Object-oriented waves" },
-      { eyebrow: "03 / THE GAME LOOP", title: "Every frame runs a chain of calculations.", body: "Player input, entity movement, projectiles, collisions, score and wave state are coordinated inside the game loop. A hit reduces enemy health; a defeated enemy can return points or a new item to the field.", points: ["20 ms game loop", "Collision and health management", "Score, coins and upgrades", "SQLite player persistence"], tag: "Rules, state and calculations" },
-      { eyebrow: "04 / THE EXPERIENCE", title: "All systems become one experience.", body: "The main menu, player login, shop, audio settings and battlefield form one connected experience. Progress is saved, while each wave brings tougher enemy combinations.", points: ["Player login and saved progress", "Ship shop and upgrades", "Background music and sound effects", "Progressive wave difficulty"], tag: "The complete game" },
+      { eyebrow: "01 / WORLD BUILDING", title: "We built the world from independent pieces.", body: "We began by defining the experience: a backdrop with depth, a readable player ship, a HUD for status and pickups that change player decisions. Every asset has a clear role in the battlefield.", points: ["Layered space backdrop and custom HUD", "Five selectable player skins", "Coins, health, shield and triple shot", "Separate image and audio resources"], tag: "Scene and asset composition" },
+      { eyebrow: "02 / ENEMY DESIGN", title: "Every enemy has a role and a rule.", body: "Select an enemy to inspect its behavior and design decisions. Their differences go beyond appearance: movement, health, speed, score, attack and drop chance define each threat.", points: ["Five enemy classes", "Straight, wave and pursuit movement", "Ranged attacks and heavy tank", "Health and rewards scale with threat"], tag: "Independent enemy behavior" },
+      { eyebrow: "03 / GAME LOOP", title: "Every frame moves the world forward.", body: "The main loop reads input, updates ship positions, advances projectiles, checks collisions and renders the scene. A fixed interval keeps movement and firing coordinated.", points: ["20 ms update interval", "Keyboard movement and arena bounds", "Wave spawning and rising pressure", "Frame rendering and HUD updates"], tag: "The game execution cycle" },
+      { eyebrow: "04 / GAME RULES", title: "Collisions, health and rewards form one chain.", body: "A projectile hit reduces enemy health. At zero health, the enemy is removed, its score is awarded and it may drop a coin or power-up. Enemy contact and projectiles damage the player unless a shield is active.", points: ["Projectile and enemy hit checks", "Class-based health and score", "Coin and power-up drop chances", "Timed shield and triple shot"], tag: "Gameplay rules and calculations" },
+      { eyebrow: "05 / COMPLETE EXPERIENCE", title: "All systems connect into one game.", body: "The main menu, player login, shop, settings, music and battlefield form one continuous experience. SQLite stores player data while waves introduce tougher enemy combinations.", points: ["Player login and persistence", "Ship shop and upgrades", "Configurable music and sound effects", "Dynamic waves and saved progress"], tag: "The complete experience" },
     ],
-    labEyebrow: "05 / PLAYER LAB", labTitle: "Your turn. Change the rules of the battlefield.", labBody: "Tune the settings, watch the game react instantly, then describe the experience you want. The demo analyst estimates how your choices affect difficulty and survival.",
-    settings: "Experiment settings", preview: "Live test arena", model: "Analyst prediction", modelTag: "Local analysis · No AI service connected", promptLabel: "What kind of run do you want?", promptPlaceholder: "For example: I want a fast battle with rapid fire and enough room to survive...", predict: "Analyze my setup", reset: "Restart game", music: "Background music", sfx: "Sound effects", effects: "Particles and explosions", difficulty: "Difficulty", speed: "Ship speed", fireRate: "Fire interval", health: "Starting health", musicVolume: "Music volume", sfxVolume: "Effects volume", skin: "Ship skin", statScore: "Score", statWave: "Wave", statHealth: "Health", statCoins: "Coins", keys: "Move with WASD or arrow keys · Shoot with Space", predictionWave: "Estimated wave", predictionRisk: "Collision risk", predictionSurvival: "Survival chance", predictionNote: "This estimate uses the current settings and words in your prompt. It is not a real gameplay result or a connected AI model.",
+    labEyebrow: "06 / PLAYER LAB", labTitle: "Your turn. Change the rules of the battlefield.", labBody: "Change the ship, speed, health, difficulty, music and effects, then see every choice reflected instantly in the playable build. Pilot with your keyboard or touch controls.",
+    settings: "Experiment settings", preview: "Live test arena", reset: "Restart game", music: "Background music", sfx: "Sound effects", effects: "Particles and explosions", difficulty: "Difficulty", speed: "Ship speed", fireRate: "Fire interval", health: "Starting health", musicVolume: "Music volume", sfxVolume: "Effects volume", skin: "Ship skin", statScore: "Score", statWave: "Wave", statHealth: "Health", statCoins: "Coins", keys: "Move with WASD or arrow keys · Shoot with Space",
     skins: ["Classic", "Red", "Pink", "Green", "Special"],
     creatorEyebrow: "THE MAKER", creatorTitle: "Built with curiosity, code and a lot of trial and error.", creatorBody: "I'm Amirhossein Rezaaie. I built this game from the ground up while learning C#, from entities and the game loop to the UI, audio and persistence.", contact: "Get in touch", github: "GitHub", resume: "Resume", email: "Email", telegram: "Telegram", whatsapp: "WhatsApp", eitaa: "Eitaa", instagram: "Instagram", source: "Explore source code", footer: "An independent project, made with a love for building games.",
-    modelEasy: "Your current setup is a good fit for a relaxed run.", modelHard: "The battlefield is intense. Fast reactions and dodging matter.", modelBalanced: "Your setup creates a balanced mix of speed and enemy pressure.",
   },
 };
 
 const enemyArt = ["enemy-standard.png", "enemy-scout.png", "enemy-shooter.png", "enemy-terrorist.png", "enemy-tank.png"];
 const shipArt = ["player-default.png", "player-red.png", "player-pink.png", "player-green.png", "player-special.png"];
+const enemySpecs = {
+  fa: [
+    { name: "دشمن استاندارد", role: "تهدید پایه · فشار پیوسته", behavior: "در مسیر مستقیم به سمت پایین حرکت می‌کند و الگوی اصلی سنجش مهارت بازیکن است.", stats: "جان ۲ · سرعت ۲ · امتیاز ۱۰", logic: "با برخورد گلوله جانش کم می‌شود؛ پس از نابودی، شانس ۲۰٪ برای سکه دارد." },
+    { name: "جنگنده Scout", role: "هدف چابک · حرکت غیرخطی", behavior: "علاوه بر حرکت رو به پایین، با تابع سینوسی به چپ و راست منحرف می‌شود.", stats: "جان ۲ · سرعت ۳ · امتیاز ۲۰", logic: "سرعت بیشتر و مسیر موجی، زمان‌بندی شلیک را دشوارتر می‌کند؛ شانس سکه ۳۰٪ است." },
+    { name: "ناوشکن Shooter", role: "حمله از فاصله دور", behavior: "در میدان پیشروی می‌کند و با فاصله زمانی مشخص به سمت بازیکن گلوله شلیک می‌کند.", stats: "جان ۴ · سرعت ۲ · امتیاز ۳۰", logic: "فاصله شلیک با سختی موج تنظیم می‌شود؛ شانس سکه ۴۰٪ است." },
+    { name: "تعقیب‌گر Terrorist", role: "تهدید تعقیب‌کننده", behavior: "فاصله تا مرکز سفینه بازیکن را محاسبه می‌کند و در راستای آن حرکت می‌کند تا به هدف نزدیک شود.", stats: "جان ۱۱ · سرعت ۲ · امتیاز ۸۰", logic: "بردار اختلاف موقعیت به فاصله اقلیدسی تقسیم می‌شود تا حرکت جهت‌دار و نرمال داشته باشد؛ شانس سکه ۶۰٪ است." },
+    { name: "تانک سنگین", role: "مینی‌باس · دوام و آتش", behavior: "بدنه بزرگ و جان زیاد دارد و با فاصله زمانی کوتاه‌تر، گلوله‌های سنگین شلیک می‌کند.", stats: "جان ۱۶ · سرعت ۱ · امتیاز ۱۰۰", logic: "فشار اصلی از دوام و شلیک‌های پی‌درپی می‌آید؛ شانس سکه ۸۰٪ است." },
+  ],
+  en: [
+    { name: "Standard enemy", role: "Baseline threat · steady pressure", behavior: "Moves straight down the arena and establishes the baseline challenge for the player.", stats: "HP 2 · Speed 2 · Score 10", logic: "Each hit reduces health; a defeated unit has a 20% coin drop chance." },
+    { name: "Scout fighter", role: "Agile target · nonlinear movement", behavior: "Moves downward while drifting left and right along a sine-wave path.", stats: "HP 2 · Speed 3 · Score 20", logic: "Higher speed and wave movement make shot timing harder; coin chance is 30%." },
+    { name: "Shooter destroyer", role: "Ranged pressure", behavior: "Advances through the arena and fires projectiles at timed intervals.", stats: "HP 4 · Speed 2 · Score 30", logic: "Its firing interval scales with difficulty; coin chance is 40%." },
+    { name: "Terrorist pursuer", role: "Homing threat", behavior: "Calculates the distance to the player ship and moves along that direction to close the gap.", stats: "HP 11 · Speed 2 · Score 80", logic: "The position delta is normalized by Euclidean distance to create directional pursuit; coin chance is 60%." },
+    { name: "Heavy tank", role: "Mini-boss · durability and fire", behavior: "Has a large hitbox and high health, then launches heavy projectiles at timed intervals.", stats: "HP 16 · Speed 1 · Score 100", logic: "Its threat comes from durability and repeated fire; coin chance is 80%." },
+  ],
+};
 
-function ChapterScene({ index }: { index: number }) {
+function ChapterScene({ index, selectedEnemy, onSelectEnemy }: { index: number; selectedEnemy: number; onSelectEnemy: (index: number) => void }) {
   if (index === 0) return (
     <div className="scene scene-world">
       <img className="scene-backdrop" src={asset("/game/background.png")} alt="" />
@@ -73,7 +89,7 @@ function ChapterScene({ index }: { index: number }) {
       <img className="scene-backdrop" src={asset("/game/background.png")} alt="" />
       <span className="scene-chip">WAVE MANAGER / LIVE</span>
       <div className="wave-track"><span>WAVE 01</span><i /><i /><i /><i /><b>+2</b></div>
-      {enemyArt.map((item, i) => <img key={item} className={`wave-enemy wave-enemy-${i}`} src={asset(`/game/${item}`)} alt="Enemy type" />)}
+      {enemyArt.map((item, i) => <button type="button" key={item} className={`wave-enemy-button wave-enemy-${i} ${selectedEnemy === i ? "chosen" : ""}`} onClick={() => onSelectEnemy(i)} aria-label={`Select ${enemySpecs.en[i].name}`} aria-pressed={selectedEnemy === i}><img src={asset(`/game/${item}`)} alt="" /><span>{["01", "02", "03", "04", "05"][i]}</span></button>)}
       <div className="wave-code"><span>SPAWN SEQUENCE</span><b>if (wave &lt;= 3)</b><b>  StandardEnemy()</b><b>  ScoutEnemy()</b><em>Next wave → stronger fleet</em></div>
       <div className="scene-caption"><b>5 ENEMY CLASSES</b><span>Different movement · health · score</span></div>
     </div>
@@ -105,14 +121,15 @@ export default function Showcase() {
   const [active, setActive] = useState(0);
   const [settings, setSettings] = useState<GameConfig>({ ship: shipArt[0], speed: 7, fireRate: 0.2, difficulty: 1, health: 3, effects: true, sfx: false, sfxVolume: 65, music: false, musicVolume: 24 });
   const [stats, setStats] = useState<Stats>({ score: 0, wave: 1, health: 3, coins: 0 });
-  const [prompt, setPrompt] = useState("");
-  const [predicted, setPredicted] = useState(false);
+  const [selectedEnemy, setSelectedEnemy] = useState(0);
+  const [typedEnemy, setTypedEnemy] = useState("");
   const [restartKey, setRestartKey] = useState(0);
   const t = copy[locale];
   const isFa = locale === "fa";
 
   const updateSetting = <K extends keyof GameConfig>(key: K, value: GameConfig[K]) => setSettings((previous) => ({ ...previous, [key]: value }));
   const onStats = useCallback((next: Stats) => setStats(next), []);
+  const selectedSpec = enemySpecs[locale][selectedEnemy];
 
   useEffect(() => {
     document.documentElement.lang = locale;
@@ -130,27 +147,30 @@ export default function Showcase() {
     return () => observer.disconnect();
   }, []);
 
-  const prediction = useMemo(() => {
-    const text = prompt.toLowerCase();
-    const defensive = /آرام|دفاع|زنده|بقا|easy|calm|surviv|defen/.test(text);
-    const aggressive = /سریع|تهاجم|زیاد|سخت|چالش|fast|rapid|aggress|hard|challeng/.test(text);
-    const risk = Math.max(5, Math.min(95, Math.round(26 + settings.difficulty * 23 - settings.speed * 2.1 - (1 / settings.fireRate) * 1.8 + (aggressive ? 8 : 0) - (defensive ? 12 : 0) + (settings.health < 3 ? 12 : 0))));
-    const wave = Math.max(1, Math.round(3 + settings.speed * 0.52 + (1 / settings.fireRate) * 0.55 + settings.health * 0.48 - settings.difficulty * 1.7 + (defensive ? 0.5 : 0) + (aggressive ? 1 : 0)));
-    return { risk, wave, survival: 100 - risk, mood: risk > 58 ? t.modelHard : risk < 28 ? t.modelEasy : t.modelBalanced };
-  }, [prompt, settings.difficulty, settings.speed, settings.fireRate, settings.health, t]);
+  useEffect(() => {
+    const fullText = `${selectedSpec.role}\n\n${selectedSpec.behavior}\n\n${selectedSpec.stats}\n\n${selectedSpec.logic}`;
+    setTypedEnemy("");
+    let position = 0;
+    const timer = window.setInterval(() => {
+      position += 1;
+      setTypedEnemy(fullText.slice(0, position));
+      if (position >= fullText.length) window.clearInterval(timer);
+    }, 19);
+    return () => window.clearInterval(timer);
+  }, [selectedSpec]);
 
   const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-  const chapterIds = ["intro", "world", "architecture", "logic", "result", "lab"];
+  const chapterIds = ["intro", "world", "architecture", "logic", "result", "lab", "creator"];
 
   return (
     <div className={`site-shell ${theme}`}>
-      <div className="ambient ambient-one" /><div className="ambient ambient-two" />
+        <div className="ambient ambient-one" /><div className="ambient ambient-two" />
       <header className="topbar">
         <a className="brand" href="#intro" aria-label="Space Shooter home"><span className="brand-mark">✦</span><span>SPACE<span className="brand-muted">SHOOTER</span></span></a>
         <nav className="top-nav" aria-label="Main navigation">{t.nav.map((label, index) => <button key={label} className={active === index ? "active" : ""} onClick={() => scrollTo(chapterIds[index])}>{label}</button>)}</nav>
-        <div className="top-actions"><button className="language-switch" onClick={() => setLocale(isFa ? "en" : "fa")} aria-label="Switch language">{isFa ? "EN" : "FA"}<span>↗</span></button><button className="theme-switch" onClick={() => setTheme(theme === "dark" ? "light" : "dark")} aria-label="Toggle theme">{theme === "dark" ? "☼" : "☾"}</button></div>
+        <div className="top-actions"><button className="language-switch" onClick={() => setLocale(isFa ? "en" : "fa")} aria-label="Switch language"><span className="control-orbit">◎</span><span>{isFa ? "EN" : "FA"}</span><small>{isFa ? "English" : "فارسی"}</small></button><button className="theme-switch" onClick={() => setTheme(theme === "dark" ? "light" : "dark")} aria-label="Toggle theme"><span>{theme === "dark" ? "☼" : "☾"}</span><small>{theme === "dark" ? (isFa ? "روز" : "Light") : (isFa ? "شب" : "Dark")}</small></button></div>
       </header>
-      <div className="reading-progress"><span style={{ width: `${((active + 1) / 6) * 100}%` }} /></div>
+      <div className="reading-progress"><span style={{ width: `${((active + 1) / 7) * 100}%` }} /></div>
 
       <main>
         <section className="hero section-wrap" id="intro" data-chapter="0">
@@ -175,12 +195,13 @@ export default function Showcase() {
             <div className="chapter-grid">
               <div className="chapter-copy">
                 <span className="eyebrow"><i />{chapter.eyebrow}</span>
-                <span className="chapter-number">0{index + 1}<b> / 04</b></span>
+                <span className="chapter-number">0{index + 1}<b> / 05</b></span>
                 <h2>{chapter.title}</h2><p>{chapter.body}</p>
                 <ul className="chapter-points">{chapter.points.map((point) => <li key={point}><span>✳</span>{point}</li>)}</ul>
+                {index === 1 && <div className="enemy-inspector" aria-live="polite"><div className="inspector-head"><span>◈ {isFa ? "پرونده دشمن انتخاب‌شده" : "SELECTED ENEMY DOSSIER"}</span><b>0{selectedEnemy + 1} / 05</b></div><h3>{selectedSpec.name}</h3><p className="typed-spec">{typedEnemy}<i className="typing-caret" /></p></div>}
                 <span className="chapter-tag">{chapter.tag}<b>↗</b></span>
               </div>
-              <div className={`chapter-stage stage-${index + 1}`}><ChapterScene index={index} /><span className="stage-index">FIG. 0{index + 1} <i> / SPACE SHOOTER</i></span></div>
+              <div className={`chapter-stage stage-${index + 1}`}>{index === 1 && <p className="scene-hint">{isFa ? "برای بررسی، روی هر سفینه کلیک کن" : "CLICK ANY SHIP TO INSPECT IT"}</p>}<ChapterScene index={index} selectedEnemy={selectedEnemy} onSelectEnemy={setSelectedEnemy} /><span className="stage-index">FIG. 0{index + 1} <i> / SPACE SHOOTER</i></span></div>
             </div>
             <div className="chapter-connector"><span>SCROLL TO NEXT SEQUENCE</span><i>↓</i></div>
           </section>
@@ -218,22 +239,12 @@ export default function Showcase() {
                 <div className="game-controls"><span>⌨ {t.keys}</span><div>{(["arrowleft", "arrowup", "arrowdown", "arrowright"] as const).map((key, index) => <button key={key} onPointerDown={() => window.dispatchEvent(new KeyboardEvent("keydown", { key }))} onPointerUp={() => window.dispatchEvent(new KeyboardEvent("keyup", { key }))} onPointerLeave={() => window.dispatchEvent(new KeyboardEvent("keyup", { key }))}>{["←", "↑", "↓", "→"][index]}</button>)}</div></div>
               </div>
 
-              <div className="prediction-panel">
-                <div className="prediction-title"><span className="prediction-icon">⌁</span><div><b>{t.model}</b><small>{t.modelTag}</small></div><span className="prediction-spark">✳</span></div>
-                <label className="prompt-field"><span>{t.promptLabel}</span><textarea value={prompt} onChange={(event) => { setPrompt(event.target.value); setPredicted(false); }} placeholder={t.promptPlaceholder} rows={3} /></label>
-                <button className="predict-button" onClick={() => setPredicted(true)}>{t.predict}<span>✦</span></button>
-                <div className={`prediction-results ${predicted ? "revealed" : ""}`}>
-                  <div className="prediction-metrics"><div><small>{t.predictionWave}</small><b>{prediction.wave}<em>+</em></b></div><div><small>{t.predictionRisk}</small><b>{prediction.risk}<em>%</em></b></div><div><small>{t.predictionSurvival}</small><b>{prediction.survival}<em>%</em></b></div></div>
-                  <p>{prediction.mood}</p>
-                </div>
-                <small className="prediction-disclaimer">ⓘ {t.predictionNote}</small>
-              </div>
             </div>
           </div>
         </section>
 
-        <section className="creator-section section-wrap" id="creator">
-          <div className="creator-card"><div className="creator-avatar"><span>AR</span><i>✦</i></div><div className="creator-copy"><span className="eyebrow"><i />{t.creatorEyebrow}</span><h2>{t.creatorTitle}</h2><p>{t.creatorBody}</p><div className="creator-actions"><a href="https://github.com/AmirHosseinRezaaie" target="_blank" rel="noreferrer">◈ {t.github}</a><a href="https://amirhosseinrezaaie.github.io/CW_project_Resume-Web-Page/" target="_blank" rel="noreferrer">↗ {t.resume}</a><a href="mailto:ah.rezaaie@gmail.com">✉ {t.email}</a></div></div><div className="contact-links"><b>{t.contact}</b><a href="https://t.me/amirhossein122333" target="_blank" rel="noreferrer">↗ {t.telegram}</a><a href="https://wa.me/qr/DXZSKFSOLGCMH1" target="_blank" rel="noreferrer">↗ {t.whatsapp}</a><a href="https://eitaa.com/amirhossein122333" target="_blank" rel="noreferrer">↗ {t.eitaa}</a><a href="https://instagram.com/amir_hosein122333" target="_blank" rel="noreferrer">↗ {t.instagram}</a></div></div>
+        <section className="creator-section section-wrap" id="creator" data-chapter="6">
+          <div className="creator-card"><div className="creator-avatar"><img src="https://github.com/AmirHosseinRezaaie.png" alt="Amirhossein Rezaaie" /><i>✦</i></div><div className="creator-copy"><span className="eyebrow"><i />{t.creatorEyebrow}</span><h2>{t.creatorTitle}</h2><p>{t.creatorBody}</p><div className="creator-actions"><a href="https://github.com/AmirHosseinRezaaie" target="_blank" rel="noreferrer"><span>⌘</span>{t.github}</a><a href="https://amirhosseinrezaaie.github.io/CW_project_Resume-Web-Page/" target="_blank" rel="noreferrer"><span>▤</span>{t.resume}</a><a href="mailto:ah.rezaaie@gmail.com"><span>✉</span>{t.email}</a></div></div><div className="contact-links"><b>{t.contact}</b><a href="https://t.me/amirhossein122333" target="_blank" rel="noreferrer"><span>➤</span>{t.telegram}</a><a href="https://wa.me/qr/DXZSKFSOLGCMH1" target="_blank" rel="noreferrer"><span>◉</span>{t.whatsapp}</a><a href="https://eitaa.com/amirhossein122333" target="_blank" rel="noreferrer"><span>✳</span>{t.eitaa}</a><a href="https://instagram.com/amir_hosein122333" target="_blank" rel="noreferrer"><span>◎</span>{t.instagram}</a></div></div>
           <footer className="site-footer"><a className="brand" href="#intro"><span className="brand-mark">✦</span><span>SPACE<span className="brand-muted">SHOOTER</span></span></a><span>{t.footer}</span><a href="https://github.com/AmirHosseinRezaaie/SpaceShooter-Game" target="_blank" rel="noreferrer">{t.source} ↗</a><span>© 2026</span></footer>
         </section>
       </main>
