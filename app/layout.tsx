@@ -17,7 +17,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
   return (
     <html lang="fa" dir="rtl" suppressHydrationWarning>
-      <body>
+      <body className="font-fa">
         <style>{`@font-face{font-family:Vazirmatn;src:url('${basePath}/fonts/vazirmatn-variable.woff2') format('woff2');font-weight:100 900;font-display:swap}`}</style>
         {children}
       </body>
