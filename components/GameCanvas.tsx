@@ -19,12 +19,13 @@ type Props = {
   config: GameConfig;
   active: boolean;
   restartKey: number;
+  inputRef: { current: { x: number; y: number; shooting: boolean } };
   onStats: (stats: { score: number; wave: number; health: number; coins: number }) => void;
 };
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
-export default function GameCanvas({ config, active, restartKey, onStats }: Props) {
+export default function GameCanvas({ config, active, restartKey, inputRef, onStats }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const configRef = useRef(config);
   const musicRef = useRef<HTMLAudioElement | null>(null);
@@ -172,13 +173,16 @@ export default function GameCanvas({ config, active, restartKey, onStats }: Prop
       ctx.globalAlpha = 1;
 
       const speed = current.speed * 0.9;
+      const touch = inputRef.current;
       if (keys.has("arrowleft") || keys.has("a")) player.x -= speed;
       if (keys.has("arrowright") || keys.has("d")) player.x += speed;
       if (keys.has("arrowup") || keys.has("w")) player.y -= speed;
       if (keys.has("arrowdown") || keys.has("s")) player.y += speed;
+      player.x += touch.x * speed;
+      player.y += touch.y * speed;
       player.x = Math.max(8, Math.min(W - player.w - 8, player.x));
       player.y = Math.max(95, Math.min(H - player.h - 8, player.y));
-      if ((keys.has(" ") || keys.has("space")) && time - lastShot > current.fireRate * 1000) {
+      if ((keys.has(" ") || keys.has("space") || touch.shooting) && time - lastShot > current.fireRate * 1000) {
         if (frame < tripleUntil) {
           bullets.push({ x: player.x + 18, y: player.y + 7, vx: -2.1, vy: -10.5 });
           bullets.push({ x: player.x + player.w / 2 - 3, y: player.y + 5, vx: 0, vy: -11 });
