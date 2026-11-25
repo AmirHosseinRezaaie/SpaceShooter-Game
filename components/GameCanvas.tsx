@@ -38,7 +38,7 @@ export default function GameCanvas({ config, active, restartKey, onStats }: Prop
     music.volume = configRef.current.musicVolume / 100;
     musicRef.current = music;
     soundsRef.current = {
-      shot: new Audio(`${BASE}/game/coin.wav`),
+      coin: new Audio(`${BASE}/game/coin.wav`),
       hit: new Audio(`${BASE}/game/hit.wav`),
       boom: new Audio(`${BASE}/game/explosion.wav`),
     };
@@ -75,11 +75,14 @@ export default function GameCanvas({ config, active, restartKey, onStats }: Prop
       standard: image("enemy-standard.png"),
       scout: image("enemy-scout.png"),
       shooter: image("enemy-shooter.png"),
+      terrorist: image("enemy-terrorist.png"),
       tank: image("enemy-tank.png"),
       bullet: image("player-bullet.png"),
       enemyBullet: image("enemy-bullet.png"),
       coin: image("coin.png"),
       health: image("health.png"),
+      shield: image("shield.png"),
+      tripleShot: image("triple-shot.png"),
     };
     const keys = new Set<string>();
     const player = { x: W / 2, y: H - 88, w: 76, h: 76 };
@@ -87,11 +90,14 @@ export default function GameCanvas({ config, active, restartKey, onStats }: Prop
     let enemyBullets: { x: number; y: number; vy: number }[] = [];
     let enemies: { x: number; y: number; hp: number; maxHp: number; speed: number; kind: string; phase: number; lastShot: number }[] = [];
     let coins: { x: number; y: number }[] = [];
+    let powerUps: { x: number; y: number; kind: string }[] = [];
     let particles: { x: number; y: number; life: number; color: string }[] = [];
     let stars = Array.from({ length: 95 }, () => ({ x: Math.random() * W, y: Math.random() * H, z: Math.random() * 1.8 + 0.4 }));
     let score = 0;
     let wave = 1;
     let health = configRef.current.health;
+    let shieldUntil = 0;
+    let tripleUntil = 0;
     let collected = 0;
     let spawned = 0;
     let spawnClock = 0;
@@ -116,10 +122,13 @@ export default function GameCanvas({ config, active, restartKey, onStats }: Prop
       enemyBullets = [];
       enemies = [];
       coins = [];
+      powerUps = [];
       particles = [];
       score = 0;
       wave = 1;
       health = configRef.current.health;
+      shieldUntil = 0;
+      tripleUntil = 0;
       collected = 0;
       spawned = 0;
       spawnClock = 0;
@@ -128,6 +137,7 @@ export default function GameCanvas({ config, active, restartKey, onStats }: Prop
     reset();
 
     const keyDown = (event: KeyboardEvent) => {
+      if (event.target instanceof HTMLElement && event.target.closest("input, textarea, select, [contenteditable='true']")) return;
       const key = event.key.toLowerCase();
       if (["arrowup", "arrowdown", "arrowleft", "arrowright", " "].includes(key)) event.preventDefault();
       keys.add(key);
@@ -161,7 +171,7 @@ export default function GameCanvas({ config, active, restartKey, onStats }: Prop
       });
       ctx.globalAlpha = 1;
 
-      const speed = current.speed * 0.72;
+      const speed = current.speed * 0.9;
       if (keys.has("arrowleft") || keys.has("a")) player.x -= speed;
       if (keys.has("arrowright") || keys.has("d")) player.x += speed;
       if (keys.has("arrowup") || keys.has("w")) player.y -= speed;
@@ -169,21 +179,33 @@ export default function GameCanvas({ config, active, restartKey, onStats }: Prop
       player.x = Math.max(8, Math.min(W - player.w - 8, player.x));
       player.y = Math.max(95, Math.min(H - player.h - 8, player.y));
       if ((keys.has(" ") || keys.has("space")) && time - lastShot > current.fireRate * 1000) {
-        bullets.push({ x: player.x + player.w / 2 - 3, y: player.y + 5, vx: 0, vy: -11 });
+        if (frame < tripleUntil) {
+          bullets.push({ x: player.x + 18, y: player.y + 7, vx: -2.1, vy: -10.5 });
+          bullets.push({ x: player.x + player.w / 2 - 3, y: player.y + 5, vx: 0, vy: -11 });
+          bullets.push({ x: player.x + player.w - 24, y: player.y + 7, vx: 2.1, vy: -10.5 });
+        } else {
+          bullets.push({ x: player.x + player.w / 2 - 3, y: player.y + 5, vx: 0, vy: -11 });
+        }
         lastShot = time;
       }
 
       spawnClock++;
-      const spawnEvery = Math.max(18, 70 / current.difficulty);
-      if (spawnClock >= spawnEvery && spawned < 4 + wave * 2) {
+      const spawnEvery = Math.max(20, 50 / current.difficulty);
+      const enemiesPerWave = 3 + wave * 2;
+      if (spawnClock >= spawnEvery && spawned < enemiesPerWave) {
         const roll = Math.random();
-        const kind = wave > 5 && roll > 0.82 ? "tank" : wave > 2 && roll > 0.58 ? "shooter" : roll > 0.3 ? "scout" : "standard";
-        const hp = kind === "tank" ? 8 : kind === "shooter" ? 3 : 1;
-        enemies.push({ x: 36 + Math.random() * (W - 100), y: -72, hp, maxHp: hp, speed: (1.2 + wave * 0.14) * current.difficulty, kind, phase: Math.random() * 6, lastShot: frame });
+        let kind: string;
+        if (wave <= 3) kind = roll < 0.7 ? "standard" : "scout";
+        else if (wave <= 6) kind = roll < 0.5 ? "standard" : roll < 0.75 ? "scout" : "shooter";
+        else if (wave <= 9) kind = roll < 0.3 ? "standard" : roll < 0.55 ? "scout" : roll < 0.85 ? "shooter" : "terrorist";
+        else kind = roll < 0.2 ? "standard" : roll < 0.4 ? "scout" : roll < 0.7 ? "shooter" : roll < 0.9 ? "terrorist" : "tank";
+        const hp = kind === "tank" ? 16 : kind === "terrorist" ? 11 : kind === "shooter" ? 4 : 2;
+        const baseSpeed = kind === "tank" ? 1 : kind === "scout" ? 3 : 2;
+        enemies.push({ x: 36 + Math.random() * (W - 100), y: -72, hp, maxHp: hp, speed: baseSpeed * (1 + 0.1 * wave) * current.difficulty, kind, phase: Math.random() * 6, lastShot: frame });
         spawned++;
         spawnClock = 0;
       }
-      if (spawned >= 4 + wave * 2 && enemies.length === 0) {
+      if (spawned >= enemiesPerWave && enemies.length === 0) {
         wave++;
         spawned = 0;
         score += 60;
@@ -200,10 +222,17 @@ export default function GameCanvas({ config, active, restartKey, onStats }: Prop
       enemies.forEach((enemy) => {
         enemy.y += enemy.speed;
         if (enemy.kind === "scout") enemy.x += Math.sin(frame / 24 + enemy.phase) * 1.6;
-        const enemyImage = enemy.kind === "tank" ? art.tank : enemy.kind === "shooter" ? art.shooter : enemy.kind === "scout" ? art.scout : art.standard;
-        const size = enemy.kind === "tank" ? 72 : 48;
+        if (enemy.kind === "terrorist") {
+          const dx = player.x + player.w / 2 - (enemy.x + 25);
+          const dy = player.y + player.h / 2 - (enemy.y + 25);
+          const distance = Math.hypot(dx, dy) || 1;
+          enemy.x += dx / distance * enemy.speed;
+          enemy.y += dy / distance * enemy.speed;
+        }
+        const enemyImage = enemy.kind === "tank" ? art.tank : enemy.kind === "terrorist" ? art.terrorist : enemy.kind === "shooter" ? art.shooter : enemy.kind === "scout" ? art.scout : art.standard;
+        const size = enemy.kind === "tank" ? 72 : enemy.kind === "terrorist" ? 52 : 48;
         drawImage(enemyImage, enemy.x, enemy.y, size, size);
-        if ((enemy.kind === "shooter" || enemy.kind === "tank") && frame - enemy.lastShot > (enemy.kind === "tank" ? 115 : 82) / current.difficulty) {
+        if ((enemy.kind === "shooter" || enemy.kind === "tank") && frame - enemy.lastShot > (enemy.kind === "tank" ? 175 : 75) / current.difficulty) {
           enemyBullets.push({ x: enemy.x + size / 2, y: enemy.y + size, vy: 4.2 * current.difficulty });
           enemy.lastShot = frame;
         }
@@ -213,16 +242,18 @@ export default function GameCanvas({ config, active, restartKey, onStats }: Prop
         }
         if (enemy.y > player.y - 14 && enemy.y < player.y + player.h - 10 && enemy.x < player.x + player.w - 8 && enemy.x + size > player.x + 8) {
           enemy.y = H + 100;
-          health = Math.max(0, health - 1);
-          playSound("hit");
-          if (current.effects) for (let i = 0; i < 12; i++) particles.push({ x: player.x + 38, y: player.y + 38, life: 28, color: "#fb7185" });
+          if (frame >= shieldUntil) {
+            health = Math.max(0, health - 1);
+            playSound("hit");
+            if (current.effects) for (let i = 0; i < 12; i++) particles.push({ x: player.x + 38, y: player.y + 38, life: 28, color: "#fb7185" });
+          }
         }
       });
       enemyBullets = enemyBullets.filter((bullet) => bullet.y < H + 20);
       enemyBullets.forEach((bullet) => {
         bullet.y += bullet.vy;
         drawImage(art.enemyBullet, bullet.x - 5, bullet.y, 10, 22);
-        if (bullet.x > player.x + 10 && bullet.x < player.x + player.w - 10 && bullet.y > player.y + 12 && bullet.y < player.y + player.h) {
+        if (frame >= shieldUntil && bullet.x > player.x + 10 && bullet.x < player.x + player.w - 10 && bullet.y > player.y + 12 && bullet.y < player.y + player.h) {
           bullet.y = H + 40;
           health = Math.max(0, health - 1);
           playSound("hit");
@@ -232,13 +263,18 @@ export default function GameCanvas({ config, active, restartKey, onStats }: Prop
 
       bullets.forEach((bullet) => {
         enemies.forEach((enemy) => {
-          const size = enemy.kind === "tank" ? 72 : 48;
+          const size = enemy.kind === "tank" ? 72 : enemy.kind === "terrorist" ? 52 : 48;
           if (bullet.x > enemy.x && bullet.x < enemy.x + size && bullet.y > enemy.y && bullet.y < enemy.y + size && enemy.hp > 0) {
             enemy.hp--;
             bullet.y = -100;
             if (enemy.hp <= 0) {
-              score += enemy.kind === "tank" ? 100 : enemy.kind === "shooter" ? 30 : enemy.kind === "scout" ? 20 : 10;
-              if (Math.random() < 0.28) coins.push({ x: enemy.x + size / 2, y: enemy.y + size / 2 });
+              score += enemy.kind === "tank" ? 100 : enemy.kind === "terrorist" ? 80 : enemy.kind === "shooter" ? 30 : enemy.kind === "scout" ? 20 : 10;
+              const coinChance = enemy.kind === "tank" ? 0.8 : enemy.kind === "terrorist" ? 0.6 : enemy.kind === "shooter" ? 0.4 : enemy.kind === "scout" ? 0.3 : 0.2;
+              if (Math.random() < coinChance) coins.push({ x: enemy.x + size / 2, y: enemy.y + size / 2 });
+              else {
+                const kinds = ["health", "shield", "tripleShot"];
+                powerUps.push({ x: enemy.x + size / 2, y: enemy.y + size / 2, kind: kinds[Math.floor(Math.random() * kinds.length)] });
+              }
               playSound("boom");
               if (current.effects) for (let i = 0; i < 13; i++) particles.push({ x: enemy.x + size / 2, y: enemy.y + size / 2, life: 24, color: "#fb923c" });
             }
@@ -253,6 +289,19 @@ export default function GameCanvas({ config, active, restartKey, onStats }: Prop
           coin.y = H + 40; collected++; score += 5; playSound("coin");
         }
       });
+      powerUps = powerUps.filter((item) => item.y < H + 30);
+      powerUps.forEach((item) => {
+        item.y += 2.1;
+        const itemImage = item.kind === "shield" ? art.shield : item.kind === "tripleShot" ? art.tripleShot : art.health;
+        drawImage(itemImage, item.x - 15, item.y - 15, 30, 30);
+        if (Math.abs(item.x - (player.x + 38)) < 38 && Math.abs(item.y - (player.y + 38)) < 42) {
+          item.y = H + 40;
+          if (item.kind === "health") health = Math.min(5, health + 1);
+          if (item.kind === "shield") shieldUntil = frame + 300;
+          if (item.kind === "tripleShot") tripleUntil = frame + 300;
+          playSound("coin");
+        }
+      });
       if (current.effects) {
         particles = particles.filter((particle) => particle.life > 0);
         particles.forEach((particle) => {
@@ -265,6 +314,10 @@ export default function GameCanvas({ config, active, restartKey, onStats }: Prop
       } else particles = [];
 
       drawImage(art.player, player.x, player.y, player.w, player.h);
+      if (frame < shieldUntil) {
+        ctx.strokeStyle = "rgba(90,230,255,.9)"; ctx.lineWidth = 3;
+        ctx.beginPath(); ctx.ellipse(player.x + 38, player.y + 38, 48, 49, 0, 0, Math.PI * 2); ctx.stroke();
+      }
       if (health > 0) {
         ctx.fillStyle = "rgba(5, 10, 24, .76)";
         ctx.fillRect(18, 16, W - 36, 52);
@@ -274,6 +327,7 @@ export default function GameCanvas({ config, active, restartKey, onStats }: Prop
         ctx.fillStyle = "#fbbf24"; ctx.fillText(`COINS  ${collected}`, 310, 48);
         ctx.fillStyle = "#67e8f9"; ctx.fillText(`WAVE  ${wave}`, 510, 48);
         ctx.fillStyle = "#fb7185"; ctx.fillText(`HP  ${"♥".repeat(health)}${"♡".repeat(Math.max(0, 5 - health))}`, 700, 48);
+        if (frame < tripleUntil) { ctx.fillStyle = "#f0abfc"; ctx.fillText("TRIPLE SHOT", 700, 88); }
       } else {
         ctx.fillStyle = "rgba(3, 7, 18, .78)"; ctx.fillRect(0, 0, W, H);
         ctx.textAlign = "center";

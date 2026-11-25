@@ -103,7 +103,7 @@ export default function Showcase() {
   const [locale, setLocale] = useState<Locale>("fa");
   const [theme, setTheme] = useState<Theme>("dark");
   const [active, setActive] = useState(0);
-  const [settings, setSettings] = useState<GameConfig>({ ship: shipArt[0], speed: 6, fireRate: 0.42, difficulty: 1, health: 3, effects: true, sfx: false, sfxVolume: 65, music: false, musicVolume: 24 });
+  const [settings, setSettings] = useState<GameConfig>({ ship: shipArt[0], speed: 7, fireRate: 0.2, difficulty: 1, health: 3, effects: true, sfx: false, sfxVolume: 65, music: false, musicVolume: 24 });
   const [stats, setStats] = useState<Stats>({ score: 0, wave: 1, health: 3, coins: 0 });
   const [prompt, setPrompt] = useState("");
   const [predicted, setPredicted] = useState(false);
@@ -215,7 +215,7 @@ export default function Showcase() {
                 <div className="game-panel-top"><div><span className="live-dot">● LIVE SESSION</span><b>{t.preview}</b></div><button className="restart-button" onClick={() => setRestartKey((value) => value + 1)}>↻ {t.reset}</button></div>
                 <div className="game-frame"><GameCanvas config={settings} active={true} restartKey={restartKey} onStats={onStats} /></div>
                 <div className="game-stats">{[[t.statScore, stats.score.toString().padStart(4, "0")], [t.statWave, stats.wave.toString().padStart(2, "0")], [t.statHealth, stats.health.toString()], [t.statCoins, stats.coins.toString().padStart(2, "0")]].map(([label, value]) => <div key={label}><small>{label}</small><b>{value}</b></div>)}</div>
-                <div className="game-controls"><span>⌨ {t.keys}</span><div><button onMouseDown={() => window.dispatchEvent(new KeyboardEvent("keydown", { key: "arrowleft" }))} onMouseUp={() => window.dispatchEvent(new KeyboardEvent("keyup", { key: "arrowleft" }))}>←</button><button onMouseDown={() => window.dispatchEvent(new KeyboardEvent("keydown", { key: "arrowup" }))} onMouseUp={() => window.dispatchEvent(new KeyboardEvent("keyup", { key: "arrowup" }))}>↑</button><button onMouseDown={() => window.dispatchEvent(new KeyboardEvent("keydown", { key: "arrowdown" }))} onMouseUp={() => window.dispatchEvent(new KeyboardEvent("keyup", { key: "arrowdown" }))}>↓</button><button onMouseDown={() => window.dispatchEvent(new KeyboardEvent("keydown", { key: "arrowright" }))} onMouseUp={() => window.dispatchEvent(new KeyboardEvent("keyup", { key: "arrowright" }))}>→</button></div></div>
+                <div className="game-controls"><span>⌨ {t.keys}</span><div>{(["arrowleft", "arrowup", "arrowdown", "arrowright"] as const).map((key, index) => <button key={key} onPointerDown={() => window.dispatchEvent(new KeyboardEvent("keydown", { key }))} onPointerUp={() => window.dispatchEvent(new KeyboardEvent("keyup", { key }))} onPointerLeave={() => window.dispatchEvent(new KeyboardEvent("keyup", { key }))}>{["←", "↑", "↓", "→"][index]}</button>)}</div></div>
               </div>
 
               <div className="prediction-panel">

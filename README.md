@@ -6,14 +6,14 @@
 
 **An object-oriented space shooter, built from scratch with C# and Windows Forms — now presented through an interactive, playable web experience.**
 
-[![Live showcase](https://img.shields.io/badge/Live_Showcase-Visit_the_site-78e6f2?style=for-the-badge&logo=googlechrome&logoColor=07111b)](https://amirhosein5969.github.io/SpaceShooter-Game/)
+[![Live showcase](https://img.shields.io/badge/Live_Showcase-Visit_the_site-78e6f2?style=for-the-badge&logo=googlechrome&logoColor=07111b)](https://amirhosseinrezaaie.github.io/SpaceShooter-Game/)
 [![C#](https://img.shields.io/badge/C%23-.NET_10-68217a?style=flat-square&logo=dotnet)](https://dotnet.microsoft.com/)
 [![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=nextdotjs)](https://nextjs.org/)
 [![GitHub Pages](https://img.shields.io/badge/Deployed_with-GitHub_Pages-222?style=flat-square&logo=github)](https://pages.github.com/)
 
 <br />
 
-**[Explore the live experience ↗](https://amirhosein5969.github.io/SpaceShooter-Game/)** · **[Meet the developer](#-the-developer)** · **[فارسی](#-معرفی-پروژه)**
+**[Explore the live experience ↗](https://amirhosseinrezaaie.github.io/SpaceShooter-Game/)** · **[Meet the developer](#-the-developer)** · **[فارسی](#-معرفی-پروژه)**
 
 <br />
 
@@ -99,7 +99,7 @@ The prediction panel is a transparent local heuristic demo. It estimates difficu
 
 The `Deploy Space Shooter showcase` workflow builds and publishes the static Next.js export to GitHub Pages whenever changes reach `main`. The repository's Pages publishing source must be set to **GitHub Actions** in Settings → Pages.
 
-**Live website:** https://amirhosein5969.github.io/SpaceShooter-Game/
+**Live website:** https://amirhosseinrezaaie.github.io/SpaceShooter-Game/
 
 ## 👨‍🚀 The developer
 
@@ -134,7 +134,7 @@ This academic project was developed with contributions from **Amirhossein Ebrahi
 
 در کنار بازی اصلی، یک وب‌سایت تعاملی هم برای نمایش روند ساخت آن آماده شده است. با اسکرول، فصل‌های مختلف پروژه را می‌بینی و در آزمایشگاه پایانی می‌توانی بازی را اجرا کنی، تنظیمات را تغییر بدهی و نتیجه را همان لحظه مشاهده کنی.
 
-**[ورود به وب‌سایت پروژه ↗](https://amirhosein5969.github.io/SpaceShooter-Game/)**
+**[ورود به وب‌سایت پروژه ↗](https://amirhosseinrezaaie.github.io/SpaceShooter-Game/)**
 
 ### بخش‌های پروژه
 
