@@ -430,3 +430,12 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# Local AI / agent instructions and private assistant configuration
+AGENTS.md
+**/AGENTS.md
+.github/agents/
+.github/instructions/
+.cursor/
+.claude/
+.copilot/

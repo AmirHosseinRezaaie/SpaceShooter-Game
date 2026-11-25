@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import GameCanvas, { type GameConfig } from "@/components/GameCanvas";
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
@@ -68,6 +68,37 @@ const enemySpecs = {
   ],
 };
 
+function LiveRecordScene() {
+  const [record, setRecord] = useState({ score: 2480, wave: 7, health: 3, coins: 5, saved: false });
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setRecord((previous) => {
+        const lostLife = previous.score > 0 && previous.score % 500 === 0;
+        const health = lostLife ? previous.health - 1 : previous.health;
+        return {
+          score: previous.score + 25,
+          wave: previous.wave + (previous.score > 0 && previous.score % 500 === 0 ? 1 : 0),
+          health: health <= 0 ? 3 : health,
+          coins: previous.coins + (previous.score % 250 === 0 ? 1 : 0),
+          saved: !previous.saved,
+        };
+      });
+    }, 950);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="scene scene-finale">
+      <img className="scene-backdrop" src={asset("/game/background.png")} alt="Animated gameplay and player progress" />
+      <span className="scene-chip">LIVE RUN / PLAYER 001</span>
+      <div className="arcade-hud"><span>SCORE <b>{record.score.toString().padStart(5, "0")}</b></span><span>WAVE <b>{record.wave.toString().padStart(2, "0")}</b></span><span>HP <b className="life-counter">{"♥ ".repeat(record.health)}{"♡ ".repeat(3 - record.health)}</b></span><span>COINS <b>{record.coins.toString().padStart(2, "0")}</b></span></div>
+      <div className="arcade-action"><img className="arcade-enemy arcade-enemy-one" src={asset("/game/enemy-scout.png")} alt=""/><img className="arcade-enemy arcade-enemy-two" src={asset("/game/enemy-shooter.png")} alt=""/><img className="arcade-player" src={asset("/game/player-default.png")} alt=""/><i className="arcade-shot shot-one"/><i className="arcade-shot shot-two"/><i className="arcade-burst"/></div>
+      <div className="save-status"><span className="save-pulse"/><div><b>{record.saved ? "PLAYER RECORD SAVED" : "UPDATING PLAYER RECORD"}</b><small>SQLITE · SCORE / WAVE / COINS / LIVES</small></div><strong>{record.saved ? "SYNCED" : "SAVING…"}</strong></div>
+      <div className="scene-caption"><b>THE COMPLETE EXPERIENCE</b><span>Gameplay · Progress · Persistent player data</span></div>
+    </div>
+  );
+}
+
 function ChapterScene({ index, selectedEnemy, onSelectEnemy }: { index: number; selectedEnemy: number; onSelectEnemy: (index: number) => void }) {
   if (index === 0) return (
     <div className="scene scene-world">
@@ -103,12 +134,16 @@ function ChapterScene({ index, selectedEnemy, onSelectEnemy }: { index: number; 
       <div className="scene-caption"><b>EVERY FRAME COUNTS</b><span>Input → Update → Detect → Render</span></div>
     </div>
   );
-  return (
-    <div className="scene scene-finale">
-      <img className="scene-backdrop" src={asset("/game/gameplay.png")} alt="Screenshot of the original game in action" />
-      <div className="finale-overlay"><span className="scene-chip">SYSTEMS ONLINE</span><div className="finale-stats"><b>250 <small>SCORE</small></b><b>05 <small>COINS</small></b><b>07 <small>WAVE</small></b></div><span className="finale-ready">✦ ALL SYSTEMS CONNECTED</span></div>
+  if (index === 3) return (
+    <div className="scene scene-rules">
+      <img className="scene-backdrop" src={asset("/game/background.png")} alt="" />
+      <span className="scene-chip">COLLISION / REWARD PIPELINE</span>
+      <div className="rules-flow"><div><b>01</b><span>PROJECTILE HIT</span><strong>Enemy HP − 1</strong></div><i>↓</i><div><b>02</b><span>HP REACHES ZERO</span><strong>Enemy removed</strong></div><i>↓</i><div><b>03</b><span>REWARD CALCULATION</span><strong>Score + Coin chance</strong></div></div>
+      <div className="rules-ships"><img src={asset("/game/player-bullet.png")} alt=""/><img src={asset("/game/enemy-tank.png")} alt=""/><img src={asset("/game/coin.png")} alt=""/></div>
+      <div className="scene-caption"><b>GAMEPLAY RULES</b><span>Hit detection · Health · Rewards</span></div>
     </div>
   );
+  return <LiveRecordScene />;
 }
 
 function RangeControl({ label, value, min, max, step = 1, onChange, suffix = "" }: { label: string; value: number; min: number; max: number; step?: number; onChange: (value: number) => void; suffix?: string }) {
@@ -124,6 +159,8 @@ export default function Showcase() {
   const [selectedEnemy, setSelectedEnemy] = useState(0);
   const [typedEnemy, setTypedEnemy] = useState("");
   const [restartKey, setRestartKey] = useState(0);
+  const touchInput = useRef({ x: 0, y: 0, shooting: false });
+  const [stickPosition, setStickPosition] = useState({ x: 0, y: 0 });
   const t = copy[locale];
   const isFa = locale === "fa";
 
@@ -148,6 +185,19 @@ export default function Showcase() {
   }, []);
 
   useEffect(() => {
+    const contacts = document.querySelector<HTMLElement>(".contact-links");
+    if (!contacts) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        contacts.classList.add("is-visible");
+        observer.disconnect();
+      }
+    }, { threshold: 0.25, rootMargin: "0px 0px -8% 0px" });
+    observer.observe(contacts);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
     const fullText = `${selectedSpec.role}\n\n${selectedSpec.behavior}\n\n${selectedSpec.stats}\n\n${selectedSpec.logic}`;
     setTypedEnemy("");
     let position = 0;
@@ -160,6 +210,24 @@ export default function Showcase() {
   }, [selectedSpec]);
 
   const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  const moveStick = (event: React.PointerEvent<HTMLButtonElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const dx = event.clientX - (rect.left + rect.width / 2);
+    const dy = event.clientY - (rect.top + rect.height / 2);
+    const radius = rect.width * 0.31;
+    const distance = Math.hypot(dx, dy) || 1;
+    const scale = Math.min(1, radius / distance);
+    const x = (dx * scale) / radius;
+    const y = (dy * scale) / radius;
+    touchInput.current.x = x;
+    touchInput.current.y = y;
+    setStickPosition({ x: dx * scale, y: dy * scale });
+  };
+  const releaseStick = () => {
+    touchInput.current.x = 0;
+    touchInput.current.y = 0;
+    setStickPosition({ x: 0, y: 0 });
+  };
   const chapterIds = ["intro", "world", "architecture", "logic", "result", "lab", "creator"];
 
   return (
@@ -234,9 +302,13 @@ export default function Showcase() {
             <div className="lab-main">
               <div className="game-panel">
                 <div className="game-panel-top"><div><span className="live-dot">● LIVE SESSION</span><b>{t.preview}</b></div><button className="restart-button" onClick={() => setRestartKey((value) => value + 1)}>↻ {t.reset}</button></div>
-                <div className="game-frame"><GameCanvas config={settings} active={true} restartKey={restartKey} onStats={onStats} /></div>
+                <div className="game-frame"><GameCanvas config={settings} active={true} restartKey={restartKey} inputRef={touchInput} onStats={onStats} /></div>
                 <div className="game-stats">{[[t.statScore, stats.score.toString().padStart(4, "0")], [t.statWave, stats.wave.toString().padStart(2, "0")], [t.statHealth, stats.health.toString()], [t.statCoins, stats.coins.toString().padStart(2, "0")]].map(([label, value]) => <div key={label}><small>{label}</small><b>{value}</b></div>)}</div>
                 <div className="game-controls"><span>⌨ {t.keys}</span><div>{(["arrowleft", "arrowup", "arrowdown", "arrowright"] as const).map((key, index) => <button key={key} onPointerDown={() => window.dispatchEvent(new KeyboardEvent("keydown", { key }))} onPointerUp={() => window.dispatchEvent(new KeyboardEvent("keyup", { key }))} onPointerLeave={() => window.dispatchEvent(new KeyboardEvent("keyup", { key }))}>{["←", "↑", "↓", "→"][index]}</button>)}</div></div>
+                <div className="touch-controls" aria-label={isFa ? "کنترل لمسی بازی" : "Touch game controls"}>
+                  <div className="joystick-wrap"><span>{isFa ? "حرکت سفینه" : "MOVE"}</span><button className="joystick" type="button" aria-label={isFa ? "جوی‌استیک حرکت سفینه" : "Ship movement joystick"} onPointerDown={(event) => { event.currentTarget.setPointerCapture(event.pointerId); moveStick(event); }} onPointerMove={(event) => { if (event.currentTarget.hasPointerCapture(event.pointerId)) moveStick(event); }} onPointerUp={releaseStick} onPointerCancel={releaseStick} onLostPointerCapture={releaseStick}><i style={{ transform: `translate(${stickPosition.x}px, ${stickPosition.y}px)` }} /></button></div>
+                  <button className="fire-control" type="button" aria-label={isFa ? "شلیک" : "Fire"} onPointerDown={(event) => { event.currentTarget.setPointerCapture(event.pointerId); touchInput.current.shooting = true; }} onPointerUp={() => { touchInput.current.shooting = false; }} onPointerCancel={() => { touchInput.current.shooting = false; }} onLostPointerCapture={() => { touchInput.current.shooting = false; }}><span>✦</span><b>{isFa ? "شلیک" : "FIRE"}</b></button>
+                </div>
               </div>
 
             </div>
@@ -244,7 +316,7 @@ export default function Showcase() {
         </section>
 
         <section className="creator-section section-wrap" id="creator" data-chapter="6">
-          <div className="creator-card"><div className="creator-avatar"><img src="https://github.com/AmirHosseinRezaaie.png" alt="Amirhossein Rezaaie" /><i>✦</i></div><div className="creator-copy"><span className="eyebrow"><i />{t.creatorEyebrow}</span><h2>{t.creatorTitle}</h2><p>{t.creatorBody}</p><div className="creator-actions"><a href="https://github.com/AmirHosseinRezaaie" target="_blank" rel="noreferrer"><span>⌘</span>{t.github}</a><a href="https://amirhosseinrezaaie.github.io/CW_project_Resume-Web-Page/" target="_blank" rel="noreferrer"><span>▤</span>{t.resume}</a><a href="mailto:ah.rezaaie@gmail.com"><span>✉</span>{t.email}</a></div></div><div className="contact-links"><b>{t.contact}</b><a href="https://t.me/amirhossein122333" target="_blank" rel="noreferrer"><span>➤</span>{t.telegram}</a><a href="https://wa.me/qr/DXZSKFSOLGCMH1" target="_blank" rel="noreferrer"><span>◉</span>{t.whatsapp}</a><a href="https://eitaa.com/amirhossein122333" target="_blank" rel="noreferrer"><span>✳</span>{t.eitaa}</a><a href="https://instagram.com/amir_hosein122333" target="_blank" rel="noreferrer"><span>◎</span>{t.instagram}</a></div></div>
+          <div className="creator-card"><div className="creator-avatar"><img src={asset("/contact/creator.webp")} alt="Amirhossein Rezaaie" /><i>✦</i></div><div className="creator-copy"><span className="eyebrow"><i />{t.creatorEyebrow}</span><h2>{t.creatorTitle}</h2><p>{t.creatorBody}</p><div className="creator-actions"><a href="https://github.com/AmirHosseinRezaaie" target="_blank" rel="noreferrer"><span>⌘</span>{t.github}</a><a href="https://amirhosseinrezaaie.github.io/CW_project_Resume-Web-Page/" target="_blank" rel="noreferrer"><span>▤</span>{t.resume}</a><a href="mailto:ah.rezaaie@gmail.com"><span>✉</span>{t.email}</a></div></div><div className="contact-links"><b>{t.contact}</b><a href="https://t.me/amirhossein122333" target="_blank" rel="noreferrer"><img src={asset("/contact/telegram.png")} alt="" />{t.telegram}</a><a href="https://wa.me/qr/DXZSKFSOLGCMH1" target="_blank" rel="noreferrer"><img src={asset("/contact/whatsapp.png")} alt="" />{t.whatsapp}</a><a href="https://eitaa.com/amirhossein122333" target="_blank" rel="noreferrer"><img src={asset("/contact/eitaa.png")} alt="" />{t.eitaa}</a><a href="https://instagram.com/amir_hosein122333" target="_blank" rel="noreferrer"><img src={asset("/contact/instagram.svg")} alt="" />{t.instagram}</a><a href="https://github.com/AmirHosseinRezaaie" target="_blank" rel="noreferrer"><img src={asset("/contact/github.png")} alt="" />{t.github}</a></div></div>
           <footer className="site-footer"><a className="brand" href="#intro"><span className="brand-mark">✦</span><span>SPACE<span className="brand-muted">SHOOTER</span></span></a><span>{t.footer}</span><a href="https://github.com/AmirHosseinRezaaie/SpaceShooter-Game" target="_blank" rel="noreferrer">{t.source} ↗</a><span>© 2026</span></footer>
         </section>
       </main>
